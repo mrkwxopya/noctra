@@ -111,3 +111,4 @@ This is an internal foundation release baseline. Public API is not stable yet.
 - Expanded professional component demo catalog with curated examples for key Noctra components.
 - Final professional docs polish and audit added before GitHub publish.
 - Final professional docs release gate added for GitHub publish readiness.
+- Premium professional documentation shell and component detail UI redesign added.

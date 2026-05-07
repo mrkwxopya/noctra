@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { Grid, Stack, Group } from "@noctra/react";
 import { DocCard, PageHero, TagList } from "../components/DocsChrome";
 import { noctraDocsComponents, noctraDocsGroups } from "../generated/noctra-professional-docs.generated";
 
@@ -12,63 +11,44 @@ export function ComponentsPage() {
 
     return noctraDocsComponents.filter((component) => {
       const matchesGroup = group === "All" || component.group === group;
-      const matchesQuery =
-        normalizedQuery.length === 0 ||
-        component.name.toLowerCase().includes(normalizedQuery) ||
-        component.kebab.toLowerCase().includes(normalizedQuery) ||
-        component.description.toLowerCase().includes(normalizedQuery);
-
+      const matchesQuery = normalizedQuery.length === 0 || component.name.toLowerCase().includes(normalizedQuery) || component.kebab.toLowerCase().includes(normalizedQuery) || component.description.toLowerCase().includes(normalizedQuery);
       return matchesGroup && matchesQuery;
     });
   }, [group, query]);
 
   return (
-    <Stack gap="1.5rem">
-      <div className="nd-docs-status-strip"><strong>Professional docs coverage</strong><span>Generated component pages, searchable inventory, curated examples, props metadata, tokens, anatomy, and release gates.</span></div>
-
+    <div className="nd-page-stack">
       <PageHero
-        eyebrow="Component inventory"
-        title="Generated component documentation"
-        description="Browse every public component, inspect package integration status, and open generated detail pages with props, anatomy, variants, tokens, and import examples."
+        eyebrow="Component catalog"
+        title="Every Noctra component, generated from source."
+        description="Browse the full component inventory with generated detail pages, curated examples, props metadata, tokens, anatomy, integration status, and related components."
       />
 
       <div className="nd-toolbar">
-        <input
-          className="nd-input"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search components..."
-          aria-label="Search components"
-        />
-
+        <input className="nd-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search components..." aria-label="Search components" />
         <select className="nd-select" value={group} onChange={(event) => setGroup(event.target.value)} aria-label="Filter by group">
           <option value="All">All groups</option>
-          {noctraDocsGroups.map((item) => (
-            <option key={item.group} value={item.group}>
-              {item.group} ({item.count})
-            </option>
-          ))}
+          {noctraDocsGroups.map((item) => <option key={item.group} value={item.group}>{item.group} ({item.count})</option>)}
         </select>
       </div>
 
-      <Grid columns={3} gap="1rem">
+      <div className="nd-component-grid">
         {filteredComponents.map((component) => (
-          <a className="nd-card-link" key={component.name} href={`#/components/${component.kebab}`}>
-            <DocCard title={component.name} description={component.description}>
-              <Stack gap="0.75rem">
-                <Group gap="0.5rem" wrap="wrap">
-                  <span className="nd-badge">{component.group}</span>
-                  <span className="nd-badge" data-ok={component.hasTypes || undefined}>types</span>
-                  <span className="nd-badge" data-ok={component.hasStyle || undefined}>css</span>
-                  <span className="nd-badge" data-ok={component.hasTokens || undefined}>tokens</span>
-                </Group>
-
-                <TagList items={component.variants.length > 0 ? component.variants : component.anatomy} limit={8} />
-              </Stack>
-            </DocCard>
+          <a className="nd-component-card" key={component.name} href={`#/components/${component.kebab}`}>
+            <div>
+              <span>{component.group}</span>
+              <h3>{component.name}</h3>
+              <p>{component.description}</p>
+            </div>
+            <div className="nd-component-meta">
+              <strong>{component.props.length}</strong><small>props</small>
+              <strong>{component.tokens.length}</strong><small>tokens</small>
+              <strong>{component.anatomy.length}</strong><small>slots</small>
+            </div>
+            <TagList items={component.variants.length > 0 ? component.variants : component.anatomy} limit={5} />
           </a>
         ))}
-      </Grid>
-    </Stack>
+      </div>
+    </div>
   );
 }

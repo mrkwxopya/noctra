@@ -1,6 +1,5 @@
-import { useState, type ReactNode } from "react";
-import { Layout, Page, Stack, Group, Card, CardBody, CardDescription, CardHeader, CardTitle, Divider } from "@noctra/react";
-import { noctraDocsGroups, noctraDocsSummary } from "../generated/noctra-professional-docs.generated";
+import { useMemo, useState, type ReactNode } from "react";
+import { noctraDocsComponents, noctraDocsGroups, noctraDocsSummary } from "../generated/noctra-professional-docs.generated";
 
 export type DocsRoute = "overview" | "components" | "component" | "architecture" | "theming" | "quality" | "release";
 
@@ -10,139 +9,120 @@ export interface DocsChromeProps {
 }
 
 const navItems = [
-  { id: "overview", label: "Overview", href: "#/", description: "Project, packages, and design direction." },
-  { id: "components", label: "Components", href: "#/components", description: "Full component inventory and generated docs." },
-  { id: "architecture", label: "Architecture", href: "#/architecture", description: "Package boundaries and public exports." },
-  { id: "theming", label: "Theming & Tokens", href: "#/theming", description: "CSS variables, variants, tones, and tokens." },
-  { id: "quality", label: "Quality Gates", href: "#/quality", description: "Audits, reports, smoke files, and hard gates." },
-  { id: "release", label: "Release", href: "#/release", description: "Publish checklist and final decision flow." }
+  { id: "overview", label: "Overview", href: "#/", description: "Start here" },
+  { id: "components", label: "Components", href: "#/components", description: "119 generated docs" },
+  { id: "architecture", label: "Architecture", href: "#/architecture", description: "Packages & exports" },
+  { id: "theming", label: "Theming", href: "#/theming", description: "Tokens & CSS variables" },
+  { id: "quality", label: "Quality", href: "#/quality", description: "Audit gates" },
+  { id: "release", label: "Release", href: "#/release", description: "Publish readiness" }
 ] as const;
 
 export function DocsChrome({ route, children }: DocsChromeProps) {
-  const sidebar = (
-    <aside className="nd-sidebar">
-      <a className="nd-brand" href="#/">
-        <span className="nd-brand-mark">N</span>
-        <span>
-          <strong>Noctra</strong>
-          <small>Professional UI Docs</small>
-        </span>
-      </a>
+  const [query, setQuery] = useState("");
 
-      <Divider />
+  const searchResults = useMemo(() => {
+    const value = query.trim().toLowerCase();
 
-      <nav className="nd-nav" aria-label="Main documentation">
-        {navItems.map((item) => (
-          <a
-            key={item.id}
-            href={item.href}
-            className="nd-nav-item"
-            data-active={item.id === route || undefined}
-          >
-            <strong>{item.label}</strong>
-            <small>{item.description}</small>
-          </a>
-        ))}
-      </nav>
+    if (!value) return [];
 
-      <Divider />
-
-      <div className="nd-sidebar-meta">
-        <strong>{noctraDocsSummary.componentCount} components</strong>
-        <span>{noctraDocsSummary.propCount} props extracted</span>
-        <span>{noctraDocsSummary.tokenCount} component tokens</span>
-      </div>
-    </aside>
-  );
-
-  const header = (
-    <Group justify="between" align="center" fullWidth>
-      <div>
-        <div className="nd-eyebrow">Noctra UI System</div>
-        <div className="nd-header-title">Component library documentation</div>
-      </div>
-
-      <Group gap="0.5rem" inline>
-        <a className="nd-action" href="#/components">Browse components</a>
-        <a className="nd-action nd-action-primary" href="#/release">Release status</a>
-      </Group>
-    </Group>
-  );
+    return noctraDocsComponents
+      .filter((component) => component.name.toLowerCase().includes(value) || component.kebab.toLowerCase().includes(value) || component.group.toLowerCase().includes(value))
+      .slice(0, 8);
+  }, [query]);
 
   return (
-    <Layout
-      className="nd-app"
-      sidebar={sidebar}
-      header={header}
-      mode="sidebar"
-      stickyHeader
-      stickySidebar
-      padded={false}
-      fullWidth
-      minHeight="100vh"
-      variant="ghost"
-    >
-      <Page className="nd-page" maxWidth="1280px" fullWidth padded variant="ghost">
-        {children}
-      </Page>
-    </Layout>
+    <div className="nd-shell">
+      <aside className="nd-sidebar">
+        <a className="nd-brand" href="#/">
+          <span className="nd-brand-logo">N</span>
+          <span>
+            <strong>Noctra</strong>
+            <small>React UI System</small>
+          </span>
+        </a>
+
+        <div className="nd-search">
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search components..." aria-label="Search documentation" />
+          {searchResults.length > 0 ? (
+            <div className="nd-search-results">
+              {searchResults.map((component) => (
+                <a key={component.name} href={`#/components/${component.kebab}`} onClick={() => setQuery("")}>
+                  <strong>{component.name}</strong>
+                  <small>{component.group}</small>
+                </a>
+              ))}
+            </div>
+          ) : null}
+        </div>
+
+        <nav className="nd-nav" aria-label="Documentation navigation">
+          {navItems.map((item) => (
+            <a key={item.id} href={item.href} className="nd-nav-link" data-active={item.id === route || undefined}>
+              <span>{item.label}</span>
+              <small>{item.description}</small>
+            </a>
+          ))}
+        </nav>
+
+        <div className="nd-sidebar-card">
+          <strong>{noctraDocsSummary.componentCount} components</strong>
+          <span>{noctraDocsSummary.propCount} props extracted</span>
+          <span>{noctraDocsSummary.tokenCount} tokens mapped</span>
+        </div>
+      </aside>
+
+      <main className="nd-main">
+        <header className="nd-topbar">
+          <div>
+            <span className="nd-kicker">Noctra UI System</span>
+            <strong>Professional component documentation</strong>
+          </div>
+          <div className="nd-topbar-actions">
+            <a href="#/components">Browse components</a>
+            <a href="#/release" data-primary>Release gate</a>
+          </div>
+        </header>
+
+        <div className="nd-content">
+          {children}
+        </div>
+      </main>
+    </div>
   );
 }
 
-export function PageHero({
-  eyebrow,
-  title,
-  description,
-  children
-}: {
-  eyebrow: string;
-  title: ReactNode;
-  description: ReactNode;
-  children?: ReactNode;
-}) {
+export function PageHero({ eyebrow, title, description, children }: { eyebrow: string; title: ReactNode; description: ReactNode; children?: ReactNode }) {
   return (
     <section className="nd-hero">
-      <div>
-        <div className="nd-eyebrow">{eyebrow}</div>
+      <div className="nd-hero-content">
+        <span className="nd-kicker">{eyebrow}</span>
         <h1>{title}</h1>
         <p>{description}</p>
       </div>
-      {children ? <div className="nd-hero-aside">{children}</div> : null}
+      {children ? <div className="nd-hero-panel">{children}</div> : null}
     </section>
   );
 }
 
 export function StatCard({ label, value, description }: { label: string; value: string | number; description?: ReactNode }) {
   return (
-    <Card variant="surface" shadow="sm" fullWidth>
-      <CardBody>
-        <div className="nd-stat">
-          <span>{label}</span>
-          <strong>{value}</strong>
-          {description ? <small>{description}</small> : null}
-        </div>
-      </CardBody>
-    </Card>
+    <div className="nd-stat-card">
+      <span>{label}</span>
+      <strong>{value}</strong>
+      {description ? <small>{description}</small> : null}
+    </div>
   );
 }
 
-export function DocCard({
-  title,
-  description,
-  children
-}: {
-  title: ReactNode;
-  description?: ReactNode;
-  children?: ReactNode;
-}) {
+export function DocCard({ title, description, children, premium }: { title: ReactNode; description?: ReactNode; children?: ReactNode; premium?: boolean }) {
   return (
-    <Card variant="surface" shadow="sm" fullWidth>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        {description ? <CardDescription>{description}</CardDescription> : null}
-      </CardHeader>
-      {children ? <CardBody>{children}</CardBody> : null}
-    </Card>
+    <section className="nd-card" data-premium={premium || undefined}>
+      <div className="nd-card-header">
+        <h3>{title}</h3>
+        {description ? <p>{description}</p> : null}
+      </div>
+      {children ? <div className="nd-card-body">{children}</div> : null}
+    </section>
   );
 }
 
@@ -158,50 +138,30 @@ export function TagList({ items, limit }: { items: readonly string[]; limit?: nu
   const visibleItems = typeof limit === "number" ? items.slice(0, limit) : items;
 
   if (visibleItems.length === 0) {
-    return <span className="nd-muted">None</span>;
+    return <span className="nd-muted">No generated data yet</span>;
   }
 
   return (
     <div className="nd-tags">
       {visibleItems.map((item) => (
-        <span key={item} className="nd-tag">
-          {item}
-        </span>
+        <span key={item} className="nd-tag">{item}</span>
       ))}
     </div>
   );
 }
 
-export function DataTable({
-  columns,
-  rows
-}: {
-  columns: readonly string[];
-  rows: readonly (readonly ReactNode[])[];
-}) {
+export function DataTable({ columns, rows }: { columns: readonly string[]; rows: readonly (readonly ReactNode[])[] }) {
   return (
     <div className="nd-table-wrap">
       <table className="nd-table">
         <thead>
-          <tr>
-            {columns.map((column) => (
-              <th key={column}>{column}</th>
-            ))}
-          </tr>
+          <tr>{columns.map((column) => <th key={column}>{column}</th>)}</tr>
         </thead>
         <tbody>
-          {rows.length > 0 ? (
-            rows.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {row.map((cell, cellIndex) => (
-                  <td key={cellIndex}>{cell}</td>
-                ))}
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={columns.length}>No data available.</td>
-            </tr>
+          {rows.length > 0 ? rows.map((row, rowIndex) => (
+            <tr key={rowIndex}>{row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}</tr>
+          )) : (
+            <tr><td colSpan={columns.length}>No data available.</td></tr>
           )}
         </tbody>
       </table>
@@ -209,18 +169,6 @@ export function DataTable({
   );
 }
 
-export function GroupSummary() {
-  return (
-    <Stack gap="0.5rem">
-      {noctraDocsGroups.map((group) => (
-        <div className="nd-group-row" key={group.group}>
-          <span>{group.group}</span>
-          <strong>{group.count}</strong>
-        </div>
-      ))}
-    </Stack>
-  );
-}
 export function CopyButton({ value }: { value: string }) {
   const [copied, setCopied] = useState(false);
 
@@ -234,70 +182,36 @@ export function CopyButton({ value }: { value: string }) {
     }
   }
 
+  return <button className="nd-copy-button" type="button" onClick={() => void handleCopy()}>{copied ? "Copied" : "Copy"}</button>;
+}
+
+export function ExampleBlock({ title, description, code, preview }: { title: ReactNode; description?: ReactNode; code: string; preview: ReactNode }) {
   return (
-    <button className="nd-copy-button" type="button" onClick={() => void handleCopy()}>
-      {copied ? "Copied" : "Copy"}
-    </button>
+    <section className="nd-example">
+      <div className="nd-example-header">
+        <div>
+          <h3>{title}</h3>
+          {description ? <p>{description}</p> : null}
+        </div>
+        <CopyButton value={code} />
+      </div>
+      <div className="nd-example-preview">{preview}</div>
+      <CodeBlock>{code}</CodeBlock>
+    </section>
   );
 }
 
-export function ExampleBlock({
-  title,
-  description,
-  code,
-  preview
-}: {
-  title: ReactNode;
-  description?: ReactNode;
-  code: string;
-  preview: ReactNode;
-}) {
-  return (
-    <Card variant="surface" shadow="sm" fullWidth>
-      <CardHeader>
-        <Group justify="between" align="start" fullWidth>
-          <div>
-            <CardTitle>{title}</CardTitle>
-            {description ? <CardDescription>{description}</CardDescription> : null}
-          </div>
-          <CopyButton value={code} />
-        </Group>
-      </CardHeader>
-
-      <CardBody>
-        <Stack gap="1rem">
-          <div className="nd-preview">{preview}</div>
-          <CodeBlock>{code}</CodeBlock>
-        </Stack>
-      </CardBody>
-    </Card>
-  );
-}
-export function SectionTitle({
-  id,
-  eyebrow,
-  title,
-  description
-}: {
-  id: string;
-  eyebrow?: ReactNode;
-  title: ReactNode;
-  description?: ReactNode;
-}) {
+export function SectionTitle({ id, eyebrow, title, description }: { id: string; eyebrow?: ReactNode; title: ReactNode; description?: ReactNode }) {
   return (
     <div className="nd-section-title" id={id}>
-      {eyebrow ? <div className="nd-eyebrow">{eyebrow}</div> : null}
+      {eyebrow ? <span className="nd-kicker">{eyebrow}</span> : null}
       <h2>{title}</h2>
       {description ? <p>{description}</p> : null}
     </div>
   );
 }
 
-export function AnchorList({
-  items
-}: {
-  items: readonly { href: string; label: string; description?: string }[];
-}) {
+export function AnchorList({ items }: { items: readonly { href: string; label: string; description?: string }[] }) {
   return (
     <nav className="nd-anchor-list" aria-label="On this page">
       <strong>On this page</strong>
@@ -311,15 +225,7 @@ export function AnchorList({
   );
 }
 
-export function CoverageMeter({
-  label,
-  value,
-  max
-}: {
-  label: string;
-  value: number;
-  max: number;
-}) {
+export function CoverageMeter({ label, value, max }: { label: string; value: number; max: number }) {
   const percent = max <= 0 ? 0 : Math.min(100, Math.round((value / max) * 100));
 
   return (
@@ -330,6 +236,39 @@ export function CoverageMeter({
       </div>
       <div className="nd-coverage-track" aria-hidden="true">
         <span style={{ width: `${percent}%` }} />
+      </div>
+    </div>
+  );
+}
+
+export function GroupSummary() {
+  return (
+    <div className="nd-group-summary">
+      {noctraDocsGroups.map((group) => (
+        <a key={group.group} href={`#/components?group=${encodeURIComponent(group.group)}`}>
+          <span>{group.group}</span>
+          <strong>{group.count}</strong>
+        </a>
+      ))}
+    </div>
+  );
+}
+
+export function ProPreview({ componentName, group, description }: { componentName: string; group: string; description: string }) {
+  return (
+    <div className="nd-pro-preview">
+      <div className="nd-pro-preview-top">
+        <span className="nd-preview-icon">{componentName.slice(0, 1)}</span>
+        <div>
+          <strong>{componentName}</strong>
+          <small>{group}</small>
+        </div>
+      </div>
+      <p>{description}</p>
+      <div className="nd-pro-preview-grid">
+        <span />
+        <span />
+        <span />
       </div>
     </div>
   );
