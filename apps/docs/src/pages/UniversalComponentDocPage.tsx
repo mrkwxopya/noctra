@@ -13,6 +13,7 @@ import {
 import * as NoctraRuntime from "../components/docs-system/NoctraRuntimeMock";
 import { docsComponentLinks } from "../data/docsSidebarLinks";
 import { getComponentDocsApiEntry } from "../data/componentDocsApiMap";
+import { getComponentDocsExampleCode } from "../data/componentDocsExamplesMap";
 import { docsHref } from "../lib/docsRouting";
 
 type UniversalComponentDocPageProps = {
@@ -648,6 +649,12 @@ function BooleanControl({
 }
 
 function buildCode(slug: string, label: string, state: VisualState) {
+  const mappedExample = getComponentDocsExampleCode(slug);
+
+  if (mappedExample) {
+    return mappedExample;
+  }
+
   const name = pascalCase(slug);
   const kind = getComponentDocKind(slug);
   const lines: string[] = [];
