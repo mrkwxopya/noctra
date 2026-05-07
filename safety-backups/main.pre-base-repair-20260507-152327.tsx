@@ -1,11 +1,6 @@
-import {
-  StrictMode,
-  useEffect,
-  useMemo,
-  useState } from "react";
+import { StrictMode, useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { DocsChrome,
-  type DocsRoute } from "./components/DocsChrome";
+import { DocsChrome, type DocsRoute } from "./components/DocsChrome";
 import { OverviewPage } from "./pages/OverviewPage";
 import { ComponentsPage } from "./pages/ComponentsPage";
 import { ComponentDetailPage } from "./pages/ComponentDetailPage";
@@ -18,8 +13,7 @@ import {
   canonicalizeDocsCleanRoute,
   docsHref,
   isInternalDocsUrl,
-  parseDocsRouteFromLocation,
-  sanitizeDocsAnchors
+  parseDocsRouteFromLocation
 } from "./lib/docsRouting";
 import "./noctra-style-bridge.css";
 import "./docs.css";
@@ -140,18 +134,6 @@ if (!root) {
 if (window.location.pathname.endsWith("/index.html")) {
   window.history.replaceState(null, "", docsHref("/"));
 }
-
-
-sanitizeDocsAnchors();
-
-const noctraAnchorObserver = new MutationObserver(() => {
-  sanitizeDocsAnchors();
-});
-
-noctraAnchorObserver.observe(document.body, {
-  childList: true,
-  subtree: true
-});
 
 createRoot(root).render(
   <StrictMode>

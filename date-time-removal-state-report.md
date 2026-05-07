@@ -1,10 +1,10 @@
 # Date/Time Removal State Report
 
-Generated: 2026-05-07T12:16:59.001Z
+Generated: 2026-05-07T12:23:27.606Z
 
 Problems found: 0
 Allowed matches: 85
-Informational matches: 201
+Informational matches: 212
 
 ## Problems
 
@@ -111,6 +111,17 @@ Informational matches: 201
 - apps/docs/src/data/interactiveDemoPresets.ts:62: "DatePicker",
 - apps/docs/src/data/interactiveDemoPresets.ts:63: "DateTimePicker",
 - apps/docs/src/data/interactiveDemoPresets.ts:64: "DateRangePicker"
+- scripts/audit-docs-mantine-style-requirements.mjs:28: "DateInput",
+- scripts/audit-docs-mantine-style-requirements.mjs:29: "DateTimeInput",
+- scripts/audit-docs-mantine-style-requirements.mjs:30: "MonthInput",
+- scripts/audit-docs-mantine-style-requirements.mjs:31: "TimeInput",
+- scripts/audit-docs-mantine-style-requirements.mjs:32: "WeekInput",
+- scripts/audit-docs-mantine-style-requirements.mjs:33: "YearInput",
+- scripts/audit-docs-mantine-style-requirements.mjs:34: "TimePicker",
+- scripts/audit-docs-mantine-style-requirements.mjs:35: "Calendar",
+- scripts/audit-docs-mantine-style-requirements.mjs:36: "DatePicker",
+- scripts/audit-docs-mantine-style-requirements.mjs:37: "DateTimePicker",
+- scripts/audit-docs-mantine-style-requirements.mjs:38: "DateRangePicker"
 - scripts/audit-interactive-demo-preset-api-compat.mjs:28: "DateInput",
 - scripts/audit-interactive-demo-preset-api-compat.mjs:29: "DateTimeInput",
 - scripts/audit-interactive-demo-preset-api-compat.mjs:30: "MonthInput",

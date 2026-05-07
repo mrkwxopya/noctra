@@ -1,142 +1,140 @@
-import type { DocsRoute } from "../components/DocsChrome";
+export type DocsRoute =
+  | { route: "overview" }
+  | { route: "components" }
+  | { route: "component"; componentSlug: string }
+  | { route: "architecture" }
+  | { route: "theming" }
+  | { route: "quality" }
+  | { route: "release" };
 
-export type ParsedDocsRoute = {
-  route: DocsRoute;
-  componentSlug?: string;
-};
+export const NOCTRA_DOCS_BASE = "/noctra/";
 
-const REQUIRED_BASE = "/noctra/";
+function normalizePathname(pathname: string) {
+  if (!pathname || pathname === "/") return "/";
 
-function getViteBaseUrl() {
-  const meta = import.meta as unknown as {
-    env?: {
-      BASE_URL?: string;
-    };
-  };
+  let next = pathname.trim();
 
-  return meta.env?.BASE_URL ?? REQUIRED_BASE;
-}
-
-export function getDocsBasePath() {
-  const viteBase = getViteBaseUrl();
-  let base = viteBase && viteBase !== "/" ? viteBase : REQUIRED_BASE;
-
-  if (!base.startsWith("/")) {
-    base = `/${base}`;
+  if (!next.startsWith("/")) {
+    next = `/${next}`;
   }
 
-  return base.endsWith("/") ? base : `${base}/`;
-}
+  next = next.replace(/\/{2,}/g, "/");
 
-export function normalizeDocsPath(value: string) {
-  const withoutHash = value.replace(/^#\/?/, "/");
-  const cleaned = withoutHash.replace(/^\/+/, "/").replace(/\/+$/, "");
-
-  return cleaned === "" ? "/" : cleaned;
-}
-
-export function docsHref(path = "/") {
-  const base = getDocsBasePath();
-  const normalized = normalizeDocsPath(path);
-
-  if (normalized === "/") return base;
-
-  const withoutNoctra = normalized.replace(/^\/noctra(\/|$)/, "/");
-
-  return `${base}${withoutNoctra.replace(/^\/+/, "")}`;
-}
-
-export function parseDocsRouteFromPath(path: string): ParsedDocsRoute {
-  const normalized = normalizeDocsPath(path);
-  const parts = normalized.split("/").filter(Boolean);
-
-  if (parts[0] === "noctra") {
-    parts.shift();
+  if (next.length > 1 && next.endsWith("/")) {
+    next = next.slice(0, -1);
   }
 
-  if (parts.length === 0) return { route: "overview" };
-
-  if (parts[0] === "components" && parts[1]) {
-    return {
-      route: "component",
-      componentSlug: parts[1]
-    };
-  }
-
-  if (parts[0] === "components") return { route: "components" };
-  if (parts[0] === "architecture") return { route: "architecture" };
-  if (parts[0] === "theming") return { route: "theming" };
-  if (parts[0] === "quality") return { route: "quality" };
-  if (parts[0] === "release") return { route: "release" };
-
-  return { route: "overview" };
+  return next;
 }
 
-export function getRelativeDocsPathFromLocation(location: Location) {
-  if (location.hash.startsWith("#/")) {
-    return normalizeDocsPath(location.hash);
+function stripNoctraBase(pathname: string) {
+  const normalized = normalizePathname(pathname);
+
+  if (normalized === "/noctra") return "/";
+
+  if (normalized.startsWith("/noctra/")) {
+    return normalizePathname(normalized.slice("/noctra".length));
   }
 
-  const base = getDocsBasePath();
-  const baseWithoutTrailingSlash = base.replace(/\/+$/, "");
-  const pathname = location.pathname;
-
-  if (pathname === "/components" || pathname.startsWith("/components/")) {
-    return normalizeDocsPath(pathname);
-  }
-
-  if (baseWithoutTrailingSlash && pathname.startsWith(baseWithoutTrailingSlash)) {
-    const relative = pathname.slice(baseWithoutTrailingSlash.length);
-
-    return normalizeDocsPath(relative || "/");
-  }
-
-  return normalizeDocsPath(pathname);
+  return normalized;
 }
 
-export function parseDocsRouteFromLocation(location: Location): ParsedDocsRoute {
-  return parseDocsRouteFromPath(getRelativeDocsPathFromLocation(location));
+export function docsHref(pathname = "/") {
+  const cleanPath = stripNoctraBase(pathname);
+  const normalized = normalizePathname(cleanPath);
+
+  if (normalized === "/") return NOCTRA_DOCS_BASE;
+
+  return `${NOCTRA_DOCS_BASE.replace(/\/$/, "")}${normalized}`;
 }
 
-export function routeToPath(route: ParsedDocsRoute) {
-  if (route.route === "component" && route.componentSlug) {
-    return `/components/${route.componentSlug}`;
-  }
+export function forceNoctraDocsHref(value: string) {
+  if (!value) return docsHref("/");
 
-  if (route.route === "overview") return "/";
+  try {
+    const url = new URL(value, window.location.origin);
+    const cleanPath = stripNoctraBase(url.pathname);
+    return `${docsHref(cleanPath)}${url.search}${url.hash}`;
+  } catch {
+    const [pathAndSearch = "/", hash = ""] = value.split("#");
+    const [pathname = "/", search = ""] = pathAndSearch.split("?");
+    const nextHash = hash ? `#${hash}` : "";
+    const nextSearch = search ? `?${search}` : "";
 
-  return `/${route.route}`;
-}
-
-export function canonicalCleanHrefForLocation(location: Location) {
-  const parsed = parseDocsRouteFromLocation(location);
-
-  return docsHref(routeToPath(parsed));
-}
-
-export function canonicalizeDocsCleanRoute() {
-  const target = canonicalCleanHrefForLocation(window.location);
-  const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-
-  if (current !== target) {
-    window.history.replaceState(null, "", target);
+    return `${docsHref(pathname)}${nextSearch}${nextHash}`;
   }
 }
 
 export function isInternalDocsUrl(url: URL) {
   if (url.origin !== window.location.origin) return false;
 
-  const base = getDocsBasePath();
-  const baseWithoutTrailingSlash = base.replace(/\/+$/, "");
-
   return (
-    url.pathname === baseWithoutTrailingSlash ||
-    url.pathname.startsWith(`${baseWithoutTrailingSlash}/`) ||
+    url.pathname === "/" ||
+    url.pathname === "/noctra" ||
+    url.pathname.startsWith("/noctra/") ||
     url.pathname === "/components" ||
-    url.pathname.startsWith("/components/")
+    url.pathname.startsWith("/components/") ||
+    url.pathname === "/architecture" ||
+    url.pathname === "/theming" ||
+    url.pathname === "/quality" ||
+    url.pathname === "/release"
   );
 }
 
-export function toNoctraDocsUrl(path: string) {
-  return docsHref(path);
+export function parseDocsRouteFromLocation(locationLike: Pick<Location, "pathname" | "hash">): DocsRoute {
+  const pathname = stripNoctraBase(locationLike.pathname);
+  const hashPath = locationLike.hash.startsWith("#/") ? locationLike.hash.slice(1) : "";
+  const routePath = normalizePathname(hashPath || pathname);
+
+  if (routePath === "/" || routePath === "/overview") {
+    return { route: "overview" };
+  }
+
+  if (routePath === "/components") {
+    return { route: "components" };
+  }
+
+  if (routePath.startsWith("/components/")) {
+    return {
+      route: "component",
+      componentSlug: routePath.replace("/components/", "")
+    };
+  }
+
+  if (routePath === "/architecture") return { route: "architecture" };
+  if (routePath === "/theming") return { route: "theming" };
+  if (routePath === "/quality") return { route: "quality" };
+  if (routePath === "/release") return { route: "release" };
+
+  return { route: "overview" };
+}
+
+export function canonicalizeDocsCleanRoute() {
+  const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  const canonical = forceNoctraDocsHref(current);
+
+  if (canonical !== current) {
+    window.history.replaceState(null, "", canonical);
+  }
+}
+
+export function sanitizeDocsAnchors(root: ParentNode = document) {
+  const anchors = Array.from(root.querySelectorAll("a[href]"));
+
+  for (const anchor of anchors) {
+    if (!(anchor instanceof HTMLAnchorElement)) continue;
+
+    const rawHref = anchor.getAttribute("href");
+
+    if (!rawHref) continue;
+    if (rawHref.startsWith("#")) continue;
+    if (rawHref.startsWith("mailto:")) continue;
+    if (rawHref.startsWith("tel:")) continue;
+
+    const url = new URL(anchor.href, window.location.origin);
+
+    if (!isInternalDocsUrl(url)) continue;
+
+    anchor.href = forceNoctraDocsHref(`${url.pathname}${url.search}${url.hash}`);
+  }
 }
