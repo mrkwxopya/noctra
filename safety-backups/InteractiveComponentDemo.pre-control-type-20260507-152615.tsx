@@ -67,9 +67,9 @@ function getDefaultState(component: NoctraDocsComponent): DemoState {
   };
 }
 
-function getControls(component: NoctraDocsComponent): string[] {
+function getControls(component: NoctraDocsComponent) {
   const preset = getInteractiveDemoPreset(component);
-  const controls: unknown[] = Array.isArray(preset?.controls) ? preset.controls : [];
+  const controls = Array.isArray(preset?.controls) ? preset.controls : [];
 
   return controls.filter((control: unknown): control is string => {
     if (typeof control !== "string") return false;
@@ -230,7 +230,7 @@ export function InteractiveComponentDemo({ component }: { component: NoctraDocsC
   const [activeTab, setActiveTab] = useState<DemoTab>("preview");
   const [state, setState] = useState<DemoState>(() => getDefaultState(component));
 
-  const controls = useMemo<string[]>(() => getControls(component), [component]);
+  const controls = useMemo(() => getControls(component), [component]);
 
   const runtimeProps = useMemo(() => {
     return cleanRuntimeProps(buildInteractiveDemoProps(component, state));
@@ -292,7 +292,7 @@ export function InteractiveComponentDemo({ component }: { component: NoctraDocsC
         {activeTab === "controls" ? (
           <div>
             {controls.length > 0 ? (
-              controls.map((control: string) => (
+              controls.map((control) => (
                 <ControlField
                   key={control}
                   component={component}
