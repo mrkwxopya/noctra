@@ -1,16 +1,15 @@
 # Docs Foundation ValueWrapper Cleanup Report
 
-Generated: 2026-05-07T16:05:31.024Z
+Generated: 2026-05-07T16:08:23.762Z
 
-Changed: yes
-ValueWrapper hits before: 2
+Changed: no
+ValueWrapper hits before: 0
 ValueWrapper hits after: 0
 Problems found: 0
 
 ## Hits before
 
-- 128: <ValueWrapper {...(link.href ? { href: link.href } : {})}>
-- 130: </ValueWrapper>
+- None
 
 ## Hits after
 
