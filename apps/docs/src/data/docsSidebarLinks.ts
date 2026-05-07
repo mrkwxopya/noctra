@@ -18,27 +18,27 @@ export const docsSidebarSections = [
       },
       {
         "label": "Components",
-        "href": "/components"
+        "href": "/components/"
       },
       {
         "label": "Architecture",
-        "href": "/architecture"
+        "href": "/architecture/"
       },
       {
         "label": "Theming",
-        "href": "/theming"
+        "href": "/theming/"
       },
       {
         "label": "Tokens",
-        "href": "/tokens"
+        "href": "/tokens/"
       },
       {
         "label": "Quality",
-        "href": "/quality"
+        "href": "/quality/"
       },
       {
         "label": "Release",
-        "href": "/release"
+        "href": "/release/"
       }
     ]
   },
@@ -47,427 +47,427 @@ export const docsSidebarSections = [
     "links": [
       {
         "label": "Accordion",
-        "href": "/components/accordion"
+        "href": "/components/accordion/"
       },
       {
         "label": "Alert",
-        "href": "/components/alert"
+        "href": "/components/alert/"
       },
       {
         "label": "App Shell",
-        "href": "/components/app-shell"
+        "href": "/components/app-shell/"
       },
       {
         "label": "Aspect Ratio",
-        "href": "/components/aspect-ratio"
+        "href": "/components/aspect-ratio/"
       },
       {
         "label": "Autocomplete",
-        "href": "/components/autocomplete"
+        "href": "/components/autocomplete/"
       },
       {
         "label": "Avatar",
-        "href": "/components/avatar"
+        "href": "/components/avatar/"
       },
       {
         "label": "Badge",
-        "href": "/components/badge"
+        "href": "/components/badge/"
       },
       {
         "label": "Blockquote",
-        "href": "/components/blockquote"
+        "href": "/components/blockquote/"
       },
       {
         "label": "Box",
-        "href": "/components/box"
+        "href": "/components/box/"
       },
       {
         "label": "Breadcrumb",
-        "href": "/components/breadcrumb"
+        "href": "/components/breadcrumb/"
       },
       {
         "label": "Breadcrumbs",
-        "href": "/components/breadcrumbs"
+        "href": "/components/breadcrumbs/"
       },
       {
         "label": "Button",
-        "href": "/components/button"
+        "href": "/components/button/"
       },
       {
         "label": "Card",
-        "href": "/components/card"
+        "href": "/components/card/"
       },
       {
         "label": "Card Body",
-        "href": "/components/card-body"
+        "href": "/components/card-body/"
       },
       {
         "label": "Card Description",
-        "href": "/components/card-description"
+        "href": "/components/card-description/"
       },
       {
         "label": "Card Footer",
-        "href": "/components/card-footer"
+        "href": "/components/card-footer/"
       },
       {
         "label": "Card Header",
-        "href": "/components/card-header"
+        "href": "/components/card-header/"
       },
       {
         "label": "Card Title",
-        "href": "/components/card-title"
+        "href": "/components/card-title/"
       },
       {
         "label": "Center",
-        "href": "/components/center"
+        "href": "/components/center/"
       },
       {
         "label": "Checkbox",
-        "href": "/components/checkbox"
+        "href": "/components/checkbox/"
       },
       {
         "label": "Clipboard",
-        "href": "/components/clipboard"
+        "href": "/components/clipboard/"
       },
       {
         "label": "Code",
-        "href": "/components/code"
+        "href": "/components/code/"
       },
       {
         "label": "Code Block",
-        "href": "/components/code-block"
+        "href": "/components/code-block/"
       },
       {
         "label": "Color Input",
-        "href": "/components/color-input"
+        "href": "/components/color-input/"
       },
       {
         "label": "Color Picker",
-        "href": "/components/color-picker"
+        "href": "/components/color-picker/"
       },
       {
         "label": "Combobox",
-        "href": "/components/combobox"
+        "href": "/components/combobox/"
       },
       {
         "label": "Command",
-        "href": "/components/command"
+        "href": "/components/command/"
       },
       {
         "label": "Command Bar",
-        "href": "/components/command-bar"
+        "href": "/components/command-bar/"
       },
       {
         "label": "Container",
-        "href": "/components/container"
+        "href": "/components/container/"
       },
       {
         "label": "Context Menu",
-        "href": "/components/context-menu"
+        "href": "/components/context-menu/"
       },
       {
         "label": "Credit Card",
-        "href": "/components/credit-card"
+        "href": "/components/credit-card/"
       },
       {
         "label": "Data Grid",
-        "href": "/components/data-grid"
+        "href": "/components/data-grid/"
       },
       {
         "label": "Dialog",
-        "href": "/components/dialog"
+        "href": "/components/dialog/"
       },
       {
         "label": "Divider",
-        "href": "/components/divider"
+        "href": "/components/divider/"
       },
       {
         "label": "Dock",
-        "href": "/components/dock"
+        "href": "/components/dock/"
       },
       {
         "label": "Drawer",
-        "href": "/components/drawer"
+        "href": "/components/drawer/"
       },
       {
         "label": "Dropzone",
-        "href": "/components/dropzone"
+        "href": "/components/dropzone/"
       },
       {
         "label": "Empty State",
-        "href": "/components/empty-state"
+        "href": "/components/empty-state/"
       },
       {
         "label": "Flex",
-        "href": "/components/flex"
+        "href": "/components/flex/"
       },
       {
         "label": "Float Label",
-        "href": "/components/float-label"
+        "href": "/components/float-label/"
       },
       {
         "label": "Footer",
-        "href": "/components/footer"
+        "href": "/components/footer/"
       },
       {
         "label": "Form Field",
-        "href": "/components/form-field"
+        "href": "/components/form-field/"
       },
       {
         "label": "Grid",
-        "href": "/components/grid"
+        "href": "/components/grid/"
       },
       {
         "label": "Group",
-        "href": "/components/group"
+        "href": "/components/group/"
       },
       {
         "label": "Header",
-        "href": "/components/header"
+        "href": "/components/header/"
       },
       {
         "label": "Highlight",
-        "href": "/components/highlight"
+        "href": "/components/highlight/"
       },
       {
         "label": "Hover Card",
-        "href": "/components/hover-card"
+        "href": "/components/hover-card/"
       },
       {
         "label": "Icon Button",
-        "href": "/components/icon-button"
+        "href": "/components/icon-button/"
       },
       {
         "label": "Inline Code",
-        "href": "/components/inline-code"
+        "href": "/components/inline-code/"
       },
       {
         "label": "Input",
-        "href": "/components/input"
+        "href": "/components/input/"
       },
       {
         "label": "Kbd",
-        "href": "/components/kbd"
+        "href": "/components/kbd/"
       },
       {
         "label": "Layout",
-        "href": "/components/layout"
+        "href": "/components/layout/"
       },
       {
         "label": "Layout Shell",
-        "href": "/components/layout-shell"
+        "href": "/components/layout-shell/"
       },
       {
         "label": "Link",
-        "href": "/components/link"
+        "href": "/components/link/"
       },
       {
         "label": "List Box",
-        "href": "/components/list-box"
+        "href": "/components/list-box/"
       },
       {
         "label": "Loader",
-        "href": "/components/loader"
+        "href": "/components/loader/"
       },
       {
         "label": "Menu",
-        "href": "/components/menu"
+        "href": "/components/menu/"
       },
       {
         "label": "Modal",
-        "href": "/components/modal"
+        "href": "/components/modal/"
       },
       {
         "label": "Multi Select",
-        "href": "/components/multi-select"
+        "href": "/components/multi-select/"
       },
       {
         "label": "Native Select",
-        "href": "/components/native-select"
+        "href": "/components/native-select/"
       },
       {
         "label": "Notification",
-        "href": "/components/notification"
+        "href": "/components/notification/"
       },
       {
         "label": "Number Input",
-        "href": "/components/number-input"
+        "href": "/components/number-input/"
       },
       {
         "label": "Page",
-        "href": "/components/page"
+        "href": "/components/page/"
       },
       {
         "label": "Pagination",
-        "href": "/components/pagination"
+        "href": "/components/pagination/"
       },
       {
         "label": "Paper",
-        "href": "/components/paper"
+        "href": "/components/paper/"
       },
       {
         "label": "Password Input",
-        "href": "/components/password-input"
+        "href": "/components/password-input/"
       },
       {
         "label": "Pin Code",
-        "href": "/components/pin-code"
+        "href": "/components/pin-code/"
       },
       {
         "label": "Pin Input",
-        "href": "/components/pin-input"
+        "href": "/components/pin-input/"
       },
       {
         "label": "Popover",
-        "href": "/components/popover"
+        "href": "/components/popover/"
       },
       {
         "label": "Portal",
-        "href": "/components/portal"
+        "href": "/components/portal/"
       },
       {
         "label": "Progress",
-        "href": "/components/progress"
+        "href": "/components/progress/"
       },
       {
         "label": "Prose",
-        "href": "/components/prose"
+        "href": "/components/prose/"
       },
       {
         "label": "Radio",
-        "href": "/components/radio"
+        "href": "/components/radio/"
       },
       {
         "label": "Range Slider",
-        "href": "/components/range-slider"
+        "href": "/components/range-slider/"
       },
       {
         "label": "Rating",
-        "href": "/components/rating"
+        "href": "/components/rating/"
       },
       {
         "label": "Resizable Panel",
-        "href": "/components/resizable-panel"
+        "href": "/components/resizable-panel/"
       },
       {
         "label": "Scroll Area",
-        "href": "/components/scroll-area"
+        "href": "/components/scroll-area/"
       },
       {
         "label": "Search Input",
-        "href": "/components/search-input"
+        "href": "/components/search-input/"
       },
       {
         "label": "Segmented Control",
-        "href": "/components/segmented-control"
+        "href": "/components/segmented-control/"
       },
       {
         "label": "Select",
-        "href": "/components/select"
+        "href": "/components/select/"
       },
       {
         "label": "Sidebar",
-        "href": "/components/sidebar"
+        "href": "/components/sidebar/"
       },
       {
         "label": "Simple Grid",
-        "href": "/components/simple-grid"
+        "href": "/components/simple-grid/"
       },
       {
         "label": "Skeleton",
-        "href": "/components/skeleton"
+        "href": "/components/skeleton/"
       },
       {
         "label": "Slider",
-        "href": "/components/slider"
+        "href": "/components/slider/"
       },
       {
         "label": "Spacer",
-        "href": "/components/spacer"
+        "href": "/components/spacer/"
       },
       {
         "label": "Spinner",
-        "href": "/components/spinner"
+        "href": "/components/spinner/"
       },
       {
         "label": "Split Pane",
-        "href": "/components/split-pane"
+        "href": "/components/split-pane/"
       },
       {
         "label": "Stack",
-        "href": "/components/stack"
+        "href": "/components/stack/"
       },
       {
         "label": "Status Bar",
-        "href": "/components/status-bar"
+        "href": "/components/status-bar/"
       },
       {
         "label": "Stepper",
-        "href": "/components/stepper"
+        "href": "/components/stepper/"
       },
       {
         "label": "Switch",
-        "href": "/components/switch"
+        "href": "/components/switch/"
       },
       {
         "label": "Table",
-        "href": "/components/table"
+        "href": "/components/table/"
       },
       {
         "label": "Table Of Contents",
-        "href": "/components/table-of-contents"
+        "href": "/components/table-of-contents/"
       },
       {
         "label": "Tabs",
-        "href": "/components/tabs"
+        "href": "/components/tabs/"
       },
       {
         "label": "Tags Input",
-        "href": "/components/tags-input"
+        "href": "/components/tags-input/"
       },
       {
         "label": "Text Input",
-        "href": "/components/text-input"
+        "href": "/components/text-input/"
       },
       {
         "label": "Textarea",
-        "href": "/components/textarea"
+        "href": "/components/textarea/"
       },
       {
         "label": "Timeline",
-        "href": "/components/timeline"
+        "href": "/components/timeline/"
       },
       {
         "label": "Toast",
-        "href": "/components/toast"
+        "href": "/components/toast/"
       },
       {
         "label": "Toolbar",
-        "href": "/components/toolbar"
+        "href": "/components/toolbar/"
       },
       {
         "label": "Tooltip",
-        "href": "/components/tooltip"
+        "href": "/components/tooltip/"
       },
       {
         "label": "Transfer List",
-        "href": "/components/transfer-list"
+        "href": "/components/transfer-list/"
       },
       {
         "label": "Tree",
-        "href": "/components/tree"
+        "href": "/components/tree/"
       },
       {
         "label": "Tree Select",
-        "href": "/components/tree-select"
+        "href": "/components/tree-select/"
       },
       {
         "label": "Tree View",
-        "href": "/components/tree-view"
+        "href": "/components/tree-view/"
       },
       {
         "label": "Visually Hidden",
-        "href": "/components/visually-hidden"
+        "href": "/components/visually-hidden/"
       }
     ]
   }

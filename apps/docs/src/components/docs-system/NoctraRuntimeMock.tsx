@@ -171,7 +171,7 @@ function createNoctraMock(displayName: string) {
     const commonProps: Record<string, any> = {
       ...safeProps,
       ref,
-      className: cx(mockStateClass(displayName, props as Record<string, unknown>), className),
+      className: cx(mockStateClass(displayName, props as Record<string, unknown>), typeof className === "string" ? className : undefined),
       style: typeof style === "object" && style !== null && !Array.isArray(style) ? style : undefined,
       "data-variant": safeAttr((props as Record<string, unknown>).variant),
       "data-tone": safeAttr((props as Record<string, unknown>).tone),
@@ -181,6 +181,26 @@ function createNoctraMock(displayName: string) {
       "data-disabled": boolAttr((props as Record<string, unknown>).disabled),
       "data-full-width": boolAttr((props as Record<string, unknown>).fullWidth)
     };
+
+    for (const attr of ["variant", "tone", "size", "radius"]) {
+      const value = safeAttr((props as Record<string, unknown>)[attr]);
+
+      if (value) {
+        commonProps["data-" + attr] = value;
+      }
+    }
+
+    if ((props as Record<string, unknown>).loading === true) commonProps["data-loading"] = "true";
+    if ((props as Record<string, unknown>).disabled === true) commonProps["data-disabled"] = "true";
+    if ((props as Record<string, unknown>).fullWidth === true) commonProps["data-full-width"] = "true";
+
+    commonProps["data-variant"] = safeAttr((props as Record<string, unknown>).variant);
+    commonProps["data-tone"] = safeAttr((props as Record<string, unknown>).tone);
+    commonProps["data-size"] = safeAttr((props as Record<string, unknown>).size);
+    commonProps["data-radius"] = safeAttr((props as Record<string, unknown>).radius ?? (props as Record<string, unknown>).radiusMode);
+    commonProps["data-loading"] = boolAttr((props as Record<string, unknown>).loading);
+    commonProps["data-disabled"] = boolAttr((props as Record<string, unknown>).disabled);
+    commonProps["data-full-width"] = boolAttr((props as Record<string, unknown>).fullWidth);
 
     if (tag === "input" || tag === "textarea") {
       return createElement(tag, {

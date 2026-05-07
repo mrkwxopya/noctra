@@ -1,4 +1,4 @@
-﻿import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 const distRoot = "apps/docs/dist";
@@ -11,8 +11,8 @@ function readText(path) {
 }
 
 function writeText(path, content) {
-  const dir = dirname(path);
-  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  const parent = dirname(path);
+  if (!existsSync(parent)) mkdirSync(parent, { recursive: true });
   writeFileSync(path, `${content.trimEnd()}\n`, "utf8");
 }
 
@@ -30,6 +30,15 @@ function cleanRoute(route) {
   return out || "/";
 }
 
+function addRoute(set, route) {
+  const clean = cleanRoute(route);
+  set.add(clean);
+
+  if (clean !== "/") {
+    set.add(clean + "/");
+  }
+}
+
 function routeToIndexPath(route) {
   const clean = cleanRoute(route);
 
@@ -40,15 +49,6 @@ function routeToIndexPath(route) {
 
 function kebabToCompactAlias(slug) {
   return slug.replace(/-/g, "");
-}
-
-function addRoute(set, route) {
-  const clean = cleanRoute(route);
-  set.add(clean);
-
-  if (clean !== "/") {
-    set.add(clean + "/");
-  }
 }
 
 if (!existsSync(indexPath)) {
@@ -95,15 +95,18 @@ for (const href of hrefs) {
 }
 
 const written = [];
-const uniqueCleanRoutes = [...routes]
+const uniqueRoutes = [...routes]
   .map(cleanRoute)
   .filter((route, index, all) => all.indexOf(route) === index)
   .sort((a, b) => a.localeCompare(b));
 
-for (const route of uniqueCleanRoutes) {
-  const outPath = routeToIndexPath(route);
-  writeText(outPath, indexHtml);
+for (const route of uniqueRoutes) {
+  writeText(routeToIndexPath(route), indexHtml);
   written.push(route);
+
+  if (route !== "/") {
+    written.push(route + "/");
+  }
 }
 
 writeText(join(distRoot, "404.html"), indexHtml);
@@ -128,7 +131,7 @@ deployInfo = {
   sha: process.env.GITHUB_SHA || deployInfo.sha || "",
   asset: asset || deployInfo.asset || "",
   base: process.env.GITHUB_PAGES_BASE || deployInfo.base || "/noctra/",
-  routeFallbacks: written
+  routeFallbacks: [...new Set(written)]
 };
 
 writeText(deployInfoPath, JSON.stringify(deployInfo, null, 2));
@@ -136,12 +139,12 @@ writeText(deployInfoPath, JSON.stringify(deployInfo, null, 2));
 const important = [
   "/overview",
   "/overview/",
-  "/getting-started",
-  "/getting-started/",
-  "/accessibility",
-  "/accessibility/",
-  "/components/button",
-  "/components/button/",
+  "/components",
+  "/components/",
+  "/components/card",
+  "/components/card/",
+  "/components/modal",
+  "/components/modal/",
   "/components/listbox",
   "/components/listbox/"
 ];
@@ -149,7 +152,8 @@ const important = [
 const problems = [];
 
 for (const route of important) {
-  const outPath = routeToIndexPath(route);
+  const clean = cleanRoute(route);
+  const outPath = routeToIndexPath(clean);
 
   if (!existsSync(outPath)) {
     problems.push(`Missing generated fallback: ${route} -> ${outPath}`);
@@ -165,7 +169,7 @@ const report = [
   "",
   `Generated: ${new Date().toISOString()}`,
   "",
-  `Routes written: ${written.length}`,
+  `Routes written: ${deployInfo.routeFallbacks.length}`,
   `Problems found: ${problems.length}`,
   "",
   "## Problems",
@@ -178,16 +182,14 @@ const report = [
   "",
   "## Applied",
   "",
-  "- Rebuilt static route fallback generator with explicit general docs routes.",
-  "- Added /overview, /getting-started and /accessibility fallbacks.",
-  "- Preserved all component route fallbacks from docsSidebarLinks.",
-  "- Added compact component aliases such as /components/listbox and /components/textinput.",
+  "- Generated general docs route fallbacks.",
+  "- Generated component route fallbacks.",
+  "- Generated compact aliases such as /components/listbox.",
   "- Recreated 404.html as SPA fallback.",
-  "- Added routeFallbacks into noctra-deploy-info.json."
+  "- Wrote routeFallbacks into noctra-deploy-info.json."
 ].join("\n");
 
 writeText(reportPath, report);
-
 console.log(report);
 
 if (problems.length > 0) {

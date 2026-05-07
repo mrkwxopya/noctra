@@ -1,8 +1,8 @@
 # Static Route Fallbacks Report
 
-Generated: 2026-05-07T21:04:45.085Z
+Generated: 2026-05-07T21:21:08.280Z
 
-Routes written: 160
+Routes written: 319
 Problems found: 0
 
 ## Problems
@@ -13,20 +13,19 @@ Problems found: 0
 
 - /overview
 - /overview/
-- /getting-started
-- /getting-started/
-- /accessibility
-- /accessibility/
-- /components/button
-- /components/button/
+- /components
+- /components/
+- /components/card
+- /components/card/
+- /components/modal
+- /components/modal/
 - /components/listbox
 - /components/listbox/
 
 ## Applied
 
-- Rebuilt static route fallback generator with explicit general docs routes.
-- Added /overview, /getting-started and /accessibility fallbacks.
-- Preserved all component route fallbacks from docsSidebarLinks.
-- Added compact component aliases such as /components/listbox and /components/textinput.
+- Generated general docs route fallbacks.
+- Generated component route fallbacks.
+- Generated compact aliases such as /components/listbox.
 - Recreated 404.html as SPA fallback.
-- Added routeFallbacks into noctra-deploy-info.json.
+- Wrote routeFallbacks into noctra-deploy-info.json.

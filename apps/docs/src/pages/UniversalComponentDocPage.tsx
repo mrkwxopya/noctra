@@ -672,6 +672,7 @@ function ComponentVisual({
 type ControlGroupOption = string | {
   label?: ReactNode;
   value?: string;
+  name?: string;
   disabled?: boolean;
   [key: string]: unknown;
 };
@@ -679,8 +680,13 @@ type ControlGroupOption = string | {
 type ControlGroupProps = {
   label?: ReactNode;
   value?: string;
+  defaultValue?: string;
+  selected?: string;
   options?: readonly ControlGroupOption[];
   onChange?: (value: string) => void;
+  onValueChange?: (value: string) => void;
+  onSelect?: (value: string) => void;
+  setValue?: (value: string) => void;
   children?: ReactNode;
   [key: string]: unknown;
 };
@@ -688,7 +694,7 @@ type ControlGroupProps = {
 function optionValue(option: ControlGroupOption) {
   if (typeof option === "string") return option;
 
-  const raw = option.value ?? option.label;
+  const raw = option.value ?? option.name ?? option.label;
 
   if (typeof raw === "string" || typeof raw === "number" || typeof raw === "boolean") {
     return String(raw);
@@ -700,16 +706,28 @@ function optionValue(option: ControlGroupOption) {
 function optionLabel(option: ControlGroupOption): ReactNode {
   if (typeof option === "string") return option;
 
-  return option.label ?? option.value ?? "";
+  return option.label ?? option.name ?? option.value ?? "";
 }
 
-function ControlGroup({
-  label,
-  value,
-  options,
-  onChange,
-  children
-}: ControlGroupProps) {
+function emitControlChange(props: ControlGroupProps, value: string) {
+  props.onChange?.(value);
+  props.onValueChange?.(value);
+  props.onSelect?.(value);
+  props.setValue?.(value);
+}
+
+function ControlGroup(props: ControlGroupProps) {
+  const {
+    label,
+    value,
+    defaultValue,
+    selected,
+    options,
+    children
+  } = props;
+
+  const currentValue = value ?? selected ?? defaultValue;
+
   if (children) {
     return (
       <div className="ncu-control-group">
@@ -731,8 +749,8 @@ function ControlGroup({
               key={resolvedValue || index}
               type="button"
               disabled={typeof option === "object" ? Boolean(option.disabled) : false}
-              data-active={value === resolvedValue ? "true" : undefined}
-              onClick={() => onChange?.(resolvedValue)}
+              data-active={currentValue === resolvedValue ? "true" : undefined}
+              onClick={() => emitControlChange(props, resolvedValue)}
             >
               {optionLabel(option)}
             </button>
@@ -746,27 +764,38 @@ function ControlGroup({
 type BooleanControlProps = {
   label?: ReactNode;
   checked?: boolean;
+  defaultChecked?: boolean;
   value?: boolean;
   onChange?: (value: boolean) => void;
+  onCheckedChange?: (value: boolean) => void;
+  setChecked?: (value: boolean) => void;
   children?: ReactNode;
   [key: string]: unknown;
 };
 
-function BooleanControl({
-  label,
-  checked,
-  value,
-  onChange,
-  children
-}: BooleanControlProps) {
-  const isChecked = Boolean(checked ?? value);
+function BooleanControl(props: BooleanControlProps) {
+  const {
+    label,
+    checked,
+    defaultChecked,
+    value,
+    children
+  } = props;
+
+  const isChecked = Boolean(checked ?? value ?? defaultChecked);
+
+  function emit(value: boolean) {
+    props.onChange?.(value);
+    props.onCheckedChange?.(value);
+    props.setChecked?.(value);
+  }
 
   return (
     <label className="ncu-boolean-control">
       <input
         type="checkbox"
         checked={isChecked}
-        onChange={(event) => onChange?.(event.currentTarget.checked)}
+        onChange={(event) => emit(event.currentTarget.checked)}
       />
       <span>{children ?? label}</span>
     </label>

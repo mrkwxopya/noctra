@@ -69,7 +69,11 @@ export const cleanDocsRoutePath = cleanDocsPath;
 export function docsHref(path = "/"): string {
   const clean = cleanDocsPath(path);
 
-  return clean === "/" ? `${NOCTRA_DOCS_BASE}/` : `${NOCTRA_DOCS_BASE}${clean}`;
+  if (clean === "/") {
+    return `${NOCTRA_DOCS_BASE}/`;
+  }
+
+  return `${NOCTRA_DOCS_BASE}${clean}/`;
 }
 
 export const docsBaseHref = docsHref;
@@ -144,14 +148,14 @@ export function resolveDocsRouteFromPath(path = "/", hash = ""): NoctraDocsRoute
     return { route: "overview" };
   }
 
-  if (clean === "/components") {
+  if ((clean === "/components" || clean === "/components/")) {
     return { route: "components" };
   }
 
   if (clean.startsWith("/components/")) {
     return {
       route: "component",
-      componentSlug: normalizeDocsComponentSlugAlias(clean.replace("/components/", ""))
+      componentSlug: normalizeDocsComponentSlugAlias(clean.replace(/^\/components\//, "").replace(/\/+$/, ""))
     };
   }
 
