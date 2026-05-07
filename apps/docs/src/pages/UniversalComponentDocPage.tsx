@@ -1,4 +1,4 @@
-import { createElement, useMemo, useState, type ReactNode } from "react";
+﻿import { createElement, useMemo, useState, type ReactNode } from "react";
 import {
   NoctraMantineDocs,
   NoctraDocsSection,
@@ -30,6 +30,16 @@ type UniversalComponentDocPageProps = {
 type ControlOption = {
   label: string;
   value: string;
+};
+
+type VisualState = {
+  variant: string;
+  tone: string;
+  size: string;
+  radius: string;
+  disabled: boolean;
+  loading: boolean;
+  fullWidth: boolean;
 };
 
 const variants: readonly ControlOption[] = [
@@ -84,6 +94,14 @@ function pascalCase(slug: string): string {
     .join("");
 }
 
+function titleCase(slug: string): string {
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.slice(0, 1).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 function safeComponentLabel(slug: string, value: unknown): string {
   const text = typeof value === "string" ? value.trim() : "";
 
@@ -94,18 +112,11 @@ function safeComponentLabel(slug: string, value: unknown): string {
   return text.replace(/\s+preview$/i, "");
 }
 
-function titleCase(slug: string): string {
-  return slug
-    .split("-")
-    .filter(Boolean)
-    .map((part) => part.slice(0, 1).toUpperCase() + part.slice(1))
-    .join(" ");
-}
-
 function getPathSlug(): string {
   if (typeof window === "undefined") return "button";
 
   const match = window.location.pathname.match(/\/components\/([^/?#]+)/);
+
   return match?.[1] ?? "button";
 }
 
@@ -126,36 +137,171 @@ function resolveComponent(slug: string): any {
   return runtime[name] ?? runtime.DefaultNoctraMock ?? "div";
 }
 
+function getComponentMeta(slug: string) {
+  const link = docsComponentLinks.find((item) => item.href.endsWith(`/${slug}`));
+  const label = safeComponentLabel(slug, link?.label ?? titleCase(slug));
+
+  return {
+    label,
+    href: link?.href ?? `/components/${slug}`,
+    description: `${label} component documentation with usage, live controls, examples, props and styles API.`
+  };
+}
+
 function isTextLike(slug: string): boolean {
-  return /input|textarea|select|combobox|autocomplete|search|password|number|color/.test(slug);
+  return /input|textarea|select|combobox|autocomplete|search|password|number|color|pin-code|pin-input|tags-input|multi-select|native-select/.test(slug);
 }
 
 function isChoiceLike(slug: string): boolean {
-  return /checkbox|radio|switch/.test(slug);
+  return /checkbox|radio|switch|segmented-control|rating|slider|range-slider/.test(slug);
+}
+
+function isStatusLike(slug: string): boolean {
+  return /badge|alert|notification|toast|progress|loader|spinner|skeleton|empty-state/.test(slug);
+}
+
+function isOverlayLike(slug: string): boolean {
+  return /modal|dialog|drawer|popover|tooltip|hover-card|context-menu|menu|dropdown/.test(slug);
+}
+
+function isNavigationLike(slug: string): boolean {
+  return /tabs|breadcrumb|breadcrumbs|pagination|stepper|timeline|table-of-contents|sidebar|dock|toolbar|command|command-bar/.test(slug);
+}
+
+function isDataLike(slug: string): boolean {
+  return /table|data-grid|list-box|tree|tree-view|tree-select|transfer-list/.test(slug);
 }
 
 function isLayoutLike(slug: string): boolean {
-  return /grid|group|stack|simple-grid|container|box|paper|card|layout|shell|section|center|flex/.test(slug);
+  return /grid|group|stack|simple-grid|container|box|paper|card|layout|shell|section|center|flex|app-shell|split-pane|resizable-panel/.test(slug);
 }
 
-function createPreviewChildren(slug: string, label: string): ReactNode {
-  if (isTextLike(slug)) return undefined;
-  if (isChoiceLike(slug)) return label;
-  if (slug.includes("avatar")) return label.slice(0, 2).toUpperCase();
-  if (slug.includes("badge")) return label;
-  if (slug.includes("loader") || slug.includes("spinner") || slug.includes("skeleton")) return undefined;
-  if (isLayoutLike(slug)) return (
-    <>
-      <span className="ncu-sample-box">A</span>
-      <span className="ncu-sample-box">B</span>
-      <span className="ncu-sample-box">C</span>
-    </>
-  );
+function createVisualChildren(slug: string, label: string): ReactNode {
+  if (isTextLike(slug)) {
+    return undefined;
+  }
+
+  if (slug.includes("card") || slug.includes("paper")) {
+    return (
+      <div className="ncu-card-sample">
+        <strong>{label}</strong>
+        <span>Clean content container for product interfaces.</span>
+        <button type="button">Action</button>
+      </div>
+    );
+  }
+
+  if (slug.includes("avatar")) {
+    return label
+      .split(" ")
+      .map((part) => part[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase();
+  }
+
+  if (slug.includes("badge")) {
+    return "Status";
+  }
+
+  if (slug.includes("alert") || slug.includes("notification") || slug.includes("toast")) {
+    return (
+      <div className="ncu-message-sample">
+        <strong>{label}</strong>
+        <span>Important interface feedback message.</span>
+      </div>
+    );
+  }
+
+  if (slug.includes("table") || slug.includes("data-grid")) {
+    return (
+      <div className="ncu-table-sample">
+        <div><strong>Name</strong><strong>Status</strong></div>
+        <div><span>Noctra UI</span><span>Ready</span></div>
+        <div><span>Docs System</span><span>Active</span></div>
+      </div>
+    );
+  }
+
+  if (slug.includes("tabs")) {
+    return (
+      <div className="ncu-tabs-sample">
+        <div><button type="button">Overview</button><button type="button">Settings</button></div>
+        <p>Selected tab content</p>
+      </div>
+    );
+  }
+
+  if (slug.includes("breadcrumb")) {
+    return "Docs / Components / Current";
+  }
+
+  if (slug.includes("pagination")) {
+    return "1 2 3";
+  }
+
+  if (slug.includes("timeline")) {
+    return (
+      <div className="ncu-timeline-sample">
+        <span>Created</span>
+        <span>Reviewed</span>
+        <span>Released</span>
+      </div>
+    );
+  }
+
+  if (slug.includes("modal") || slug.includes("dialog") || slug.includes("drawer")) {
+    return (
+      <div className="ncu-overlay-sample">
+        <strong>{label}</strong>
+        <span>Layered surface content</span>
+      </div>
+    );
+  }
+
+  if (slug.includes("menu") || slug.includes("popover") || slug.includes("tooltip") || slug.includes("hover-card")) {
+    return "Open menu";
+  }
+
+  if (slug.includes("progress")) {
+    return "68%";
+  }
+
+  if (slug.includes("loader") || slug.includes("spinner") || slug.includes("skeleton")) {
+    return undefined;
+  }
+
+  if (slug.includes("accordion")) {
+    return (
+      <div className="ncu-accordion-sample">
+        <strong>Section title</strong>
+        <span>Expandable content</span>
+      </div>
+    );
+  }
+
+  if (isLayoutLike(slug)) {
+    return (
+      <div className="ncu-layout-sample">
+        <span>Header</span>
+        <span>Content</span>
+        <span>Aside</span>
+      </div>
+    );
+  }
+
+  if (isChoiceLike(slug)) {
+    return label;
+  }
+
+  if (isNavigationLike(slug) || isDataLike(slug) || isStatusLike(slug) || isOverlayLike(slug)) {
+    return label;
+  }
 
   return label;
 }
 
-function createPreviewProps(slug: string, label: string, state: Record<string, unknown>): Record<string, unknown> {
+function createVisualProps(slug: string, label: string, state: VisualState): Record<string, unknown> {
   const props: Record<string, unknown> = {
     variant: state.variant,
     tone: state.tone,
@@ -165,11 +311,11 @@ function createPreviewProps(slug: string, label: string, state: Record<string, u
     loading: state.loading,
     fullWidth: state.fullWidth,
     title: label,
-    label,
-      };
+    label
+  };
 
   if (isTextLike(slug)) {
-    props.placeholder = `${label} placeholder`;
+    props.placeholder = `${label} value`;
     props.value = "";
   }
 
@@ -231,27 +377,27 @@ function BooleanControl({
   );
 }
 
-function UniversalPreview({
+function ComponentVisual({
   slug,
   label,
   state
 }: {
   slug: string;
   label: string;
-  state: Record<string, unknown>;
+  state: VisualState;
 }) {
   const Component = resolveComponent(slug);
-  const previewProps = createPreviewProps(slug, label, state);
-  const children = createPreviewChildren(slug, label);
+  const props = createVisualProps(slug, label, state);
+  const children = createVisualChildren(slug, label);
 
   return (
-    <div className="ncu-preview-stage">
-      {createElement(Component, previewProps, children)}
+    <div className="ncu-stage">
+      {createElement(Component, props, children)}
     </div>
   );
 }
 
-function buildCode(slug: string, label: string, state: Record<string, unknown>) {
+function buildCode(slug: string, label: string, state: VisualState) {
   const name = pascalCase(slug);
 
   return `import { ${name} } from "@noctra/react";
@@ -269,17 +415,6 @@ export function Demo() {
   );
 }
 `;
-}
-
-function getComponentMeta(slug: string) {
-  const link = docsComponentLinks.find((item) => item.href.endsWith(`/${slug}`));
-  const label = safeComponentLabel(slug, link?.label ?? titleCase(slug));
-
-  return {
-    label,
-    href: link?.href ?? `/components/${slug}`,
-    description: `${label} component documentation with usage, configurator, examples, props and styles API.`
-  };
 }
 
 function createPropsRows(label: string): readonly NoctraDocsPropRow[] {
@@ -315,7 +450,7 @@ export function UniversalComponentDocPage(props: UniversalComponentDocPageProps)
   const [loading, setLoading] = useState(false);
   const [fullWidth, setFullWidth] = useState(false);
 
-  const state = useMemo(
+  const state = useMemo<VisualState>(
     () => ({
       variant,
       tone,
@@ -339,14 +474,14 @@ export function UniversalComponentDocPage(props: UniversalComponentDocPageProps)
   const documentation = (
     <>
       <NoctraDocsSection
-        description={`Default ${meta.label} usage with Noctra's Mantine-like documentation pattern.`}
+        description={`Default ${meta.label} usage with the shared Noctra documentation pattern.`}
         eyebrow="Usage"
         id="usage"
         title="Usage"
       >
         <NoctraDocsDemo
           code={buildCode(slug, meta.label, state)}
-          preview={<UniversalPreview label={meta.label} slug={slug} state={state} />}
+          preview={<ComponentVisual label={meta.label} slug={slug} state={state} />}
           title={meta.label}
         />
       </NoctraDocsSection>
@@ -358,8 +493,8 @@ export function UniversalComponentDocPage(props: UniversalComponentDocPageProps)
         title="Configurator"
       >
         <div className="ncu-configurator">
-          <div className="ncu-configurator-preview">
-            <UniversalPreview label={meta.label} slug={slug} state={state} />
+          <div className="ncu-configurator-stage">
+            <ComponentVisual label={meta.label} slug={slug} state={state} />
           </div>
 
           <div className="ncu-configurator-controls">
@@ -391,7 +526,7 @@ export function UniversalComponentDocPage(props: UniversalComponentDocPageProps)
             { variant: "subtle", tone: "danger", size: "sm", radius: "full" }
           ].map((example) => (
             <div className="ncu-example-card" key={`${example.variant}-${example.tone}-${example.size}-${example.radius}`}>
-              <UniversalPreview label={meta.label} slug={slug} state={{ ...state, ...example }} />
+              <ComponentVisual label={meta.label} slug={slug} state={{ ...state, ...example }} />
               <code>{example.variant} / {example.tone}</code>
             </div>
           ))}
@@ -402,7 +537,7 @@ export function UniversalComponentDocPage(props: UniversalComponentDocPageProps)
 
   const propsPanel = (
     <NoctraDocsSection
-      description={`Common ${meta.label} props exposed in the universal docs system.`}
+      description={`Common ${meta.label} props exposed in the shared docs system.`}
       eyebrow="Props"
       id="props"
       title="Props"
