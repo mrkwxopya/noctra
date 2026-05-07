@@ -1,4 +1,24 @@
-export const NOCTRA_DOCS_BASE = "/noctra";
+﻿import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import ts from "typescript";
+
+const routingPath = "apps/docs/src/lib/docsRouting.ts";
+const reportPath = "docs-routing-recursion-fix-report.md";
+
+function readText(path) {
+  return existsSync(path) ? readFileSync(path, "utf8").replace(/^\uFEFF/, "") : "";
+}
+
+function writeText(path, content) {
+  writeFileSync(path, `${content.trimEnd()}\n`, "utf8");
+}
+
+const before = readText(routingPath);
+
+if (!before) {
+  throw new Error(`${routingPath} missing or empty.`);
+}
+
+const next = `export const NOCTRA_DOCS_BASE = "/noctra";
 
 export type NoctraDocsRoute =
   | { route: "overview" }
@@ -18,10 +38,10 @@ export function normalizeSlashPath(path = "/"): string {
   if (!nextPath) return "/";
 
   if (!nextPath.startsWith("/")) {
-    nextPath = `/${nextPath}`;
+    nextPath = \`/\${nextPath}\`;
   }
 
-  nextPath = nextPath.replace(/\/+/g, "/");
+  nextPath = nextPath.replace(/\\/+/g, "/");
 
   if (nextPath.length > 1 && nextPath.endsWith("/")) {
     nextPath = nextPath.slice(0, -1);
@@ -35,7 +55,7 @@ export function stripDocsBase(path = "/"): string {
 
   if (normalized === NOCTRA_DOCS_BASE) return "/";
 
-  if (normalized.startsWith(`${NOCTRA_DOCS_BASE}/`)) {
+  if (normalized.startsWith(\`\${NOCTRA_DOCS_BASE}/\`)) {
     return normalizeSlashPath(normalized.slice(NOCTRA_DOCS_BASE.length));
   }
 
@@ -51,7 +71,7 @@ export function cleanDocsPath(path = "/"): string {
     nextPath = nextPath.slice(1);
   }
 
-  if (nextPath.startsWith(`${NOCTRA_DOCS_BASE}/`)) {
+  if (nextPath.startsWith(\`\${NOCTRA_DOCS_BASE}/\`)) {
     nextPath = nextPath.slice(NOCTRA_DOCS_BASE.length);
   }
 
@@ -69,7 +89,7 @@ export const cleanDocsRoutePath = cleanDocsPath;
 export function docsHref(path = "/"): string {
   const clean = cleanDocsPath(path);
 
-  return clean === "/" ? `${NOCTRA_DOCS_BASE}/` : `${NOCTRA_DOCS_BASE}${clean}`;
+  return clean === "/" ? \`\${NOCTRA_DOCS_BASE}/\` : \`\${NOCTRA_DOCS_BASE}\${clean}\`;
 }
 
 export const docsBaseHref = docsHref;
@@ -82,7 +102,7 @@ export function isDocsInternalUrl(url: URL): boolean {
     (
       url.pathname === "/" ||
       url.pathname === NOCTRA_DOCS_BASE ||
-      url.pathname.startsWith(`${NOCTRA_DOCS_BASE}/`) ||
+      url.pathname.startsWith(\`\${NOCTRA_DOCS_BASE}/\`) ||
       url.pathname === "/components" ||
       url.pathname.startsWith("/components/") ||
       url.pathname === "/architecture" ||
@@ -100,7 +120,7 @@ export const isDocsUrl = isDocsInternalUrl;
 export function resolveDocsRouteFromPath(path = "/", hash = ""): NoctraDocsRoute {
   const hashPath = String(hash || "");
 
-  const candidate = hashPath.startsWith(`${NOCTRA_DOCS_BASE}/`) || hashPath === NOCTRA_DOCS_BASE
+  const candidate = hashPath.startsWith(\`\${NOCTRA_DOCS_BASE}/\`) || hashPath === NOCTRA_DOCS_BASE
     ? hashPath
     : path;
 
@@ -153,7 +173,7 @@ export const docsRouteFromLocation = resolveDocsRoute;
 export const readDocsRoute = resolveDocsRoute;
 
 export function currentDocsLocationKey(): string {
-  return `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  return \`\${window.location.pathname}\${window.location.search}\${window.location.hash}\`;
 }
 
 export const getCurrentDocsLocationKey = currentDocsLocationKey;
@@ -162,7 +182,7 @@ export const getDocsCurrentPath = currentDocsLocationKey;
 export function normalizeDocsNavigationTarget(path = "/", hash = ""): string {
   const hashPath = String(hash || "");
 
-  if (hashPath.startsWith(`${NOCTRA_DOCS_BASE}/`) || hashPath === NOCTRA_DOCS_BASE) {
+  if (hashPath.startsWith(\`\${NOCTRA_DOCS_BASE}/\`) || hashPath === NOCTRA_DOCS_BASE) {
     return cleanDocsPath(hashPath);
   }
 
@@ -176,12 +196,12 @@ export function sanitizeNoctraHashRoute(): void {
 
   const hash = window.location.hash;
 
-  if (!hash.startsWith(`#${NOCTRA_DOCS_BASE}/`) && hash !== `#${NOCTRA_DOCS_BASE}`) {
+  if (!hash.startsWith(\`#\${NOCTRA_DOCS_BASE}/\`) && hash !== \`#\${NOCTRA_DOCS_BASE}\`) {
     return;
   }
 
   const clean = cleanDocsPath(hash.slice(1));
-  const nextUrl = `${docsHref(clean)}${window.location.search || ""}`;
+  const nextUrl = \`\${docsHref(clean)}\${window.location.search || ""}\`;
 
   window.history.replaceState(null, "", nextUrl);
 }
@@ -206,27 +226,89 @@ export function rewriteDocsAnchors(scope: Document | HTMLElement = document): vo
       continue;
     }
 
-    const target = cleanDocsPath(`${url.pathname}${url.search}${url.hash}`);
+    const target = cleanDocsPath(\`\${url.pathname}\${url.search}\${url.hash}\`);
     anchor.href = docsHref(target);
   }
 }
 
 export const hardenDocsAnchors = rewriteDocsAnchors;
 export const patchDocsAnchors = rewriteDocsAnchors;
+`;
 
-/* DOCS_ROUTING_COMPAT_EXPORTS_START */
-export const canonicalizeDocsCleanRoute = cleanDocsPath;
-export const canonicalizeDocsRoute = cleanDocsPath;
-export const canonicalDocsCleanRoute = cleanDocsPath;
-export const canonicalDocsRoute = cleanDocsPath;
+writeText(routingPath, next);
 
-export const parseDocsRouteFromLocation = resolveDocsRoute;
-export const parseDocsRoute = resolveDocsRouteFromPath;
-export const getDocsRoute = resolveDocsRoute;
-export const getDocsRouteFromPath = resolveDocsRouteFromPath;
+const after = readText(routingPath);
+const problems = [];
 
-export const sanitizeDocsAnchors = rewriteDocsAnchors;
-export const sanitizeDocsAnchorHrefs = rewriteDocsAnchors;
-export const sanitizeDocsLinks = rewriteDocsAnchors;
-export const rewriteDocsAnchorHrefs = rewriteDocsAnchors;
-/* DOCS_ROUTING_COMPAT_EXPORTS_END */
+if (after.includes("startsWith(docsHref(")) {
+  problems.push("Recursive startsWith(docsHref(...)) pattern remains.");
+}
+
+if (after.includes("startsWith(Je(")) {
+  problems.push("Minified-style recursive startsWith(Je(...)) pattern remains.");
+}
+
+if (!after.includes("export function docsHref")) {
+  problems.push("docsHref export missing.");
+}
+
+if (!after.includes("export function cleanDocsPath")) {
+  problems.push("cleanDocsPath export missing.");
+}
+
+if (!after.includes("export function sanitizeNoctraHashRoute")) {
+  problems.push("sanitizeNoctraHashRoute export missing.");
+}
+
+if (!after.includes("export function rewriteDocsAnchors")) {
+  problems.push("rewriteDocsAnchors export missing.");
+}
+
+const result = ts.transpileModule(after, {
+  compilerOptions: {
+    target: ts.ScriptTarget.ES2022,
+    module: ts.ModuleKind.ESNext
+  },
+  reportDiagnostics: true,
+  fileName: routingPath
+});
+
+for (const diagnostic of result.diagnostics ?? []) {
+  problems.push(`${routingPath} TS${diagnostic.code}: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")}`);
+}
+
+const report = [
+  "# Docs Routing Recursion Fix Report",
+  "",
+  `Generated: ${new Date().toISOString()}`,
+  "",
+  `Changed: ${before === after ? "no" : "yes"}`,
+  `Problems found: ${problems.length}`,
+  "",
+  "## Root cause",
+  "",
+  "- docsHref called cleanDocsPath.",
+  "- cleanDocsPath called docsHref('/') inside startsWith().",
+  "- This created an immediate infinite recursion before any page could render.",
+  "",
+  "## Problems",
+  "",
+  ...(problems.length ? problems.map((problem) => `- ${problem}`) : ["- None"]),
+  "",
+  "## Applied",
+  "",
+  "- Replaced docsRouting.ts with pure one-way path helpers.",
+  "- cleanDocsPath no longer calls docsHref.",
+  "- docsHref is now the only function that adds /noctra.",
+  "- Hash sanitizer and anchor rewrite now use non-recursive clean path logic.",
+  "- Added compatibility aliases for existing imports."
+].join("\n");
+
+writeText(reportPath, report);
+
+console.log(`Docs routing recursion fix completed. Problems: ${problems.length}. Report: ${reportPath}`);
+
+if (problems.length > 0) {
+  console.error(report);
+  throw new Error("Docs routing recursion fix failed.");
+}

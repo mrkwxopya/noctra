@@ -213,20 +213,3 @@ export function rewriteDocsAnchors(scope: Document | HTMLElement = document): vo
 
 export const hardenDocsAnchors = rewriteDocsAnchors;
 export const patchDocsAnchors = rewriteDocsAnchors;
-
-/* DOCS_ROUTING_COMPAT_EXPORTS_START */
-export const canonicalizeDocsCleanRoute = cleanDocsPath;
-export const canonicalizeDocsRoute = cleanDocsPath;
-export const canonicalDocsCleanRoute = cleanDocsPath;
-export const canonicalDocsRoute = cleanDocsPath;
-
-export const parseDocsRouteFromLocation = resolveDocsRoute;
-export const parseDocsRoute = resolveDocsRouteFromPath;
-export const getDocsRoute = resolveDocsRoute;
-export const getDocsRouteFromPath = resolveDocsRouteFromPath;
-
-export const sanitizeDocsAnchors = rewriteDocsAnchors;
-export const sanitizeDocsAnchorHrefs = rewriteDocsAnchors;
-export const sanitizeDocsLinks = rewriteDocsAnchors;
-export const rewriteDocsAnchorHrefs = rewriteDocsAnchors;
-/* DOCS_ROUTING_COMPAT_EXPORTS_END */
