@@ -626,11 +626,11 @@ export function getSafeInteractiveDemoPreset(componentName: string): any {
 
 type DemoComponentLike = {
   name: string;
-  props?: readonly {
+  props?: Array<{
     name: string;
     type?: string;
     required?: boolean;
-  }[];
+  }>;
   variants?: readonly string[];
   sizes?: readonly string[];
 };

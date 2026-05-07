@@ -17,7 +17,6 @@ import {
   ncBreadcrumbTokenNames,
   ncBreadcrumbsTokenNames,
   ncButtonTokenNames,
-  ncCalendarTokenNames,
   ncCardTokenNames,
   ncCenterTokenNames,
   ncCheckboxTokenNames,
@@ -34,11 +33,6 @@ import {
   ncContextMenuTokenNames,
   ncCreditCardTokenNames,
   ncDataGridTokenNames,
-  ncDateInputTokenNames,
-  ncDatePickerTokenNames,
-  ncDateRangePickerTokenNames,
-  ncDateTimeInputTokenNames,
-  ncDateTimePickerTokenNames,
   ncDialogTokenNames,
   ncDividerTokenNames,
   ncDockTokenNames,
@@ -67,7 +61,6 @@ import {
   ncLoaderTokenNames,
   ncMenuTokenNames,
   ncModalTokenNames,
-  ncMonthInputTokenNames,
   ncMultiSelectTokenNames,
   ncNativeSelectTokenNames,
   ncNotificationTokenNames,
@@ -110,9 +103,7 @@ import {
   ncTagsInputTokenNames,
   ncTextareaTokenNames,
   ncTextInputTokenNames,
-  ncTimeInputTokenNames,
   ncTimelineTokenNames,
-  ncTimePickerTokenNames,
   ncToastTokenNames,
   ncToolbarTokenNames,
   ncTooltipTokenNames,
@@ -120,10 +111,7 @@ import {
   ncTreeTokenNames,
   ncTreeSelectTokenNames,
   ncTreeViewTokenNames,
-  ncVisuallyHiddenTokenNames,
-  ncWeekInputTokenNames,
-  ncYearInputTokenNames,
-} from "../index";
+  ncVisuallyHiddenTokenNames} from "../index";
 
 export const noctraTokenComponentSmokeRegistry = [
   ["Accordion", ncAccordionTokenNames],
@@ -139,7 +127,6 @@ export const noctraTokenComponentSmokeRegistry = [
   ["Breadcrumb", ncBreadcrumbTokenNames],
   ["Breadcrumbs", ncBreadcrumbsTokenNames],
   ["Button", ncButtonTokenNames],
-  ["Calendar", ncCalendarTokenNames],
   ["Card", ncCardTokenNames],
   ["Center", ncCenterTokenNames],
   ["Checkbox", ncCheckboxTokenNames],
@@ -156,11 +143,6 @@ export const noctraTokenComponentSmokeRegistry = [
   ["ContextMenu", ncContextMenuTokenNames],
   ["CreditCard", ncCreditCardTokenNames],
   ["DataGrid", ncDataGridTokenNames],
-  ["DateInput", ncDateInputTokenNames],
-  ["DatePicker", ncDatePickerTokenNames],
-  ["DateRangePicker", ncDateRangePickerTokenNames],
-  ["DateTimeInput", ncDateTimeInputTokenNames],
-  ["DateTimePicker", ncDateTimePickerTokenNames],
   ["Dialog", ncDialogTokenNames],
   ["Divider", ncDividerTokenNames],
   ["Dock", ncDockTokenNames],
@@ -189,7 +171,6 @@ export const noctraTokenComponentSmokeRegistry = [
   ["Loader", ncLoaderTokenNames],
   ["Menu", ncMenuTokenNames],
   ["Modal", ncModalTokenNames],
-  ["MonthInput", ncMonthInputTokenNames],
   ["MultiSelect", ncMultiSelectTokenNames],
   ["NativeSelect", ncNativeSelectTokenNames],
   ["Notification", ncNotificationTokenNames],
@@ -232,9 +213,7 @@ export const noctraTokenComponentSmokeRegistry = [
   ["TagsInput", ncTagsInputTokenNames],
   ["Textarea", ncTextareaTokenNames],
   ["TextInput", ncTextInputTokenNames],
-  ["TimeInput", ncTimeInputTokenNames],
   ["Timeline", ncTimelineTokenNames],
-  ["TimePicker", ncTimePickerTokenNames],
   ["Toast", ncToastTokenNames],
   ["Toolbar", ncToolbarTokenNames],
   ["Tooltip", ncTooltipTokenNames],
@@ -242,15 +221,12 @@ export const noctraTokenComponentSmokeRegistry = [
   ["Tree", ncTreeTokenNames],
   ["TreeSelect", ncTreeSelectTokenNames],
   ["TreeView", ncTreeViewTokenNames],
-  ["VisuallyHidden", ncVisuallyHiddenTokenNames],
-  ["WeekInput", ncWeekInputTokenNames],
-  ["YearInput", ncYearInputTokenNames],
-] as const;
+  ["VisuallyHidden", ncVisuallyHiddenTokenNames]] as const;
 
 export const noctraTokenComponentSmokeNames = noctraTokenComponentSmokeRegistry.map(([name]) => name);
 
 export const noctraTokenComponentSmokeTokenCount = noctraTokenComponentSmokeRegistry.reduce(
-  (total, [, tokens]) => total + tokens.length,
+  (total, [ tokens]) => total + tokens.length,
   0
 );
 

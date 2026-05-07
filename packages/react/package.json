@@ -234,22 +234,6 @@
       "types": "./dist/components/DataGrid/index.d.ts",
       "import": "./dist/components/DataGrid/index.js"
     },
-    "./calendar": {
-      "types": "./dist/components/Calendar/index.d.ts",
-      "import": "./dist/components/Calendar/index.js"
-    },
-    "./date-picker": {
-      "types": "./dist/components/DatePicker/index.d.ts",
-      "import": "./dist/components/DatePicker/index.js"
-    },
-    "./time-picker": {
-      "types": "./dist/components/TimePicker/index.d.ts",
-      "import": "./dist/components/TimePicker/index.js"
-    },
-    "./date-time-picker": {
-      "types": "./dist/components/DateTimePicker/index.d.ts",
-      "import": "./dist/components/DateTimePicker/index.js"
-    },
     "./timeline": {
       "types": "./dist/components/Timeline/index.d.ts",
       "import": "./dist/components/Timeline/index.js"
@@ -401,34 +385,6 @@
     "./color-picker": {
       "types": "./dist/components/ColorPicker/index.d.ts",
       "import": "./dist/components/ColorPicker/index.js"
-    },
-    "./date-input": {
-      "types": "./dist/components/DateInput/index.d.ts",
-      "import": "./dist/components/DateInput/index.js"
-    },
-    "./date-range-picker": {
-      "types": "./dist/components/DateRangePicker/index.d.ts",
-      "import": "./dist/components/DateRangePicker/index.js"
-    },
-    "./time-input": {
-      "types": "./dist/components/TimeInput/index.d.ts",
-      "import": "./dist/components/TimeInput/index.js"
-    },
-    "./date-time-input": {
-      "types": "./dist/components/DateTimeInput/index.d.ts",
-      "import": "./dist/components/DateTimeInput/index.js"
-    },
-    "./month-input": {
-      "types": "./dist/components/MonthInput/index.d.ts",
-      "import": "./dist/components/MonthInput/index.js"
-    },
-    "./week-input": {
-      "types": "./dist/components/WeekInput/index.d.ts",
-      "import": "./dist/components/WeekInput/index.js"
-    },
-    "./year-input": {
-      "types": "./dist/components/YearInput/index.d.ts",
-      "import": "./dist/components/YearInput/index.js"
     },
     "./tree-view": {
       "types": "./dist/components/TreeView/index.d.ts",

@@ -107,10 +107,7 @@ export const componentGroups: DocsComponentGroup[] = [
       "PinCode",
       "FileInput",
       "Dropzone",
-      "ColorPicker",
-      "DatePicker",
-      "DateRangePicker"
-    ]
+      "ColorPicker"]
   },
   {
     title: "Feedback",

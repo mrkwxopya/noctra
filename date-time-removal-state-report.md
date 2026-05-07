@@ -1,0 +1,303 @@
+# Date/Time Removal State Report
+
+Generated: 2026-05-07T12:16:59.001Z
+
+Problems found: 0
+Allowed matches: 85
+Informational matches: 201
+
+## Problems
+
+- None
+
+## Allowed matches
+
+- scripts/audit-date-time-removal-state.mjs:5: "DateInput",
+- scripts/audit-date-time-removal-state.mjs:6: "DateTimeInput",
+- scripts/audit-date-time-removal-state.mjs:7: "MonthInput",
+- scripts/audit-date-time-removal-state.mjs:8: "TimeInput",
+- scripts/audit-date-time-removal-state.mjs:9: "WeekInput",
+- scripts/audit-date-time-removal-state.mjs:10: "YearInput",
+- scripts/audit-date-time-removal-state.mjs:11: "TimePicker",
+- scripts/audit-date-time-removal-state.mjs:12: "Calendar",
+- scripts/audit-date-time-removal-state.mjs:13: "DatePicker",
+- scripts/audit-date-time-removal-state.mjs:14: "DateTimePicker",
+- scripts/audit-date-time-removal-state.mjs:15: "DateRangePicker"
+- scripts/audit-date-time-removal-state.mjs:19: "date-input",
+- scripts/audit-date-time-removal-state.mjs:20: "date-time-input",
+- scripts/audit-date-time-removal-state.mjs:21: "datetime-input",
+- scripts/audit-date-time-removal-state.mjs:22: "month-input",
+- scripts/audit-date-time-removal-state.mjs:23: "time-input",
+- scripts/audit-date-time-removal-state.mjs:24: "week-input",
+- scripts/audit-date-time-removal-state.mjs:25: "year-input",
+- scripts/audit-date-time-removal-state.mjs:26: "time-picker",
+- scripts/audit-date-time-removal-state.mjs:27: "calendar",
+- scripts/audit-date-time-removal-state.mjs:28: "date-picker",
+- scripts/audit-date-time-removal-state.mjs:29: "date-time-picker",
+- scripts/audit-date-time-removal-state.mjs:30: "datetime-picker",
+- scripts/audit-date-time-removal-state.mjs:31: "date-range-picker"
+- scripts/audit-date-time-removal-state.mjs:165: if (/name:\s*["'](DateInput|DateTimeInput|MonthInput|TimeInput|WeekInput|YearInput|TimePicker|Calendar|DatePicker|DateTimePicker|DateRangePicker)["']/.test(line)) {
+- scripts/clean-date-time-exports-targeted.mjs:5: "DateInput",
+- scripts/clean-date-time-exports-targeted.mjs:6: "DateTimeInput",
+- scripts/clean-date-time-exports-targeted.mjs:7: "MonthInput",
+- scripts/clean-date-time-exports-targeted.mjs:8: "TimeInput",
+- scripts/clean-date-time-exports-targeted.mjs:9: "WeekInput",
+- scripts/clean-date-time-exports-targeted.mjs:10: "YearInput",
+- scripts/clean-date-time-exports-targeted.mjs:11: "TimePicker",
+- scripts/clean-date-time-exports-targeted.mjs:12: "Calendar",
+- scripts/clean-date-time-exports-targeted.mjs:13: "DatePicker",
+- scripts/clean-date-time-exports-targeted.mjs:14: "DateTimePicker",
+- scripts/clean-date-time-exports-targeted.mjs:15: "DateRangePicker"
+- scripts/clean-date-time-exports-targeted.mjs:19: "date-input",
+- scripts/clean-date-time-exports-targeted.mjs:20: "date-time-input",
+- scripts/clean-date-time-exports-targeted.mjs:21: "datetime-input",
+- scripts/clean-date-time-exports-targeted.mjs:22: "month-input",
+- scripts/clean-date-time-exports-targeted.mjs:23: "time-input",
+- scripts/clean-date-time-exports-targeted.mjs:24: "week-input",
+- scripts/clean-date-time-exports-targeted.mjs:25: "year-input",
+- scripts/clean-date-time-exports-targeted.mjs:26: "time-picker",
+- scripts/clean-date-time-exports-targeted.mjs:27: "calendar",
+- scripts/clean-date-time-exports-targeted.mjs:28: "date-picker",
+- scripts/clean-date-time-exports-targeted.mjs:29: "date-time-picker",
+- scripts/clean-date-time-exports-targeted.mjs:30: "datetime-picker",
+- scripts/clean-date-time-exports-targeted.mjs:31: "date-range-picker"
+- scripts/generate-professional-docs-data.mjs:3: "DateInput",
+- scripts/generate-professional-docs-data.mjs:4: "DateTimeInput",
+- scripts/generate-professional-docs-data.mjs:5: "MonthInput",
+- scripts/generate-professional-docs-data.mjs:6: "TimeInput",
+- scripts/generate-professional-docs-data.mjs:7: "WeekInput",
+- scripts/generate-professional-docs-data.mjs:8: "YearInput",
+- scripts/generate-professional-docs-data.mjs:9: "TimePicker",
+- scripts/generate-professional-docs-data.mjs:10: "Calendar",
+- scripts/generate-professional-docs-data.mjs:11: "DatePicker",
+- scripts/generate-professional-docs-data.mjs:12: "DateTimePicker",
+- scripts/generate-professional-docs-data.mjs:13: "DateRangePicker"
+- scripts/generate-professional-docs-data.mjs:146: const inputs = new Set(["Button", "TextInput", "Textarea", "Select", "Checkbox", "Radio", "Switch", "Slider", "NumberInput", "PinCode", "FileInput", "Dropzone", "ColorPicker", "DatePicker", "DateRangePicker", "Clipboard", "CreditCard", "TransferList", "ListBox"]);
+- scripts/safe-remove-date-time-components.mjs:13: "DateInput",
+- scripts/safe-remove-date-time-components.mjs:14: "DateTimeInput",
+- scripts/safe-remove-date-time-components.mjs:15: "MonthInput",
+- scripts/safe-remove-date-time-components.mjs:16: "TimeInput",
+- scripts/safe-remove-date-time-components.mjs:17: "WeekInput",
+- scripts/safe-remove-date-time-components.mjs:18: "YearInput",
+- scripts/safe-remove-date-time-components.mjs:19: "TimePicker",
+- scripts/safe-remove-date-time-components.mjs:20: "Calendar",
+- scripts/safe-remove-date-time-components.mjs:21: "DatePicker",
+- scripts/safe-remove-date-time-components.mjs:22: "DateTimePicker",
+- scripts/safe-remove-date-time-components.mjs:23: "DateRangePicker"
+- scripts/safe-remove-date-time-components.mjs:27: "date-input",
+- scripts/safe-remove-date-time-components.mjs:28: "date-time-input",
+- scripts/safe-remove-date-time-components.mjs:29: "datetime-input",
+- scripts/safe-remove-date-time-components.mjs:30: "month-input",
+- scripts/safe-remove-date-time-components.mjs:31: "time-input",
+- scripts/safe-remove-date-time-components.mjs:32: "week-input",
+- scripts/safe-remove-date-time-components.mjs:33: "year-input",
+- scripts/safe-remove-date-time-components.mjs:34: "time-picker",
+- scripts/safe-remove-date-time-components.mjs:35: "calendar",
+- scripts/safe-remove-date-time-components.mjs:36: "date-picker",
+- scripts/safe-remove-date-time-components.mjs:37: "date-time-picker",
+- scripts/safe-remove-date-time-components.mjs:38: "datetime-picker",
+- scripts/safe-remove-date-time-components.mjs:39: "date-range-picker"
+
+## Informational matches
+
+- apps/docs/src/data/interactiveDemoPresets.ts:54: "DateInput",
+- apps/docs/src/data/interactiveDemoPresets.ts:55: "DateTimeInput",
+- apps/docs/src/data/interactiveDemoPresets.ts:56: "MonthInput",
+- apps/docs/src/data/interactiveDemoPresets.ts:57: "TimeInput",
+- apps/docs/src/data/interactiveDemoPresets.ts:58: "WeekInput",
+- apps/docs/src/data/interactiveDemoPresets.ts:59: "YearInput",
+- apps/docs/src/data/interactiveDemoPresets.ts:60: "TimePicker",
+- apps/docs/src/data/interactiveDemoPresets.ts:61: "Calendar",
+- apps/docs/src/data/interactiveDemoPresets.ts:62: "DatePicker",
+- apps/docs/src/data/interactiveDemoPresets.ts:63: "DateTimePicker",
+- apps/docs/src/data/interactiveDemoPresets.ts:64: "DateRangePicker"
+- scripts/audit-interactive-demo-preset-api-compat.mjs:28: "DateInput",
+- scripts/audit-interactive-demo-preset-api-compat.mjs:29: "DateTimeInput",
+- scripts/audit-interactive-demo-preset-api-compat.mjs:30: "MonthInput",
+- scripts/audit-interactive-demo-preset-api-compat.mjs:31: "TimeInput",
+- scripts/audit-interactive-demo-preset-api-compat.mjs:32: "WeekInput",
+- scripts/audit-interactive-demo-preset-api-compat.mjs:33: "YearInput",
+- scripts/audit-interactive-demo-preset-api-compat.mjs:34: "TimePicker",
+- scripts/audit-interactive-demo-preset-api-compat.mjs:35: "Calendar",
+- scripts/audit-interactive-demo-preset-api-compat.mjs:36: "DatePicker",
+- scripts/audit-interactive-demo-preset-api-compat.mjs:37: "DateTimePicker",
+- scripts/audit-interactive-demo-preset-api-compat.mjs:38: "DateRangePicker"
+- scripts/audit-interactive-demo-presets-syntax.mjs:13: "DateInput",
+- scripts/audit-interactive-demo-presets-syntax.mjs:14: "DateTimeInput",
+- scripts/audit-interactive-demo-presets-syntax.mjs:15: "MonthInput",
+- scripts/audit-interactive-demo-presets-syntax.mjs:16: "TimeInput",
+- scripts/audit-interactive-demo-presets-syntax.mjs:17: "WeekInput",
+- scripts/audit-interactive-demo-presets-syntax.mjs:18: "YearInput",
+- scripts/audit-interactive-demo-presets-syntax.mjs:19: "TimePicker",
+- scripts/audit-interactive-demo-presets-syntax.mjs:20: "Calendar",
+- scripts/audit-interactive-demo-presets-syntax.mjs:21: "DatePicker",
+- scripts/audit-interactive-demo-presets-syntax.mjs:22: "DateTimePicker",
+- scripts/audit-interactive-demo-presets-syntax.mjs:23: "DateRangePicker"
+- scripts/finalize-date-time-component-removal.mjs:13: "DateInput",
+- scripts/finalize-date-time-component-removal.mjs:14: "DateTimeInput",
+- scripts/finalize-date-time-component-removal.mjs:15: "MonthInput",
+- scripts/finalize-date-time-component-removal.mjs:16: "TimeInput",
+- scripts/finalize-date-time-component-removal.mjs:17: "WeekInput",
+- scripts/finalize-date-time-component-removal.mjs:18: "YearInput",
+- scripts/finalize-date-time-component-removal.mjs:19: "TimePicker",
+- scripts/finalize-date-time-component-removal.mjs:20: "Calendar",
+- scripts/finalize-date-time-component-removal.mjs:21: "DatePicker",
+- scripts/finalize-date-time-component-removal.mjs:22: "DateTimePicker",
+- scripts/finalize-date-time-component-removal.mjs:23: "DateRangePicker"
+- scripts/finalize-date-time-component-removal.mjs:27: "date-input",
+- scripts/finalize-date-time-component-removal.mjs:28: "date-time-input",
+- scripts/finalize-date-time-component-removal.mjs:29: "datetime-input",
+- scripts/finalize-date-time-component-removal.mjs:30: "month-input",
+- scripts/finalize-date-time-component-removal.mjs:31: "time-input",
+- scripts/finalize-date-time-component-removal.mjs:32: "week-input",
+- scripts/finalize-date-time-component-removal.mjs:33: "year-input",
+- scripts/finalize-date-time-component-removal.mjs:34: "time-picker",
+- scripts/finalize-date-time-component-removal.mjs:35: "calendar",
+- scripts/finalize-date-time-component-removal.mjs:36: "date-picker",
+- scripts/finalize-date-time-component-removal.mjs:37: "date-time-picker",
+- scripts/finalize-date-time-component-removal.mjs:38: "datetime-picker",
+- scripts/finalize-date-time-component-removal.mjs:39: "date-range-picker"
+- scripts/finalize-date-time-component-removal.mjs:43: "ncCalendarTokenNames",
+- scripts/finalize-date-time-component-removal.mjs:44: "NcCalendarTokenName",
+- scripts/patch-step-082-calendar.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./Calendar";', 'export * from "./DataGrid";');
+- scripts/patch-step-082-calendar.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/calendar";', 'export * from "./components/data-grid";');
+- scripts/patch-step-082-calendar.mjs:30: if (!css.includes('calendar.css')) {
+- scripts/patch-step-082-calendar.mjs:31: css = css.replace('@import "./components/data-grid.css";', '@import "./components/data-grid.css";@import "./components/calendar.css";');
+- scripts/patch-step-082-calendar.mjs:35: patchJsonExport("packages/react/package.json", "./calendar", {
+- scripts/patch-step-082-calendar.mjs:36: types: "./dist/components/Calendar/index.d.ts",
+- scripts/patch-step-082-calendar.mjs:37: import: "./dist/components/Calendar/index.js"
+- scripts/patch-step-082-calendar.mjs:40: patchJsonExport("packages/styles/package.json", "./components/calendar.css", "./src/components/calendar.css");
+- scripts/patch-step-083-date-picker.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./DatePicker";', 'export * from "./Calendar";');
+- scripts/patch-step-083-date-picker.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/date-picker";', 'export * from "./components/calendar";');
+- scripts/patch-step-083-date-picker.mjs:30: if (!css.includes('date-picker.css')) {
+- scripts/patch-step-083-date-picker.mjs:31: css = css.replace('@import "./components/calendar.css";', '@import "./components/calendar.css";@import "./components/date-picker.css";');
+- scripts/patch-step-083-date-picker.mjs:35: patchJsonExport("packages/react/package.json", "./date-picker", {
+- scripts/patch-step-083-date-picker.mjs:36: types: "./dist/components/DatePicker/index.d.ts",
+- scripts/patch-step-083-date-picker.mjs:37: import: "./dist/components/DatePicker/index.js"
+- scripts/patch-step-083-date-picker.mjs:40: patchJsonExport("packages/styles/package.json", "./components/date-picker.css", "./src/components/date-picker.css");
+- scripts/patch-step-084-time-picker.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./TimePicker";', 'export * from "./DatePicker";');
+- scripts/patch-step-084-time-picker.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/time-picker";', 'export * from "./components/date-picker";');
+- scripts/patch-step-084-time-picker.mjs:30: if (!css.includes('time-picker.css')) {
+- scripts/patch-step-084-time-picker.mjs:31: css = css.replace('@import "./components/date-picker.css";', '@import "./components/date-picker.css";@import "./components/time-picker.css";');
+- scripts/patch-step-084-time-picker.mjs:35: patchJsonExport("packages/react/package.json", "./time-picker", {
+- scripts/patch-step-084-time-picker.mjs:36: types: "./dist/components/TimePicker/index.d.ts",
+- scripts/patch-step-084-time-picker.mjs:37: import: "./dist/components/TimePicker/index.js"
+- scripts/patch-step-084-time-picker.mjs:40: patchJsonExport("packages/styles/package.json", "./components/time-picker.css", "./src/components/time-picker.css");
+- scripts/patch-step-085-date-time-picker.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./DateTimePicker";', 'export * from "./TimePicker";');
+- scripts/patch-step-085-date-time-picker.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/date-time-picker";', 'export * from "./components/time-picker";');
+- scripts/patch-step-085-date-time-picker.mjs:30: if (!css.includes('date-time-picker.css')) {
+- scripts/patch-step-085-date-time-picker.mjs:31: css = css.replace('@import "./components/time-picker.css";', '@import "./components/time-picker.css";@import "./components/date-time-picker.css";');
+- scripts/patch-step-085-date-time-picker.mjs:35: patchJsonExport("packages/react/package.json", "./date-time-picker", {
+- scripts/patch-step-085-date-time-picker.mjs:36: types: "./dist/components/DateTimePicker/index.d.ts",
+- scripts/patch-step-085-date-time-picker.mjs:37: import: "./dist/components/DateTimePicker/index.js"
+- scripts/patch-step-085-date-time-picker.mjs:40: patchJsonExport("packages/styles/package.json", "./components/date-time-picker.css", "./src/components/date-time-picker.css");
+- scripts/patch-step-086-timeline.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./Timeline";', 'export * from "./DateTimePicker";');
+- scripts/patch-step-086-timeline.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/timeline";', 'export * from "./components/date-time-picker";');
+- scripts/patch-step-086-timeline.mjs:31: css = css.replace('@import "./components/date-time-picker.css";', '@import "./components/date-time-picker.css";@import "./components/timeline.css";');
+- scripts/patch-step-148-date-input.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./DateInput";', 'export * from "./ColorPicker";');
+- scripts/patch-step-148-date-input.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/date-input";', 'export * from "./components/color-picker";');
+- scripts/patch-step-148-date-input.mjs:30: if (!css.includes('date-input.css')) {
+- scripts/patch-step-148-date-input.mjs:32: css = css.replace('@import "./components/color-picker.css";', '@import "./components/color-picker.css";@import "./components/date-input.css";');
+- scripts/patch-step-148-date-input.mjs:34: css = `${css.trimEnd()}@import "./components/date-input.css";\n`;
+- scripts/patch-step-148-date-input.mjs:39: patchJsonExport("packages/react/package.json", "./date-input", {
+- scripts/patch-step-148-date-input.mjs:40: types: "./dist/components/DateInput/index.d.ts",
+- scripts/patch-step-148-date-input.mjs:41: import: "./dist/components/DateInput/index.js"
+- scripts/patch-step-148-date-input.mjs:44: patchJsonExport("packages/styles/package.json", "./components/date-input.css", "./src/components/date-input.css");
+- scripts/patch-step-149-date-picker.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./DatePicker";', 'export * from "./DateInput";');
+- scripts/patch-step-149-date-picker.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/date-picker";', 'export * from "./components/date-input";');
+- scripts/patch-step-149-date-picker.mjs:30: if (!css.includes('date-picker.css')) {
+- scripts/patch-step-149-date-picker.mjs:31: if (css.includes('@import "./components/date-input.css";')) {
+- scripts/patch-step-149-date-picker.mjs:32: css = css.replace('@import "./components/date-input.css";', '@import "./components/date-input.css";@import "./components/date-picker.css";');
+- scripts/patch-step-149-date-picker.mjs:34: css = `${css.trimEnd()}@import "./components/date-picker.css";\n`;
+- scripts/patch-step-149-date-picker.mjs:39: patchJsonExport("packages/react/package.json", "./date-picker", {
+- scripts/patch-step-149-date-picker.mjs:40: types: "./dist/components/DatePicker/index.d.ts",
+- scripts/patch-step-149-date-picker.mjs:41: import: "./dist/components/DatePicker/index.js"
+- scripts/patch-step-149-date-picker.mjs:44: patchJsonExport("packages/styles/package.json", "./components/date-picker.css", "./src/components/date-picker.css");
+- scripts/patch-step-150-date-range-picker.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./DateRangePicker";', 'export * from "./DatePicker";');
+- scripts/patch-step-150-date-range-picker.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/date-range-picker";', 'export * from "./components/date-picker";');
+- scripts/patch-step-150-date-range-picker.mjs:30: if (!css.includes('date-range-picker.css')) {
+- scripts/patch-step-150-date-range-picker.mjs:31: if (css.includes('@import "./components/date-picker.css";')) {
+- scripts/patch-step-150-date-range-picker.mjs:32: css = css.replace('@import "./components/date-picker.css";', '@import "./components/date-picker.css";@import "./components/date-range-picker.css";');
+- scripts/patch-step-150-date-range-picker.mjs:34: css = `${css.trimEnd()}@import "./components/date-range-picker.css";\n`;
+- scripts/patch-step-150-date-range-picker.mjs:39: patchJsonExport("packages/react/package.json", "./date-range-picker", {
+- scripts/patch-step-150-date-range-picker.mjs:40: types: "./dist/components/DateRangePicker/index.d.ts",
+- scripts/patch-step-150-date-range-picker.mjs:41: import: "./dist/components/DateRangePicker/index.js"
+- scripts/patch-step-150-date-range-picker.mjs:44: patchJsonExport("packages/styles/package.json", "./components/date-range-picker.css", "./src/components/date-range-picker.css");
+- scripts/patch-step-151-time-input.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./TimeInput";', 'export * from "./DateRangePicker";');
+- scripts/patch-step-151-time-input.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/time-input";', 'export * from "./components/date-range-picker";');
+- scripts/patch-step-151-time-input.mjs:30: if (!css.includes('time-input.css')) {
+- scripts/patch-step-151-time-input.mjs:31: if (css.includes('@import "./components/date-range-picker.css";')) {
+- scripts/patch-step-151-time-input.mjs:32: css = css.replace('@import "./components/date-range-picker.css";', '@import "./components/date-range-picker.css";@import "./components/time-input.css";');
+- scripts/patch-step-151-time-input.mjs:34: css = `${css.trimEnd()}@import "./components/time-input.css";\n`;
+- scripts/patch-step-151-time-input.mjs:39: patchJsonExport("packages/react/package.json", "./time-input", {
+- scripts/patch-step-151-time-input.mjs:40: types: "./dist/components/TimeInput/index.d.ts",
+- scripts/patch-step-151-time-input.mjs:41: import: "./dist/components/TimeInput/index.js"
+- scripts/patch-step-151-time-input.mjs:44: patchJsonExport("packages/styles/package.json", "./components/time-input.css", "./src/components/time-input.css");
+- scripts/patch-step-152-date-time-input.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./DateTimeInput";', 'export * from "./TimeInput";');
+- scripts/patch-step-152-date-time-input.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/date-time-input";', 'export * from "./components/time-input";');
+- scripts/patch-step-152-date-time-input.mjs:30: if (!css.includes('date-time-input.css')) {
+- scripts/patch-step-152-date-time-input.mjs:31: if (css.includes('@import "./components/time-input.css";')) {
+- scripts/patch-step-152-date-time-input.mjs:32: css = css.replace('@import "./components/time-input.css";', '@import "./components/time-input.css";@import "./components/date-time-input.css";');
+- scripts/patch-step-152-date-time-input.mjs:34: css = `${css.trimEnd()}@import "./components/date-time-input.css";\n`;
+- scripts/patch-step-152-date-time-input.mjs:39: patchJsonExport("packages/react/package.json", "./date-time-input", {
+- scripts/patch-step-152-date-time-input.mjs:40: types: "./dist/components/DateTimeInput/index.d.ts",
+- scripts/patch-step-152-date-time-input.mjs:41: import: "./dist/components/DateTimeInput/index.js"
+- scripts/patch-step-152-date-time-input.mjs:44: patchJsonExport("packages/styles/package.json", "./components/date-time-input.css", "./src/components/date-time-input.css");
+- scripts/patch-step-153-month-input.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./MonthInput";', 'export * from "./DateTimeInput";');
+- scripts/patch-step-153-month-input.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/month-input";', 'export * from "./components/date-time-input";');
+- scripts/patch-step-153-month-input.mjs:30: if (!css.includes('month-input.css')) {
+- scripts/patch-step-153-month-input.mjs:31: if (css.includes('@import "./components/date-time-input.css";')) {
+- scripts/patch-step-153-month-input.mjs:32: css = css.replace('@import "./components/date-time-input.css";', '@import "./components/date-time-input.css";@import "./components/month-input.css";');
+- scripts/patch-step-153-month-input.mjs:34: css = `${css.trimEnd()}@import "./components/month-input.css";\n`;
+- scripts/patch-step-153-month-input.mjs:39: patchJsonExport("packages/react/package.json", "./month-input", {
+- scripts/patch-step-153-month-input.mjs:40: types: "./dist/components/MonthInput/index.d.ts",
+- scripts/patch-step-153-month-input.mjs:41: import: "./dist/components/MonthInput/index.js"
+- scripts/patch-step-153-month-input.mjs:44: patchJsonExport("packages/styles/package.json", "./components/month-input.css", "./src/components/month-input.css");
+- scripts/patch-step-154-week-input.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./WeekInput";', 'export * from "./MonthInput";');
+- scripts/patch-step-154-week-input.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/week-input";', 'export * from "./components/month-input";');
+- scripts/patch-step-154-week-input.mjs:30: if (!css.includes('week-input.css')) {
+- scripts/patch-step-154-week-input.mjs:31: if (css.includes('@import "./components/month-input.css";')) {
+- scripts/patch-step-154-week-input.mjs:32: css = css.replace('@import "./components/month-input.css";', '@import "./components/month-input.css";@import "./components/week-input.css";');
+- scripts/patch-step-154-week-input.mjs:34: css = `${css.trimEnd()}@import "./components/week-input.css";\n`;
+- scripts/patch-step-154-week-input.mjs:39: patchJsonExport("packages/react/package.json", "./week-input", {
+- scripts/patch-step-154-week-input.mjs:40: types: "./dist/components/WeekInput/index.d.ts",
+- scripts/patch-step-154-week-input.mjs:41: import: "./dist/components/WeekInput/index.js"
+- scripts/patch-step-154-week-input.mjs:44: patchJsonExport("packages/styles/package.json", "./components/week-input.css", "./src/components/week-input.css");
+- scripts/patch-step-155-year-input.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./YearInput";', 'export * from "./WeekInput";');
+- scripts/patch-step-155-year-input.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/year-input";', 'export * from "./components/week-input";');
+- scripts/patch-step-155-year-input.mjs:30: if (!css.includes('year-input.css')) {
+- scripts/patch-step-155-year-input.mjs:31: if (css.includes('@import "./components/week-input.css";')) {
+- scripts/patch-step-155-year-input.mjs:32: css = css.replace('@import "./components/week-input.css";', '@import "./components/week-input.css";@import "./components/year-input.css";');
+- scripts/patch-step-155-year-input.mjs:34: css = `${css.trimEnd()}@import "./components/year-input.css";\n`;
+- scripts/patch-step-155-year-input.mjs:39: patchJsonExport("packages/react/package.json", "./year-input", {
+- scripts/patch-step-155-year-input.mjs:40: types: "./dist/components/YearInput/index.d.ts",
+- scripts/patch-step-155-year-input.mjs:41: import: "./dist/components/YearInput/index.js"
+- scripts/patch-step-155-year-input.mjs:44: patchJsonExport("packages/styles/package.json", "./components/year-input.css", "./src/components/year-input.css");
+- scripts/patch-step-156-file-input.mjs:26: patchText("packages/react/src/components/index.ts", 'export * from "./FileInput";', 'export * from "./YearInput";');
+- scripts/patch-step-156-file-input.mjs:27: patchText("packages/tokens/src/index.ts", 'export * from "./components/file-input";', 'export * from "./components/year-input";');
+- scripts/patch-step-156-file-input.mjs:31: if (css.includes('@import "./components/year-input.css";')) {
+- scripts/patch-step-156-file-input.mjs:32: css = css.replace('@import "./components/year-input.css";', '@import "./components/year-input.css";@import "./components/file-input.css";');
+- scripts/remove-date-time-css-imports.mjs:4: "date-input",
+- scripts/remove-date-time-css-imports.mjs:5: "date-time-input",
+- scripts/remove-date-time-css-imports.mjs:6: "datetime-input",
+- scripts/remove-date-time-css-imports.mjs:7: "month-input",
+- scripts/remove-date-time-css-imports.mjs:8: "time-input",
+- scripts/remove-date-time-css-imports.mjs:9: "week-input",
+- scripts/remove-date-time-css-imports.mjs:10: "year-input",
+- scripts/remove-date-time-css-imports.mjs:11: "time-picker",
+- scripts/remove-date-time-css-imports.mjs:12: "calendar",
+- scripts/remove-date-time-css-imports.mjs:13: "date-picker",
+- scripts/remove-date-time-css-imports.mjs:14: "date-time-picker",
+- scripts/remove-date-time-css-imports.mjs:15: "datetime-picker",
+- scripts/remove-date-time-css-imports.mjs:16: "date-range-picker"
+- scripts/repair-interactive-demo-presets.mjs:14: "DateInput",
+- scripts/repair-interactive-demo-presets.mjs:15: "DateTimeInput",
+- scripts/repair-interactive-demo-presets.mjs:16: "MonthInput",
+- scripts/repair-interactive-demo-presets.mjs:17: "TimeInput",
+- scripts/repair-interactive-demo-presets.mjs:18: "WeekInput",
+- scripts/repair-interactive-demo-presets.mjs:19: "YearInput",
+- scripts/repair-interactive-demo-presets.mjs:20: "TimePicker",
+- scripts/repair-interactive-demo-presets.mjs:21: "Calendar",
+- scripts/repair-interactive-demo-presets.mjs:22: "DatePicker",
+- scripts/repair-interactive-demo-presets.mjs:23: "DateTimePicker",
+- scripts/repair-interactive-demo-presets.mjs:24: "DateRangePicker"

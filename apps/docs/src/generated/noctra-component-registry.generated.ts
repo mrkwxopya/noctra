@@ -24,7 +24,6 @@ export const noctraDocsComponentRegistry = [
   {"name":"Breadcrumb","kebab":"breadcrumb","cssClass":"nc-breadcrumb-root","importPath":"@noctra/react/breadcrumb","status":"registered"},
   {"name":"Breadcrumbs","kebab":"breadcrumbs","cssClass":"nc-breadcrumbs-root","importPath":"@noctra/react/breadcrumbs","status":"registered"},
   {"name":"Button","kebab":"button","cssClass":"nc-button-root","importPath":"@noctra/react/button","status":"registered"},
-  {"name":"Calendar","kebab":"calendar","cssClass":"nc-calendar-root","importPath":"@noctra/react/calendar","status":"registered"},
   {"name":"Card","kebab":"card","cssClass":"nc-card-root","importPath":"@noctra/react/card","status":"registered"},
   {"name":"Center","kebab":"center","cssClass":"nc-center-root","importPath":"@noctra/react/center","status":"registered"},
   {"name":"Checkbox","kebab":"checkbox","cssClass":"nc-checkbox-root","importPath":"@noctra/react/checkbox","status":"registered"},
@@ -41,11 +40,6 @@ export const noctraDocsComponentRegistry = [
   {"name":"ContextMenu","kebab":"context-menu","cssClass":"nc-context-menu-root","importPath":"@noctra/react/context-menu","status":"registered"},
   {"name":"CreditCard","kebab":"credit-card","cssClass":"nc-credit-card-root","importPath":"@noctra/react/credit-card","status":"registered"},
   {"name":"DataGrid","kebab":"data-grid","cssClass":"nc-data-grid-root","importPath":"@noctra/react/data-grid","status":"registered"},
-  {"name":"DateInput","kebab":"date-input","cssClass":"nc-date-input-root","importPath":"@noctra/react/date-input","status":"registered"},
-  {"name":"DatePicker","kebab":"date-picker","cssClass":"nc-date-picker-root","importPath":"@noctra/react/date-picker","status":"registered"},
-  {"name":"DateRangePicker","kebab":"date-range-picker","cssClass":"nc-date-range-picker-root","importPath":"@noctra/react/date-range-picker","status":"registered"},
-  {"name":"DateTimeInput","kebab":"date-time-input","cssClass":"nc-date-time-input-root","importPath":"@noctra/react/date-time-input","status":"registered"},
-  {"name":"DateTimePicker","kebab":"date-time-picker","cssClass":"nc-date-time-picker-root","importPath":"@noctra/react/date-time-picker","status":"registered"},
   {"name":"Dialog","kebab":"dialog","cssClass":"nc-dialog-root","importPath":"@noctra/react/dialog","status":"registered"},
   {"name":"Divider","kebab":"divider","cssClass":"nc-divider-root","importPath":"@noctra/react/divider","status":"registered"},
   {"name":"Dock","kebab":"dock","cssClass":"nc-dock-root","importPath":"@noctra/react/dock","status":"registered"},
@@ -74,7 +68,6 @@ export const noctraDocsComponentRegistry = [
   {"name":"Loader","kebab":"loader","cssClass":"nc-loader-root","importPath":"@noctra/react/loader","status":"registered"},
   {"name":"Menu","kebab":"menu","cssClass":"nc-menu-root","importPath":"@noctra/react/menu","status":"registered"},
   {"name":"Modal","kebab":"modal","cssClass":"nc-modal-root","importPath":"@noctra/react/modal","status":"registered"},
-  {"name":"MonthInput","kebab":"month-input","cssClass":"nc-month-input-root","importPath":"@noctra/react/month-input","status":"registered"},
   {"name":"MultiSelect","kebab":"multi-select","cssClass":"nc-multi-select-root","importPath":"@noctra/react/multi-select","status":"registered"},
   {"name":"NativeSelect","kebab":"native-select","cssClass":"nc-native-select-root","importPath":"@noctra/react/native-select","status":"registered"},
   {"name":"Notification","kebab":"notification","cssClass":"nc-notification-root","importPath":"@noctra/react/notification","status":"registered"},
@@ -117,9 +110,7 @@ export const noctraDocsComponentRegistry = [
   {"name":"TagsInput","kebab":"tags-input","cssClass":"nc-tags-input-root","importPath":"@noctra/react/tags-input","status":"registered"},
   {"name":"Textarea","kebab":"textarea","cssClass":"nc-textarea-root","importPath":"@noctra/react/textarea","status":"registered"},
   {"name":"TextInput","kebab":"text-input","cssClass":"nc-text-input-root","importPath":"@noctra/react/text-input","status":"registered"},
-  {"name":"TimeInput","kebab":"time-input","cssClass":"nc-time-input-root","importPath":"@noctra/react/time-input","status":"registered"},
   {"name":"Timeline","kebab":"timeline","cssClass":"nc-timeline-root","importPath":"@noctra/react/timeline","status":"registered"},
-  {"name":"TimePicker","kebab":"time-picker","cssClass":"nc-time-picker-root","importPath":"@noctra/react/time-picker","status":"registered"},
   {"name":"Toast","kebab":"toast","cssClass":"nc-toast-root","importPath":"@noctra/react/toast","status":"registered"},
   {"name":"Toolbar","kebab":"toolbar","cssClass":"nc-toolbar-root","importPath":"@noctra/react/toolbar","status":"registered"},
   {"name":"Tooltip","kebab":"tooltip","cssClass":"nc-tooltip-root","importPath":"@noctra/react/tooltip","status":"registered"},
@@ -127,10 +118,7 @@ export const noctraDocsComponentRegistry = [
   {"name":"Tree","kebab":"tree","cssClass":"nc-tree-root","importPath":"@noctra/react/tree","status":"registered"},
   {"name":"TreeSelect","kebab":"tree-select","cssClass":"nc-tree-select-root","importPath":"@noctra/react/tree-select","status":"registered"},
   {"name":"TreeView","kebab":"tree-view","cssClass":"nc-tree-view-root","importPath":"@noctra/react/tree-view","status":"registered"},
-  {"name":"VisuallyHidden","kebab":"visually-hidden","cssClass":"nc-visually-hidden-root","importPath":"@noctra/react/visually-hidden","status":"registered"},
-  {"name":"WeekInput","kebab":"week-input","cssClass":"nc-week-input-root","importPath":"@noctra/react/week-input","status":"registered"},
-  {"name":"YearInput","kebab":"year-input","cssClass":"nc-year-input-root","importPath":"@noctra/react/year-input","status":"registered"},
-] as const satisfies readonly NoctraDocsComponentRegistryItem[];
+  {"name":"VisuallyHidden","kebab":"visually-hidden","cssClass":"nc-visually-hidden-root","importPath":"@noctra/react/visually-hidden","status":"registered"}] as const satisfies readonly NoctraDocsComponentRegistryItem[];
 
 export const noctraDocsComponentNames = noctraDocsComponentRegistry.map((component) => component.name);
 export const noctraDocsComponentKebabNames = noctraDocsComponentRegistry.map((component) => component.kebab);

@@ -19,7 +19,6 @@ import {
   Breadcrumb,
   Breadcrumbs,
   Button,
-  Calendar,
   Card,
   Center,
   Checkbox,
@@ -36,11 +35,6 @@ import {
   ContextMenu,
   CreditCard,
   DataGrid,
-  DateInput,
-  DatePicker,
-  DateRangePicker,
-  DateTimeInput,
-  DateTimePicker,
   Dialog,
   Divider,
   Dock,
@@ -69,7 +63,6 @@ import {
   Loader,
   Menu,
   Modal,
-  MonthInput,
   MultiSelect,
   NativeSelect,
   Notification,
@@ -112,9 +105,7 @@ import {
   TagsInput,
   Textarea,
   TextInput,
-  TimeInput,
   Timeline,
-  TimePicker,
   Toast,
   Toolbar,
   Tooltip,
@@ -122,10 +113,7 @@ import {
   Tree,
   TreeSelect,
   TreeView,
-  VisuallyHidden,
-  WeekInput,
-  YearInput,
-} from "../components";
+  VisuallyHidden} from "../components";
 
 type SmokeComponent = ComponentType<Record<string, unknown>>;
 
@@ -143,7 +131,6 @@ export const noctraReactComponentSmokeRegistry = [
   ["Breadcrumb", Breadcrumb],
   ["Breadcrumbs", Breadcrumbs],
   ["Button", Button],
-  ["Calendar", Calendar],
   ["Card", Card],
   ["Center", Center],
   ["Checkbox", Checkbox],
@@ -160,11 +147,6 @@ export const noctraReactComponentSmokeRegistry = [
   ["ContextMenu", ContextMenu],
   ["CreditCard", CreditCard],
   ["DataGrid", DataGrid],
-  ["DateInput", DateInput],
-  ["DatePicker", DatePicker],
-  ["DateRangePicker", DateRangePicker],
-  ["DateTimeInput", DateTimeInput],
-  ["DateTimePicker", DateTimePicker],
   ["Dialog", Dialog],
   ["Divider", Divider],
   ["Dock", Dock],
@@ -193,7 +175,6 @@ export const noctraReactComponentSmokeRegistry = [
   ["Loader", Loader],
   ["Menu", Menu],
   ["Modal", Modal],
-  ["MonthInput", MonthInput],
   ["MultiSelect", MultiSelect],
   ["NativeSelect", NativeSelect],
   ["Notification", Notification],
@@ -236,9 +217,7 @@ export const noctraReactComponentSmokeRegistry = [
   ["TagsInput", TagsInput],
   ["Textarea", Textarea],
   ["TextInput", TextInput],
-  ["TimeInput", TimeInput],
   ["Timeline", Timeline],
-  ["TimePicker", TimePicker],
   ["Toast", Toast],
   ["Toolbar", Toolbar],
   ["Tooltip", Tooltip],
@@ -246,10 +225,7 @@ export const noctraReactComponentSmokeRegistry = [
   ["Tree", Tree],
   ["TreeSelect", TreeSelect],
   ["TreeView", TreeView],
-  ["VisuallyHidden", VisuallyHidden],
-  ["WeekInput", WeekInput],
-  ["YearInput", YearInput],
-] as const;
+  ["VisuallyHidden", VisuallyHidden]] as const;
 
 export const noctraReactComponentSmokeNames = noctraReactComponentSmokeRegistry.map(([name]) => name);
 
