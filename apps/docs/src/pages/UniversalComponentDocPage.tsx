@@ -260,15 +260,28 @@ function NativeVisual({
   state: VisualState;
 }) {
   const cls = stateClass(state);
+  const stateKey = [
+    state.variant,
+    state.tone,
+    state.size,
+    state.radius,
+    state.disabled ? "disabled" : "enabled",
+    state.loading ? "loading" : "idle",
+    state.fullWidth ? "full" : "auto"
+  ].join(":");
 
-  if (slug === "button" || isButtonLike(slug)) {
+  const [opened, setOpened] = useState(false);
+  const [visible, setVisible] = useState(true);
+
+  if (slug === "button" || /button|icon-button|clipboard|link|toolbar|command|command-bar/.test(slug)) {
     const Component = runtimeComponent(slug);
 
     return (
-      <div className="ncu-native-button">
+      <div className="ncu-native-button" data-state-key={stateKey}>
         {createElement(
           Component,
           {
+            key: stateKey,
             variant: state.variant,
             tone: state.tone,
             size: state.size,
@@ -283,9 +296,46 @@ function NativeVisual({
     );
   }
 
+  if (/modal|dialog|drawer|popover|hover-card|tooltip|menu|context-menu|portal/.test(slug)) {
+    return (
+      <div className={cls + " ncu-native-overlay-demo"} data-state-key={stateKey}>
+        <button type="button" onClick={() => setOpened((value) => !value)}>
+          {opened ? "Close " + label : "Open " + label}
+        </button>
+
+        {opened ? (
+          <div className="ncu-native-overlay-panel" role="dialog" aria-modal="true">
+            <header>
+              <strong>{label}</strong>
+              <button type="button" aria-label="Close" onClick={() => setOpened(false)}>×</button>
+            </header>
+            <p>Interactive overlay content is mounted from preview state.</p>
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
+  if (/alert|notification|toast|empty-state|blockquote/.test(slug)) {
+    return (
+      <div className={cls + " ncu-native-feedback-demo"} data-state-key={stateKey}>
+        <button type="button" onClick={() => setVisible((value) => !value)}>
+          {visible ? "Hide " + label : "Show " + label}
+        </button>
+
+        {visible ? (
+          <div className="ncu-native-message">
+            <strong>{label}</strong>
+            <p>Feedback message is controlled by preview state.</p>
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
   if (/checkbox|radio|switch/.test(slug)) {
     return (
-      <label className={`${cls} ncu-native-check`}>
+      <label className={cls + " ncu-native-check"} data-state-key={stateKey}>
         <input checked readOnly type={slug.includes("radio") ? "radio" : "checkbox"} />
         <span>{label}</span>
       </label>
@@ -294,7 +344,7 @@ function NativeVisual({
 
   if (/segmented-control/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-segmented`}>
+      <div className={cls + " ncu-native-segmented"} data-state-key={stateKey}>
         <button aria-pressed="true" type="button">React</button>
         <button type="button">CSS</button>
         <button type="button">Docs</button>
@@ -304,7 +354,7 @@ function NativeVisual({
 
   if (/aspect-ratio/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-aspect`}>
+      <div className={cls + " ncu-native-aspect"} data-state-key={stateKey}>
         <div>
           <strong>16:9</strong>
           <span>{label}</span>
@@ -315,7 +365,7 @@ function NativeVisual({
 
   if (/color-picker/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-color-picker`}>
+      <div className={cls + " ncu-native-color-picker"} data-state-key={stateKey}>
         <div className="ncu-color-plane"><span /></div>
         <div className="ncu-color-row"><span /><span /><span /><span /></div>
         <code>#8B5CF6</code>
@@ -325,7 +375,7 @@ function NativeVisual({
 
   if (/divider/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-divider`}>
+      <div className={cls + " ncu-native-divider"} data-state-key={stateKey}>
         <span>Before</span>
         <i />
         <span>After</span>
@@ -335,7 +385,7 @@ function NativeVisual({
 
   if (/dropzone/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-dropzone`}>
+      <div className={cls + " ncu-native-dropzone"} data-state-key={stateKey}>
         <strong>Drop files here</strong>
         <span>SVG, PNG, JPG or JSON</span>
       </div>
@@ -344,7 +394,7 @@ function NativeVisual({
 
   if (/float-label/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-float-label`}>
+      <div className={cls + " ncu-native-float-label"} data-state-key={stateKey}>
         <input readOnly value="Noctra" />
         <label>Floating label</label>
       </div>
@@ -353,7 +403,7 @@ function NativeVisual({
 
   if (/form-field/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-form-field`}>
+      <div className={cls + " ncu-native-form-field"} data-state-key={stateKey}>
         <label>Email address</label>
         <input readOnly placeholder="name@example.com" />
         <small>Helper text for validation and guidance.</small>
@@ -361,18 +411,9 @@ function NativeVisual({
     );
   }
 
-  if (/portal/.test(slug)) {
-    return (
-      <div className={`${cls} ncu-native-portal`}>
-        <span>Page</span>
-        <strong>Portal layer</strong>
-      </div>
-    );
-  }
-
   if (/prose/.test(slug)) {
     return (
-      <article className={`${cls} ncu-native-prose`}>
+      <article className={cls + " ncu-native-prose"} data-state-key={stateKey}>
         <h3>Readable content</h3>
         <p>Noctra prose styles keep documentation text calm, readable and aligned.</p>
       </article>
@@ -381,7 +422,7 @@ function NativeVisual({
 
   if (/scroll-area/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-scroll-area`}>
+      <div className={cls + " ncu-native-scroll-area"} data-state-key={stateKey}>
         <span>Components</span>
         <span>Props</span>
         <span>Styles API</span>
@@ -393,7 +434,7 @@ function NativeVisual({
 
   if (/spacer/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-spacer`}>
+      <div className={cls + " ncu-native-spacer"} data-state-key={stateKey}>
         <span>Left</span>
         <i />
         <span>Right</span>
@@ -403,7 +444,7 @@ function NativeVisual({
 
   if (/status-bar/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-status-bar`}>
+      <div className={cls + " ncu-native-status-bar"} data-state-key={stateKey}>
         <span>Ready</span>
         <span>3 warnings</span>
         <span>v0.0.0</span>
@@ -413,7 +454,7 @@ function NativeVisual({
 
   if (/visually-hidden/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-visually-hidden`}>
+      <div className={cls + " ncu-native-visually-hidden"} data-state-key={stateKey}>
         <span aria-hidden="true">Visible label</span>
         <code>screen reader text</code>
       </div>
@@ -422,16 +463,16 @@ function NativeVisual({
 
   if (/text-input|input|search-input|password-input|number-input|color-input|textarea|autocomplete|tags-input|pin-code|pin-input/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-field`}>
+      <div className={cls + " ncu-native-field"} data-state-key={stateKey}>
         <label>{label}</label>
-        <input disabled={state.disabled} placeholder={`${label} value`} readOnly />
+        <input disabled={state.disabled} placeholder={label + " value"} readOnly />
       </div>
     );
   }
 
   if (/select|multi-select|native-select|combobox|list-box|tree-select|transfer-list/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-listbox`}>
+      <div className={cls + " ncu-native-listbox"} data-state-key={stateKey}>
         <label>{label}</label>
         <div role="listbox">
           <span aria-selected="true">Documentation</span>
@@ -444,7 +485,7 @@ function NativeVisual({
 
   if (/card|paper|box|container|credit-card/.test(slug)) {
     return (
-      <article className={`${cls} ncu-native-card`}>
+      <article className={cls + " ncu-native-card"} data-state-key={stateKey}>
         <header>
           <strong>{label}</strong>
           <span>Surface component</span>
@@ -458,17 +499,8 @@ function NativeVisual({
     );
   }
 
-  if (/alert|notification|toast|empty-state|blockquote/.test(slug)) {
-    return (
-      <div className={`${cls} ncu-native-message`}>
-        <strong>{label}</strong>
-        <p>Clear feedback message with title and supporting text.</p>
-      </div>
-    );
-  }
-
   if (/badge|code|inline-code|kbd|highlight/.test(slug)) {
-    return <span className={`${cls} ncu-native-badge`}>{label}</span>;
+    return <span className={cls + " ncu-native-badge"} data-state-key={stateKey}>{label}</span>;
   }
 
   if (/avatar/.test(slug)) {
@@ -479,12 +511,12 @@ function NativeVisual({
       .slice(0, 2)
       .toUpperCase();
 
-    return <span className={`${cls} ncu-native-avatar`}>{initials}</span>;
+    return <span className={cls + " ncu-native-avatar"} data-state-key={stateKey}>{initials}</span>;
   }
 
   if (/slider|range-slider|progress|rating/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-meter`}>
+      <div className={cls + " ncu-native-meter"} data-state-key={stateKey}>
         <strong>{label}</strong>
         <div><span /></div>
       </div>
@@ -493,7 +525,7 @@ function NativeVisual({
 
   if (/table|data-grid|table-of-contents/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-table`}>
+      <div className={cls + " ncu-native-table"} data-state-key={stateKey}>
         <div><strong>Name</strong><strong>Status</strong><strong>Type</strong></div>
         <div><span>Noctra UI</span><span>Ready</span><span>Core</span></div>
         <div><span>Docs</span><span>Active</span><span>System</span></div>
@@ -503,7 +535,7 @@ function NativeVisual({
 
   if (/tabs/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-tabs`}>
+      <div className={cls + " ncu-native-tabs"} data-state-key={stateKey}>
         <div>
           <button type="button">Documentation</button>
           <button type="button">Props</button>
@@ -516,7 +548,7 @@ function NativeVisual({
 
   if (/accordion/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-accordion`}>
+      <div className={cls + " ncu-native-accordion"} data-state-key={stateKey}>
         <strong>Component anatomy</strong>
         <p>Expandable content section.</p>
       </div>
@@ -524,16 +556,22 @@ function NativeVisual({
   }
 
   if (/breadcrumb|breadcrumbs/.test(slug)) {
-    return <div className={`${cls} ncu-native-breadcrumb`}>Docs / Components / {label}</div>;
+    return <div className={cls + " ncu-native-breadcrumb"} data-state-key={stateKey}>Docs / Components / {label}</div>;
   }
 
   if (/pagination/.test(slug)) {
-    return <div className={`${cls} ncu-native-pagination`}><button>1</button><button>2</button><button>3</button></div>;
+    return (
+      <div className={cls + " ncu-native-pagination"} data-state-key={stateKey}>
+        <button type="button">1</button>
+        <button type="button">2</button>
+        <button type="button">3</button>
+      </div>
+    );
   }
 
   if (/timeline|stepper/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-timeline`}>
+      <div className={cls + " ncu-native-timeline"} data-state-key={stateKey}>
         <span>Created</span>
         <span>Reviewed</span>
         <span>Released</span>
@@ -541,26 +579,23 @@ function NativeVisual({
     );
   }
 
-  if (/modal|dialog|drawer|popover|hover-card|tooltip|menu|context-menu/.test(slug)) {
+  if (/loader|spinner/.test(slug)) {
+    return <span className={cls + " ncu-native-spinner"} data-state-key={stateKey} aria-label={label} />;
+  }
+
+  if (/skeleton/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-overlay`}>
-        <strong>{label}</strong>
-        <p>Layered floating surface.</p>
+      <div className={cls + " ncu-native-skeleton"} data-state-key={stateKey}>
+        <span />
+        <span />
+        <span />
       </div>
     );
   }
 
-  if (/loader|spinner/.test(slug)) {
-    return <span className={`${cls} ncu-native-spinner`} aria-label={label} />;
-  }
-
-  if (/skeleton/.test(slug)) {
-    return <div className={`${cls} ncu-native-skeleton`}><span /><span /><span /></div>;
-  }
-
   if (/grid|simple-grid|group|stack|flex|center|layout|layout-shell|app-shell|split-pane|resizable-panel|section|page|sidebar|dock|header|footer/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-layout`}>
+      <div className={cls + " ncu-native-layout"} data-state-key={stateKey}>
         <span>Header</span>
         <span>Content</span>
         <span>Aside</span>
@@ -570,7 +605,7 @@ function NativeVisual({
 
   if (/tree|tree-view/.test(slug)) {
     return (
-      <div className={`${cls} ncu-native-tree`}>
+      <div className={cls + " ncu-native-tree"} data-state-key={stateKey}>
         <span>Components</span>
         <span>Forms</span>
         <span>Overlays</span>
@@ -578,72 +613,162 @@ function NativeVisual({
     );
   }
 
-  return <span className={`${cls} ncu-native-generic`}>{label}</span>;
+  return <span className={cls + " ncu-native-generic"} data-state-key={stateKey}>{label}</span>;
+}
+
+function humanizeSlug(value: string) {
+  return value
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+type ComponentVisualProps = {
+  slug?: string;
+  label?: string;
+  state?: VisualState;
+  component?: {
+    slug?: string;
+    kebab?: string;
+    name?: string;
+    label?: string;
+  };
+  children?: ReactNode;
+  [key: string]: unknown;
+};
+
+function fallbackVisualState(): VisualState {
+  return {
+    variant: "filled",
+    tone: "primary",
+    size: "md",
+    radius: "md",
+    disabled: false,
+    loading: false,
+    fullWidth: false
+  };
 }
 
 function ComponentVisual({
   slug,
   label,
-  state
-}: {
-  slug: string;
-  label: string;
-  state: VisualState;
-}) {
+  state,
+  component,
+  children
+}: ComponentVisualProps) {
+  const resolvedSlug = slug ?? component?.slug ?? component?.kebab ?? "button";
+  const resolvedLabel = label ?? component?.label ?? component?.name ?? humanizeSlug(resolvedSlug);
+  const resolvedState = state ?? fallbackVisualState();
+
   return (
-    <div className="ncu-stage">
-      <NativeVisual label={label} slug={slug} state={state} />
+    <div className="ncu-component-visual">
+      <NativeVisual slug={resolvedSlug} label={resolvedLabel} state={resolvedState} />
+      {children ? <div className="ncu-component-visual-extra">{children}</div> : null}
     </div>
   );
+}
+
+type ControlGroupOption = string | {
+  label?: ReactNode;
+  value?: string;
+  disabled?: boolean;
+  [key: string]: unknown;
+};
+
+type ControlGroupProps = {
+  label?: ReactNode;
+  value?: string;
+  options?: readonly ControlGroupOption[];
+  onChange?: (value: string) => void;
+  children?: ReactNode;
+  [key: string]: unknown;
+};
+
+function optionValue(option: ControlGroupOption) {
+  if (typeof option === "string") return option;
+
+  const raw = option.value ?? option.label;
+
+  if (typeof raw === "string" || typeof raw === "number" || typeof raw === "boolean") {
+    return String(raw);
+  }
+
+  return "";
+}
+
+function optionLabel(option: ControlGroupOption): ReactNode {
+  if (typeof option === "string") return option;
+
+  return option.label ?? option.value ?? "";
 }
 
 function ControlGroup({
   label,
   value,
   options,
-  onChange
-}: {
-  label: string;
-  value: string;
-  options: readonly ControlOption[];
-  onChange: (value: string) => void;
-}) {
+  onChange,
+  children
+}: ControlGroupProps) {
+  if (children) {
+    return (
+      <div className="ncu-control-group">
+        {label ? <span className="ncu-control-label">{label}</span> : null}
+        <div className="ncu-control-content">{children}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="ncu-control-group">
-      <label>{label}</label>
+      {label ? <span className="ncu-control-label">{label}</span> : null}
       <div className="ncu-control-options">
-        {options.map((option) => (
-          <button
-            aria-pressed={value === option.value}
-            key={option.value}
-            onClick={() => onChange(option.value)}
-            type="button"
-          >
-            {option.label}
-          </button>
-        ))}
+        {(options ?? []).map((option, index) => {
+          const resolvedValue = optionValue(option);
+
+          return (
+            <button
+              key={resolvedValue || index}
+              type="button"
+              disabled={typeof option === "object" ? Boolean(option.disabled) : false}
+              data-active={value === resolvedValue ? "true" : undefined}
+              onClick={() => onChange?.(resolvedValue)}
+            >
+              {optionLabel(option)}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
 }
 
+type BooleanControlProps = {
+  label?: ReactNode;
+  checked?: boolean;
+  value?: boolean;
+  onChange?: (value: boolean) => void;
+  children?: ReactNode;
+  [key: string]: unknown;
+};
+
 function BooleanControl({
   label,
   checked,
-  onChange
-}: {
-  label: string;
-  checked: boolean;
-  onChange: (value: boolean) => void;
-}) {
+  value,
+  onChange,
+  children
+}: BooleanControlProps) {
+  const isChecked = Boolean(checked ?? value);
+
   return (
     <label className="ncu-boolean-control">
       <input
-        checked={checked}
-        onChange={(event) => onChange(event.currentTarget.checked)}
         type="checkbox"
+        checked={isChecked}
+        onChange={(event) => onChange?.(event.currentTarget.checked)}
       />
-      <span>{label}</span>
+      <span>{children ?? label}</span>
     </label>
   );
 }
