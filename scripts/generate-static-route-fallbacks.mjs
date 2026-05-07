@@ -1,3 +1,4 @@
+
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
@@ -13,7 +14,7 @@ function readText(path) {
 function writeText(path, content) {
   const parent = dirname(path);
   if (!existsSync(parent)) mkdirSync(parent, { recursive: true });
-  writeFileSync(path, `${content.trimEnd()}\n`, "utf8");
+  writeFileSync(path, content.trimEnd() + "\n", "utf8");
 }
 
 function cleanRoute(route) {
@@ -52,7 +53,7 @@ function kebabToCompactAlias(slug) {
 }
 
 if (!existsSync(indexPath)) {
-  throw new Error(`Missing dist index: ${indexPath}`);
+  throw new Error("Missing dist index: " + indexPath);
 }
 
 const indexHtml = readText(indexPath);
@@ -89,7 +90,7 @@ for (const href of hrefs) {
     const compact = kebabToCompactAlias(slug);
 
     if (compact && compact !== slug) {
-      addRoute(routes, `/components/${compact}`);
+      addRoute(routes, "/components/" + compact);
     }
   }
 }
@@ -156,7 +157,7 @@ for (const route of important) {
   const outPath = routeToIndexPath(clean);
 
   if (!existsSync(outPath)) {
-    problems.push(`Missing generated fallback: ${route} -> ${outPath}`);
+    problems.push("Missing generated fallback: " + route + " -> " + outPath);
   }
 }
 
@@ -167,18 +168,18 @@ if (!asset) {
 const report = [
   "# Static Route Fallbacks Report",
   "",
-  `Generated: ${new Date().toISOString()}`,
+  "Generated: " + new Date().toISOString(),
   "",
-  `Routes written: ${deployInfo.routeFallbacks.length}`,
-  `Problems found: ${problems.length}`,
+  "Routes written: " + deployInfo.routeFallbacks.length,
+  "Problems found: " + problems.length,
   "",
   "## Problems",
   "",
-  ...(problems.length ? problems.map((problem) => `- ${problem}`) : ["- None"]),
+  ...(problems.length ? problems.map((problem) => "- " + problem) : ["- None"]),
   "",
   "## Important generated routes",
   "",
-  ...important.map((route) => `- ${route}`),
+  ...important.map((route) => "- " + route),
   "",
   "## Applied",
   "",
