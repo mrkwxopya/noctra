@@ -1,0 +1,103 @@
+# Noctra Professional Docs Audit
+
+Generated: 2026-05-07T01:54:03.478Z
+
+Required files checked: 13
+Generated components: 0
+Generated props: 0
+Generated tokens: 0
+Curated example components: 28
+Curated examples: 30
+Prop descriptions: 74
+Problems found: 1
+Warnings found: 2
+
+## Required Files
+
+- OK apps/docs/src/main.tsx
+- OK apps/docs/src/docs.css
+- OK apps/docs/src/components/DocsChrome.tsx
+- OK apps/docs/src/pages/OverviewPage.tsx
+- OK apps/docs/src/pages/ComponentsPage.tsx
+- OK apps/docs/src/pages/ComponentDetailPage.tsx
+- OK apps/docs/src/pages/ArchitecturePage.tsx
+- OK apps/docs/src/pages/ThemingPage.tsx
+- OK apps/docs/src/pages/QualityPage.tsx
+- OK apps/docs/src/pages/ReleasePage.tsx
+- OK apps/docs/src/data/componentExamples.tsx
+- OK apps/docs/src/data/propDescriptions.ts
+- OK apps/docs/src/generated/noctra-professional-docs.generated.ts
+
+## Route Checks
+
+- OK overview route
+- OK components route
+- OK component detail route
+- OK architecture route
+- OK theming route
+- OK quality route
+- OK release route
+
+## Feature Checks
+
+- OK copy button
+- OK example block
+- OK anchor list
+- OK coverage meter
+- OK component showcase
+- OK props metadata
+- OK related components
+- OK generated docs data
+- OK docs CSS preview styles
+- OK docs CSS responsive detail layout
+- OK professional docs data generator
+
+## Curated Example Components
+
+- Accordion
+- Alert
+- Badge
+- Box
+- Button
+- Card
+- Checkbox
+- CodeBlock
+- Divider
+- Drawer
+- Flex
+- Grid
+- Group
+- Modal
+- Paper
+- Progress
+- Radio
+- Section
+- Select
+- Skeleton
+- Spacer
+- Stack
+- Switch
+- Table
+- Tabs
+- Textarea
+- TextInput
+- Tooltip
+
+## Missing Core Examples
+
+- None
+
+## Problems
+
+- Generated docs component count is too low: 0
+
+## Warnings
+
+- Generated prop count looks low: 0
+- Generated token count looks low: 0
+
+## Publish Interpretation
+
+- Problems should be zero before GitHub publish.
+- Warnings are acceptable for alpha docs, but should be reduced before a stable v1 docs release.
+- This audit checks professional docs structure, not visual perfection.

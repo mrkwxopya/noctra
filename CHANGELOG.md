@@ -1,0 +1,113 @@
+# Changelog
+
+## 0.0.0
+
+### Added
+
+- Monorepo foundation.
+- React package baseline.
+- Styles package baseline.
+- Tokens package baseline.
+- Utils package baseline.
+- Docs app foundation.
+- Dark-first token architecture.
+- Light theme mapping.
+- Button component foundation.
+- Card component foundation.
+- Input component foundation.
+- Badge component foundation.
+- Alert component foundation.
+- Modal component foundation.
+- Docs shell and Button preview.
+- Button playground MVP.
+- Token metadata foundation.
+- Token inspector MVP.
+- Component docs detail expansion.
+- Modal focus trap hardening.
+- NoctraProvider theme and density foundation.
+- Theme controls and accent token foundation.
+- Package export hardening.
+- Foundation quality gate docs.
+- Docs build polish pass.
+- Light mode visual QA patch.
+- Dark mode premium polish pass.
+- Accessibility checklist patch.
+- README and installation docs hardening.
+- Package metadata and publish readiness.
+- Final build and quality gate.
+- Alpha foundation summary.
+- FormField component foundation.
+- Textarea component foundation.
+- Checkbox component foundation.
+- Radio component foundation.
+- Switch component foundation.
+- NativeSelect component foundation.
+- NumberInput component foundation.
+- PasswordInput component foundation.
+- SearchInput component foundation.
+- NativeSelect readOnly type fix.
+- PinInput component foundation.
+- FileInput component foundation.
+- FileInput placeholder type fix.
+- Dropzone component foundation.
+- Dropzone inputProps build fix.
+- ColorInput component foundation.
+- Slider component foundation.
+- Slider onInput type fix.
+- RangeSlider component foundation.
+- Slider React 19 input event fix.
+- Rating component foundation.
+- CheckboxGroup component foundation.
+- Utility layer MVP.
+
+### Notes
+
+This is an internal foundation release baseline. Public API is not stable yet.
+- AppShell component foundation.
+- Header component foundation.
+- Sidebar component foundation.
+- Footer component foundation.
+- Container component foundation.
+- Grid component foundation.
+- Grid CSS variable exact optional property fix.
+- Stack component foundation.
+- InlineCode advanced hardening.
+- Highlight advanced hardening.
+- Link advanced hardening.
+- Blockquote advanced hardening.
+- Prose advanced hardening.
+- VisuallyHidden advanced hardening.
+- Portal advanced hardening.
+- FocusTrap advanced hardening.
+- FocusTrap indexed focus element type fix.
+- ClickOutside advanced hardening.
+- ScrollLock advanced hardening.
+- AspectRatio advanced hardening.
+- Center advanced hardening.
+- Container advanced hardening.
+- Stack advanced hardening.
+- Group advanced hardening.
+- Grid advanced hardening.
+- SimpleGrid advanced hardening.
+- Box advanced hardening.
+- Flex advanced hardening.
+- Spacer advanced hardening.
+- Divider advanced hardening.
+- Paper advanced hardening.
+- Card advanced hardening.
+- Section advanced hardening.
+- Page advanced hardening.
+- Layout advanced hardening.
+- Card compound exports and interactive variant fix.
+- Card parts title prop leak fix.
+- Divider dashed variant support fix.
+- InlineCode prefix HTMLAttribute conflict fix.
+- Noctra docs pages built with Noctra primitives before GitHub publish.
+- Professional Noctra docs system with generated component detail pages, props, anatomy, tokens, and release documentation.
+- Professional component showcase and copy-code docs added for component detail pages.
+- Showcase examples hardened for stable docs build and full debug logs.
+- Professional props documentation metadata added to component detail docs.
+- Professional component detail navigation, coverage panel, and related component links added.
+- Expanded professional component demo catalog with curated examples for key Noctra components.
+- Final professional docs polish and audit added before GitHub publish.
+- Final professional docs release gate added for GitHub publish readiness.

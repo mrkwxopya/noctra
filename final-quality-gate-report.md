@@ -1,0 +1,431 @@
+# Noctra Final Quality Gate Report
+
+## Status
+
+PASS WITH WARNINGS
+
+## Passed checks
+
+- README.md: README.md
+- CHANGELOG.md: CHANGELOG.md
+- LICENSE: LICENSE
+- docs/theming.md: docs/theming.md
+- docs/component-contract.md: docs/component-contract.md
+- docs/publish-readiness.md: docs/publish-readiness.md
+- docs-release-checklist.md: docs-release-checklist.md
+- apps/docs/dist/index.html: apps/docs/dist/index.html
+- packages/react/package.json: packages/react/package.json
+- @noctra/react: private=false
+- @noctra/react: alpha version 0.0.0-alpha.0
+- @noctra/react: MIT license metadata
+- @noctra/react: exports map exists
+- @noctra/react . types: packages\react\dist\index.d.ts
+- @noctra/react . import: packages\react\dist\index.js
+- @noctra/react ./button types: packages\react\dist\components\Button\index.d.ts
+- @noctra/react ./button import: packages\react\dist\components\Button\index.js
+- @noctra/react ./icon-button types: packages\react\dist\components\IconButton\index.d.ts
+- @noctra/react ./icon-button import: packages\react\dist\components\IconButton\index.js
+- @noctra/react ./card types: packages\react\dist\components\Card\index.d.ts
+- @noctra/react ./card import: packages\react\dist\components\Card\index.js
+- @noctra/react ./input types: packages\react\dist\components\Input\index.d.ts
+- @noctra/react ./input import: packages\react\dist\components\Input\index.js
+- @noctra/react ./number-input types: packages\react\dist\components\NumberInput\index.d.ts
+- @noctra/react ./number-input import: packages\react\dist\components\NumberInput\index.js
+- @noctra/react ./password-input types: packages\react\dist\components\PasswordInput\index.d.ts
+- @noctra/react ./password-input import: packages\react\dist\components\PasswordInput\index.js
+- @noctra/react ./search-input types: packages\react\dist\components\SearchInput\index.d.ts
+- @noctra/react ./search-input import: packages\react\dist\components\SearchInput\index.js
+- @noctra/react ./pin-input types: packages\react\dist\components\PinInput\index.d.ts
+- @noctra/react ./pin-input import: packages\react\dist\components\PinInput\index.js
+- @noctra/react ./file-input types: packages\react\dist\components\FileInput\index.d.ts
+- @noctra/react ./file-input import: packages\react\dist\components\FileInput\index.js
+- @noctra/react ./dropzone types: packages\react\dist\components\Dropzone\index.d.ts
+- @noctra/react ./dropzone import: packages\react\dist\components\Dropzone\index.js
+- @noctra/react ./color-input types: packages\react\dist\components\ColorInput\index.d.ts
+- @noctra/react ./color-input import: packages\react\dist\components\ColorInput\index.js
+- @noctra/react ./slider types: packages\react\dist\components\Slider\index.d.ts
+- @noctra/react ./slider import: packages\react\dist\components\Slider\index.js
+- @noctra/react ./range-slider types: packages\react\dist\components\RangeSlider\index.d.ts
+- @noctra/react ./range-slider import: packages\react\dist\components\RangeSlider\index.js
+- @noctra/react ./rating types: packages\react\dist\components\Rating\index.d.ts
+- @noctra/react ./rating import: packages\react\dist\components\Rating\index.js
+- @noctra/react ./select types: packages\react\dist\components\Select\index.d.ts
+- @noctra/react ./select import: packages\react\dist\components\Select\index.js
+- @noctra/react ./multi-select types: packages\react\dist\components\MultiSelect\index.d.ts
+- @noctra/react ./multi-select import: packages\react\dist\components\MultiSelect\index.js
+- @noctra/react ./autocomplete types: packages\react\dist\components\Autocomplete\index.d.ts
+- @noctra/react ./autocomplete import: packages\react\dist\components\Autocomplete\index.js
+- @noctra/react ./tags-input types: packages\react\dist\components\TagsInput\index.d.ts
+- @noctra/react ./tags-input import: packages\react\dist\components\TagsInput\index.js
+- @noctra/react ./segmented-control types: packages\react\dist\components\SegmentedControl\index.d.ts
+- @noctra/react ./segmented-control import: packages\react\dist\components\SegmentedControl\index.js
+- @noctra/react ./tabs types: packages\react\dist\components\Tabs\index.d.ts
+- @noctra/react ./tabs import: packages\react\dist\components\Tabs\index.js
+- @noctra/react ./accordion types: packages\react\dist\components\Accordion\index.d.ts
+- @noctra/react ./accordion import: packages\react\dist\components\Accordion\index.js
+- @noctra/react ./breadcrumbs types: packages\react\dist\components\Breadcrumbs\index.d.ts
+- @noctra/react ./breadcrumbs import: packages\react\dist\components\Breadcrumbs\index.js
+- @noctra/react ./pagination types: packages\react\dist\components\Pagination\index.d.ts
+- @noctra/react ./pagination import: packages\react\dist\components\Pagination\index.js
+- @noctra/react ./menu types: packages\react\dist\components\Menu\index.d.ts
+- @noctra/react ./menu import: packages\react\dist\components\Menu\index.js
+- @noctra/react ./popover types: packages\react\dist\components\Popover\index.d.ts
+- @noctra/react ./popover import: packages\react\dist\components\Popover\index.js
+- @noctra/react ./hover-card types: packages\react\dist\components\HoverCard\index.d.ts
+- @noctra/react ./hover-card import: packages\react\dist\components\HoverCard\index.js
+- @noctra/react ./drawer types: packages\react\dist\components\Drawer\index.d.ts
+- @noctra/react ./drawer import: packages\react\dist\components\Drawer\index.js
+- @noctra/react ./toast types: packages\react\dist\components\Toast\index.d.ts
+- @noctra/react ./toast import: packages\react\dist\components\Toast\index.js
+- @noctra/react ./notification types: packages\react\dist\components\Notification\index.d.ts
+- @noctra/react ./notification import: packages\react\dist\components\Notification\index.js
+- @noctra/react ./textarea types: packages\react\dist\components\Textarea\index.d.ts
+- @noctra/react ./textarea import: packages\react\dist\components\Textarea\index.js
+- @noctra/react ./checkbox types: packages\react\dist\components\Checkbox\index.d.ts
+- @noctra/react ./checkbox import: packages\react\dist\components\Checkbox\index.js
+- @noctra/react ./radio types: packages\react\dist\components\Radio\index.d.ts
+- @noctra/react ./radio import: packages\react\dist\components\Radio\index.js
+- @noctra/react ./switch types: packages\react\dist\components\Switch\index.d.ts
+- @noctra/react ./switch import: packages\react\dist\components\Switch\index.js
+- @noctra/react ./native-select types: packages\react\dist\components\NativeSelect\index.d.ts
+- @noctra/react ./native-select import: packages\react\dist\components\NativeSelect\index.js
+- @noctra/react ./form-field types: packages\react\dist\components\FormField\index.d.ts
+- @noctra/react ./form-field import: packages\react\dist\components\FormField\index.js
+- @noctra/react ./badge types: packages\react\dist\components\Badge\index.d.ts
+- @noctra/react ./badge import: packages\react\dist\components\Badge\index.js
+- @noctra/react ./alert types: packages\react\dist\components\Alert\index.d.ts
+- @noctra/react ./alert import: packages\react\dist\components\Alert\index.js
+- @noctra/react ./modal types: packages\react\dist\components\Modal\index.d.ts
+- @noctra/react ./modal import: packages\react\dist\components\Modal\index.js
+- @noctra/react ./tooltip types: packages\react\dist\components\Tooltip\index.d.ts
+- @noctra/react ./tooltip import: packages\react\dist\components\Tooltip\index.js
+- @noctra/react ./spinner types: packages\react\dist\components\Spinner\index.d.ts
+- @noctra/react ./spinner import: packages\react\dist\components\Spinner\index.js
+- @noctra/react ./skeleton types: packages\react\dist\components\Skeleton\index.d.ts
+- @noctra/react ./skeleton import: packages\react\dist\components\Skeleton\index.js
+- @noctra/react ./divider types: packages\react\dist\components\Divider\index.d.ts
+- @noctra/react ./divider import: packages\react\dist\components\Divider\index.js
+- @noctra/react ./avatar types: packages\react\dist\components\Avatar\index.d.ts
+- @noctra/react ./avatar import: packages\react\dist\components\Avatar\index.js
+- @noctra/react ./providers types: packages\react\dist\providers\index.d.ts
+- @noctra/react ./providers import: packages\react\dist\providers\index.js
+- @noctra/react ./shared types: packages\react\dist\shared\index.d.ts
+- @noctra/react ./shared import: packages\react\dist\shared\index.js
+- @noctra/react ./dialog types: packages\react\dist\components\Dialog\index.d.ts
+- @noctra/react ./dialog import: packages\react\dist\components\Dialog\index.js
+- @noctra/react ./command types: packages\react\dist\components\Command\index.d.ts
+- @noctra/react ./command import: packages\react\dist\components\Command\index.js
+- @noctra/react ./kbd types: packages\react\dist\components\Kbd\index.d.ts
+- @noctra/react ./kbd import: packages\react\dist\components\Kbd\index.js
+- @noctra/react ./code types: packages\react\dist\components\Code\index.d.ts
+- @noctra/react ./code import: packages\react\dist\components\Code\index.js
+- @noctra/react ./empty-state types: packages\react\dist\components\EmptyState\index.d.ts
+- @noctra/react ./empty-state import: packages\react\dist\components\EmptyState\index.js
+- @noctra/react ./table types: packages\react\dist\components\Table\index.d.ts
+- @noctra/react ./table import: packages\react\dist\components\Table\index.js
+- @noctra/react ./data-grid types: packages\react\dist\components\DataGrid\index.d.ts
+- @noctra/react ./data-grid import: packages\react\dist\components\DataGrid\index.js
+- @noctra/react ./calendar types: packages\react\dist\components\Calendar\index.d.ts
+- @noctra/react ./calendar import: packages\react\dist\components\Calendar\index.js
+- @noctra/react ./date-picker types: packages\react\dist\components\DatePicker\index.d.ts
+- @noctra/react ./date-picker import: packages\react\dist\components\DatePicker\index.js
+- @noctra/react ./time-picker types: packages\react\dist\components\TimePicker\index.d.ts
+- @noctra/react ./time-picker import: packages\react\dist\components\TimePicker\index.js
+- @noctra/react ./date-time-picker types: packages\react\dist\components\DateTimePicker\index.d.ts
+- @noctra/react ./date-time-picker import: packages\react\dist\components\DateTimePicker\index.js
+- @noctra/react ./timeline types: packages\react\dist\components\Timeline\index.d.ts
+- @noctra/react ./timeline import: packages\react\dist\components\Timeline\index.js
+- @noctra/react ./stepper types: packages\react\dist\components\Stepper\index.d.ts
+- @noctra/react ./stepper import: packages\react\dist\components\Stepper\index.js
+- @noctra/react ./tree types: packages\react\dist\components\Tree\index.d.ts
+- @noctra/react ./tree import: packages\react\dist\components\Tree\index.js
+- @noctra/react ./transfer-list types: packages\react\dist\components\TransferList\index.d.ts
+- @noctra/react ./transfer-list import: packages\react\dist\components\TransferList\index.js
+- @noctra/react ./list-box types: packages\react\dist\components\ListBox\index.d.ts
+- @noctra/react ./list-box import: packages\react\dist\components\ListBox\index.js
+- @noctra/react ./clipboard types: packages\react\dist\components\Clipboard\index.d.ts
+- @noctra/react ./clipboard import: packages\react\dist\components\Clipboard\index.js
+- @noctra/react ./credit-card types: packages\react\dist\components\CreditCard\index.d.ts
+- @noctra/react ./credit-card import: packages\react\dist\components\CreditCard\index.js
+- @noctra/react ./pin-code types: packages\react\dist\components\PinCode\index.d.ts
+- @noctra/react ./pin-code import: packages\react\dist\components\PinCode\index.js
+- @noctra/react ./float-label types: packages\react\dist\components\FloatLabel\index.d.ts
+- @noctra/react ./float-label import: packages\react\dist\components\FloatLabel\index.js
+- @noctra/react ./combobox types: packages\react\dist\components\Combobox\index.d.ts
+- @noctra/react ./combobox import: packages\react\dist\components\Combobox\index.js
+- @noctra/react ./tree-select types: packages\react\dist\components\TreeSelect\index.d.ts
+- @noctra/react ./tree-select import: packages\react\dist\components\TreeSelect\index.js
+- @noctra/react ./table-of-contents types: packages\react\dist\components\TableOfContents\index.d.ts
+- @noctra/react ./table-of-contents import: packages\react\dist\components\TableOfContents\index.js
+- @noctra/react ./anchor types: packages\react\dist\components\Anchor\index.d.ts
+- @noctra/react ./anchor import: packages\react\dist\components\Anchor\index.js
+- @noctra/react ./spotlight types: packages\react\dist\components\Spotlight\index.d.ts
+- @noctra/react ./spotlight import: packages\react\dist\components\Spotlight\index.js
+- @noctra/react ./layout-shell types: packages\react\dist\components\LayoutShell\index.d.ts
+- @noctra/react ./layout-shell import: packages\react\dist\components\LayoutShell\index.js
+- @noctra/react ./app-shell types: packages\react\dist\components\AppShell\index.d.ts
+- @noctra/react ./app-shell import: packages\react\dist\components\AppShell\index.js
+- @noctra/react ./header types: packages\react\dist\components\Header\index.d.ts
+- @noctra/react ./header import: packages\react\dist\components\Header\index.js
+- @noctra/react ./sidebar types: packages\react\dist\components\Sidebar\index.d.ts
+- @noctra/react ./sidebar import: packages\react\dist\components\Sidebar\index.js
+- @noctra/react ./footer types: packages\react\dist\components\Footer\index.d.ts
+- @noctra/react ./footer import: packages\react\dist\components\Footer\index.js
+- @noctra/react ./container types: packages\react\dist\components\Container\index.d.ts
+- @noctra/react ./container import: packages\react\dist\components\Container\index.js
+- @noctra/react ./grid types: packages\react\dist\components\Grid\index.d.ts
+- @noctra/react ./grid import: packages\react\dist\components\Grid\index.js
+- @noctra/react ./stack types: packages\react\dist\components\Stack\index.d.ts
+- @noctra/react ./stack import: packages\react\dist\components\Stack\index.js
+- @noctra/react ./group types: packages\react\dist\components\Group\index.d.ts
+- @noctra/react ./group import: packages\react\dist\components\Group\index.js
+- @noctra/react ./flex types: packages\react\dist\components\Flex\index.d.ts
+- @noctra/react ./flex import: packages\react\dist\components\Flex\index.js
+- @noctra/react ./center types: packages\react\dist\components\Center\index.d.ts
+- @noctra/react ./center import: packages\react\dist\components\Center\index.js
+- @noctra/react ./spacer types: packages\react\dist\components\Spacer\index.d.ts
+- @noctra/react ./spacer import: packages\react\dist\components\Spacer\index.js
+- @noctra/react ./aspect-ratio types: packages\react\dist\components\AspectRatio\index.d.ts
+- @noctra/react ./aspect-ratio import: packages\react\dist\components\AspectRatio\index.js
+- @noctra/react ./scroll-area types: packages\react\dist\components\ScrollArea\index.d.ts
+- @noctra/react ./scroll-area import: packages\react\dist\components\ScrollArea\index.js
+- @noctra/react ./split-pane types: packages\react\dist\components\SplitPane\index.d.ts
+- @noctra/react ./split-pane import: packages\react\dist\components\SplitPane\index.js
+- @noctra/react ./resizable-panel types: packages\react\dist\components\ResizablePanel\index.d.ts
+- @noctra/react ./resizable-panel import: packages\react\dist\components\ResizablePanel\index.js
+- @noctra/react ./dock types: packages\react\dist\components\Dock\index.d.ts
+- @noctra/react ./dock import: packages\react\dist\components\Dock\index.js
+- @noctra/react ./toolbar types: packages\react\dist\components\Toolbar\index.d.ts
+- @noctra/react ./toolbar import: packages\react\dist\components\Toolbar\index.js
+- @noctra/react ./command-bar types: packages\react\dist\components\CommandBar\index.d.ts
+- @noctra/react ./command-bar import: packages\react\dist\components\CommandBar\index.js
+- @noctra/react ./status-bar types: packages\react\dist\components\StatusBar\index.d.ts
+- @noctra/react ./status-bar import: packages\react\dist\components\StatusBar\index.js
+- @noctra/react ./breadcrumb types: packages\react\dist\components\Breadcrumb\index.d.ts
+- @noctra/react ./breadcrumb import: packages\react\dist\components\Breadcrumb\index.js
+- @noctra/react ./context-menu types: packages\react\dist\components\ContextMenu\index.d.ts
+- @noctra/react ./context-menu import: packages\react\dist\components\ContextMenu\index.js
+- @noctra/react ./text-input types: packages\react\dist\components\TextInput\index.d.ts
+- @noctra/react ./text-input import: packages\react\dist\components\TextInput\index.js
+- @noctra/react ./color-picker types: packages\react\dist\components\ColorPicker\index.d.ts
+- @noctra/react ./color-picker import: packages\react\dist\components\ColorPicker\index.js
+- @noctra/react ./date-input types: packages\react\dist\components\DateInput\index.d.ts
+- @noctra/react ./date-input import: packages\react\dist\components\DateInput\index.js
+- @noctra/react ./date-range-picker types: packages\react\dist\components\DateRangePicker\index.d.ts
+- @noctra/react ./date-range-picker import: packages\react\dist\components\DateRangePicker\index.js
+- @noctra/react ./time-input types: packages\react\dist\components\TimeInput\index.d.ts
+- @noctra/react ./time-input import: packages\react\dist\components\TimeInput\index.js
+- @noctra/react ./date-time-input types: packages\react\dist\components\DateTimeInput\index.d.ts
+- @noctra/react ./date-time-input import: packages\react\dist\components\DateTimeInput\index.js
+- @noctra/react ./month-input types: packages\react\dist\components\MonthInput\index.d.ts
+- @noctra/react ./month-input import: packages\react\dist\components\MonthInput\index.js
+- @noctra/react ./week-input types: packages\react\dist\components\WeekInput\index.d.ts
+- @noctra/react ./week-input import: packages\react\dist\components\WeekInput\index.js
+- @noctra/react ./year-input types: packages\react\dist\components\YearInput\index.d.ts
+- @noctra/react ./year-input import: packages\react\dist\components\YearInput\index.js
+- @noctra/react ./tree-view types: packages\react\dist\components\TreeView\index.d.ts
+- @noctra/react ./tree-view import: packages\react\dist\components\TreeView\index.js
+- @noctra/react ./progress types: packages\react\dist\components\Progress\index.d.ts
+- @noctra/react ./progress import: packages\react\dist\components\Progress\index.js
+- @noctra/react ./loader types: packages\react\dist\components\Loader\index.d.ts
+- @noctra/react ./loader import: packages\react\dist\components\Loader\index.js
+- @noctra/react ./code-block types: packages\react\dist\components\CodeBlock\index.d.ts
+- @noctra/react ./code-block import: packages\react\dist\components\CodeBlock\index.js
+- @noctra/react ./inline-code types: packages\react\dist\components\InlineCode\index.d.ts
+- @noctra/react ./inline-code import: packages\react\dist\components\InlineCode\index.js
+- @noctra/react ./highlight types: packages\react\dist\components\Highlight\index.d.ts
+- @noctra/react ./highlight import: packages\react\dist\components\Highlight\index.js
+- @noctra/react ./link types: packages\react\dist\components\Link\index.d.ts
+- @noctra/react ./link import: packages\react\dist\components\Link\index.js
+- @noctra/react ./blockquote types: packages\react\dist\components\Blockquote\index.d.ts
+- @noctra/react ./blockquote import: packages\react\dist\components\Blockquote\index.js
+- @noctra/react ./prose types: packages\react\dist\components\Prose\index.d.ts
+- @noctra/react ./prose import: packages\react\dist\components\Prose\index.js
+- @noctra/react ./visually-hidden types: packages\react\dist\components\VisuallyHidden\index.d.ts
+- @noctra/react ./visually-hidden import: packages\react\dist\components\VisuallyHidden\index.js
+- @noctra/react ./portal types: packages\react\dist\components\Portal\index.d.ts
+- @noctra/react ./portal import: packages\react\dist\components\Portal\index.js
+- @noctra/react ./focus-trap types: packages\react\dist\components\FocusTrap\index.d.ts
+- @noctra/react ./focus-trap import: packages\react\dist\components\FocusTrap\index.js
+- @noctra/react ./click-outside types: packages\react\dist\components\ClickOutside\index.d.ts
+- @noctra/react ./click-outside import: packages\react\dist\components\ClickOutside\index.js
+- @noctra/react ./scroll-lock types: packages\react\dist\components\ScrollLock\index.d.ts
+- @noctra/react ./scroll-lock import: packages\react\dist\components\ScrollLock\index.js
+- @noctra/react ./simple-grid types: packages\react\dist\components\SimpleGrid\index.d.ts
+- @noctra/react ./simple-grid import: packages\react\dist\components\SimpleGrid\index.js
+- @noctra/react ./box types: packages\react\dist\components\Box\index.d.ts
+- @noctra/react ./box import: packages\react\dist\components\Box\index.js
+- @noctra/react ./paper types: packages\react\dist\components\Paper\index.d.ts
+- @noctra/react ./paper import: packages\react\dist\components\Paper\index.js
+- @noctra/react ./section types: packages\react\dist\components\Section\index.d.ts
+- @noctra/react ./section import: packages\react\dist\components\Section\index.js
+- @noctra/react ./page types: packages\react\dist\components\Page\index.d.ts
+- @noctra/react ./page import: packages\react\dist\components\Page\index.js
+- @noctra/react ./layout types: packages\react\dist\components\Layout\index.d.ts
+- @noctra/react ./layout import: packages\react\dist\components\Layout\index.js
+- @noctra/react README: packages/react/README.md
+- @noctra/react LICENSE: packages/react/LICENSE
+- packages/styles/package.json: packages/styles/package.json
+- @noctra/styles: private=false
+- @noctra/styles: alpha version 0.0.0-alpha.0
+- @noctra/styles: MIT license metadata
+- @noctra/styles: exports map exists
+- @noctra/styles . types: packages\styles\dist\index.d.ts
+- @noctra/styles . import: packages\styles\dist\index.js
+- @noctra/styles ./index.css: packages\styles\src\index.css
+- @noctra/styles ./reset.css: packages\styles\src\reset.css
+- @noctra/styles ./base.css: packages\styles\src\base.css
+- @noctra/styles ./tokens.css: packages\styles\src\tokens.css
+- @noctra/styles ./components.css: packages\styles\src\components.css
+- @noctra/styles ./utilities.css: packages\styles\src\utilities.css
+- @noctra/styles ./tokens/primitive.css: packages\styles\src\tokens\primitive.css
+- @noctra/styles ./tokens/semantic.css: packages\styles\src\tokens\semantic.css
+- @noctra/styles ./tokens/theme-dark.css: packages\styles\src\tokens\theme-dark.css
+- @noctra/styles ./tokens/theme-light.css: packages\styles\src\tokens\theme-light.css
+- @noctra/styles ./tokens/theme-accent.css: packages\styles\src\tokens\theme-accent.css
+- @noctra/styles ./tokens/theme-density.css: packages\styles\src\tokens\theme-density.css
+- @noctra/styles ./tokens/theme-radius.css: packages\styles\src\tokens\theme-radius.css
+- @noctra/styles ./components/button.css: packages\styles\src\components\button.css
+- @noctra/styles ./components/icon-button.css: packages\styles\src\components\icon-button.css
+- @noctra/styles ./components/card.css: packages\styles\src\components\card.css
+- @noctra/styles ./components/input.css: packages\styles\src\components\input.css
+- @noctra/styles ./components/number-input.css: packages\styles\src\components\number-input.css
+- @noctra/styles ./components/password-input.css: packages\styles\src\components\password-input.css
+- @noctra/styles ./components/search-input.css: packages\styles\src\components\search-input.css
+- @noctra/styles ./components/pin-input.css: packages\styles\src\components\pin-input.css
+- @noctra/styles ./components/file-input.css: packages\styles\src\components\file-input.css
+- @noctra/styles ./components/dropzone.css: packages\styles\src\components\dropzone.css
+- @noctra/styles ./components/color-input.css: packages\styles\src\components\color-input.css
+- @noctra/styles ./components/slider.css: packages\styles\src\components\slider.css
+- @noctra/styles ./components/range-slider.css: packages\styles\src\components\range-slider.css
+- @noctra/styles ./components/rating.css: packages\styles\src\components\rating.css
+- @noctra/styles ./components/select.css: packages\styles\src\components\select.css
+- @noctra/styles ./components/multi-select.css: packages\styles\src\components\multi-select.css
+- @noctra/styles ./components/autocomplete.css: packages\styles\src\components\autocomplete.css
+- @noctra/styles ./components/tags-input.css: packages\styles\src\components\tags-input.css
+- @noctra/styles ./components/segmented-control.css: packages\styles\src\components\segmented-control.css
+- @noctra/styles ./components/tabs.css: packages\styles\src\components\tabs.css
+- @noctra/styles ./components/accordion.css: packages\styles\src\components\accordion.css
+- @noctra/styles ./components/breadcrumbs.css: packages\styles\src\components\breadcrumbs.css
+- @noctra/styles ./components/pagination.css: packages\styles\src\components\pagination.css
+- @noctra/styles ./components/menu.css: packages\styles\src\components\menu.css
+- @noctra/styles ./components/popover.css: packages\styles\src\components\popover.css
+- @noctra/styles ./components/hover-card.css: packages\styles\src\components\hover-card.css
+- @noctra/styles ./components/drawer.css: packages\styles\src\components\drawer.css
+- @noctra/styles ./components/toast.css: packages\styles\src\components\toast.css
+- @noctra/styles ./components/notification.css: packages\styles\src\components\notification.css
+- @noctra/styles ./components/textarea.css: packages\styles\src\components\textarea.css
+- @noctra/styles ./components/checkbox.css: packages\styles\src\components\checkbox.css
+- @noctra/styles ./components/radio.css: packages\styles\src\components\radio.css
+- @noctra/styles ./components/switch.css: packages\styles\src\components\switch.css
+- @noctra/styles ./components/native-select.css: packages\styles\src\components\native-select.css
+- @noctra/styles ./components/form-field.css: packages\styles\src\components\form-field.css
+- @noctra/styles ./components/badge.css: packages\styles\src\components\badge.css
+- @noctra/styles ./components/alert.css: packages\styles\src\components\alert.css
+- @noctra/styles ./components/modal.css: packages\styles\src\components\modal.css
+- @noctra/styles ./components/tooltip.css: packages\styles\src\components\tooltip.css
+- @noctra/styles ./components/spinner.css: packages\styles\src\components\spinner.css
+- @noctra/styles ./components/skeleton.css: packages\styles\src\components\skeleton.css
+- @noctra/styles ./components/divider.css: packages\styles\src\components\divider.css
+- @noctra/styles ./components/avatar.css: packages\styles\src\components\avatar.css
+- @noctra/styles ./components/dialog.css: packages\styles\src\components\dialog.css
+- @noctra/styles ./components/command.css: packages\styles\src\components\command.css
+- @noctra/styles ./components/kbd.css: packages\styles\src\components\kbd.css
+- @noctra/styles ./components/code.css: packages\styles\src\components\code.css
+- @noctra/styles ./components/empty-state.css: packages\styles\src\components\empty-state.css
+- @noctra/styles ./components/table.css: packages\styles\src\components\table.css
+- @noctra/styles ./components/data-grid.css: packages\styles\src\components\data-grid.css
+- @noctra/styles ./components/calendar.css: packages\styles\src\components\calendar.css
+- @noctra/styles ./components/date-picker.css: packages\styles\src\components\date-picker.css
+- @noctra/styles ./components/time-picker.css: packages\styles\src\components\time-picker.css
+- @noctra/styles ./components/date-time-picker.css: packages\styles\src\components\date-time-picker.css
+- @noctra/styles ./components/timeline.css: packages\styles\src\components\timeline.css
+- @noctra/styles ./components/stepper.css: packages\styles\src\components\stepper.css
+- @noctra/styles ./components/tree.css: packages\styles\src\components\tree.css
+- @noctra/styles ./components/transfer-list.css: packages\styles\src\components\transfer-list.css
+- @noctra/styles ./components/list-box.css: packages\styles\src\components\list-box.css
+- @noctra/styles ./components/clipboard.css: packages\styles\src\components\clipboard.css
+- @noctra/styles ./components/credit-card.css: packages\styles\src\components\credit-card.css
+- @noctra/styles ./components/pin-code.css: packages\styles\src\components\pin-code.css
+- @noctra/styles ./components/float-label.css: packages\styles\src\components\float-label.css
+- @noctra/styles ./components/combobox.css: packages\styles\src\components\combobox.css
+- @noctra/styles ./components/tree-select.css: packages\styles\src\components\tree-select.css
+- @noctra/styles ./components/table-of-contents.css: packages\styles\src\components\table-of-contents.css
+- @noctra/styles ./components/anchor.css: packages\styles\src\components\anchor.css
+- @noctra/styles ./components/spotlight.css: packages\styles\src\components\spotlight.css
+- @noctra/styles ./components/layout-shell.css: packages\styles\src\components\layout-shell.css
+- @noctra/styles ./components/app-shell.css: packages\styles\src\components\app-shell.css
+- @noctra/styles ./components/header.css: packages\styles\src\components\header.css
+- @noctra/styles ./components/sidebar.css: packages\styles\src\components\sidebar.css
+- @noctra/styles ./components/footer.css: packages\styles\src\components\footer.css
+- @noctra/styles ./components/container.css: packages\styles\src\components\container.css
+- @noctra/styles ./components/grid.css: packages\styles\src\components\grid.css
+- @noctra/styles ./components/stack.css: packages\styles\src\components\stack.css
+- @noctra/styles ./components/group.css: packages\styles\src\components\group.css
+- @noctra/styles ./components/flex.css: packages\styles\src\components\flex.css
+- @noctra/styles ./components/center.css: packages\styles\src\components\center.css
+- @noctra/styles ./components/spacer.css: packages\styles\src\components\spacer.css
+- @noctra/styles ./components/aspect-ratio.css: packages\styles\src\components\aspect-ratio.css
+- @noctra/styles ./components/scroll-area.css: packages\styles\src\components\scroll-area.css
+- @noctra/styles ./components/split-pane.css: packages\styles\src\components\split-pane.css
+- @noctra/styles ./components/resizable-panel.css: packages\styles\src\components\resizable-panel.css
+- @noctra/styles ./components/dock.css: packages\styles\src\components\dock.css
+- @noctra/styles ./components/toolbar.css: packages\styles\src\components\toolbar.css
+- @noctra/styles ./components/command-bar.css: packages\styles\src\components\command-bar.css
+- @noctra/styles ./components/status-bar.css: packages\styles\src\components\status-bar.css
+- @noctra/styles ./components/breadcrumb.css: packages\styles\src\components\breadcrumb.css
+- @noctra/styles ./components/context-menu.css: packages\styles\src\components\context-menu.css
+- @noctra/styles ./components/text-input.css: packages\styles\src\components\text-input.css
+- @noctra/styles ./components/color-picker.css: packages\styles\src\components\color-picker.css
+- @noctra/styles ./components/date-input.css: packages\styles\src\components\date-input.css
+- @noctra/styles ./components/date-range-picker.css: packages\styles\src\components\date-range-picker.css
+- @noctra/styles ./components/time-input.css: packages\styles\src\components\time-input.css
+- @noctra/styles ./components/date-time-input.css: packages\styles\src\components\date-time-input.css
+- @noctra/styles ./components/month-input.css: packages\styles\src\components\month-input.css
+- @noctra/styles ./components/week-input.css: packages\styles\src\components\week-input.css
+- @noctra/styles ./components/year-input.css: packages\styles\src\components\year-input.css
+- @noctra/styles ./components/tree-view.css: packages\styles\src\components\tree-view.css
+- @noctra/styles ./components/progress.css: packages\styles\src\components\progress.css
+- @noctra/styles ./components/loader.css: packages\styles\src\components\loader.css
+- @noctra/styles ./components/code-block.css: packages\styles\src\components\code-block.css
+- @noctra/styles ./components/inline-code.css: packages\styles\src\components\inline-code.css
+- @noctra/styles ./components/highlight.css: packages\styles\src\components\highlight.css
+- @noctra/styles ./components/link.css: packages\styles\src\components\link.css
+- @noctra/styles ./components/blockquote.css: packages\styles\src\components\blockquote.css
+- @noctra/styles ./components/prose.css: packages\styles\src\components\prose.css
+- @noctra/styles ./components/visually-hidden.css: packages\styles\src\components\visually-hidden.css
+- @noctra/styles ./components/portal.css: packages\styles\src\components\portal.css
+- @noctra/styles ./components/focus-trap.css: packages\styles\src\components\focus-trap.css
+- @noctra/styles ./components/click-outside.css: packages\styles\src\components\click-outside.css
+- @noctra/styles ./components/scroll-lock.css: packages\styles\src\components\scroll-lock.css
+- @noctra/styles ./components/simple-grid.css: packages\styles\src\components\simple-grid.css
+- @noctra/styles ./components/box.css: packages\styles\src\components\box.css
+- @noctra/styles ./components/paper.css: packages\styles\src\components\paper.css
+- @noctra/styles ./components/section.css: packages\styles\src\components\section.css
+- @noctra/styles ./components/page.css: packages\styles\src\components\page.css
+- @noctra/styles ./components/layout.css: packages\styles\src\components\layout.css
+- @noctra/styles README: packages/styles/README.md
+- @noctra/styles LICENSE: packages/styles/LICENSE
+- packages/tokens/package.json: packages/tokens/package.json
+- @noctra/tokens: private=false
+- @noctra/tokens: alpha version 0.0.0-alpha.0
+- @noctra/tokens: MIT license metadata
+- @noctra/tokens: exports map exists
+- @noctra/tokens . types: packages\tokens\dist\index.d.ts
+- @noctra/tokens . import: packages\tokens\dist\index.js
+- @noctra/tokens LICENSE: packages/tokens/LICENSE
+- packages/utils/package.json: packages/utils/package.json
+- @noctra/utils: private=false
+- @noctra/utils: alpha version 0.0.0-alpha.0
+- @noctra/utils: MIT license metadata
+- @noctra/utils: exports map exists
+- @noctra/utils . types: packages\utils\dist\index.d.ts
+- @noctra/utils . import: packages\utils\dist\index.js
+- @noctra/utils README: packages/utils/README.md
+- @noctra/utils LICENSE: packages/utils/LICENSE
+
+## Warnings
+
+- Missing docs/installation.md: docs/installation.md
+- Missing docs/foundation-summary.md: docs/foundation-summary.md
+- Missing @noctra/tokens README: packages/tokens/README.md

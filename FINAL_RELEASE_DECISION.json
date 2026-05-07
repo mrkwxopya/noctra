@@ -1,0 +1,443 @@
+{
+  "generatedAt": "2026-05-07T02:01:14.858Z",
+  "decision": "PASS_FINAL_HARD_GATE",
+  "blockers": [],
+  "summary": {
+    "publishablePackages": 4,
+    "components": 119,
+    "criticalReports": 8,
+    "optionalReports": 5,
+    "blockerCount": 0,
+    "criticalReportProblems": 0,
+    "criticalReportWarnings": 0,
+    "optionalReportWarnings": 0,
+    "distRoots": 5,
+    "missingDistRoots": 0
+  },
+  "publishablePackages": [
+    {
+      "path": "packages/react/package.json",
+      "dir": "packages/react",
+      "name": "@noctra/react",
+      "version": "0.0.0-alpha.0",
+      "private": false,
+      "type": "module",
+      "publishConfigAccess": "public",
+      "exportCount": 122,
+      "fileCount": 3
+    },
+    {
+      "path": "packages/styles/package.json",
+      "dir": "packages/styles",
+      "name": "@noctra/styles",
+      "version": "0.0.0-alpha.0",
+      "private": false,
+      "type": "module",
+      "publishConfigAccess": "public",
+      "exportCount": 133,
+      "fileCount": 4
+    },
+    {
+      "path": "packages/tokens/package.json",
+      "dir": "packages/tokens",
+      "name": "@noctra/tokens",
+      "version": "0.0.0-alpha.0",
+      "private": false,
+      "type": "module",
+      "publishConfigAccess": "public",
+      "exportCount": 1,
+      "fileCount": 3
+    },
+    {
+      "path": "packages/utils/package.json",
+      "dir": "packages/utils",
+      "name": "@noctra/utils",
+      "version": "0.0.0-alpha.0",
+      "private": false,
+      "type": "module",
+      "publishConfigAccess": "public",
+      "exportCount": 1,
+      "fileCount": 3
+    }
+  ],
+  "components": [
+    "Accordion",
+    "Alert",
+    "Anchor",
+    "AppShell",
+    "AspectRatio",
+    "Autocomplete",
+    "Avatar",
+    "Badge",
+    "Blockquote",
+    "Box",
+    "Breadcrumb",
+    "Breadcrumbs",
+    "Button",
+    "Calendar",
+    "Card",
+    "Center",
+    "Checkbox",
+    "ClickOutside",
+    "Clipboard",
+    "Code",
+    "CodeBlock",
+    "ColorInput",
+    "ColorPicker",
+    "Combobox",
+    "Command",
+    "CommandBar",
+    "Container",
+    "ContextMenu",
+    "CreditCard",
+    "DataGrid",
+    "DateInput",
+    "DatePicker",
+    "DateRangePicker",
+    "DateTimeInput",
+    "DateTimePicker",
+    "Dialog",
+    "Divider",
+    "Dock",
+    "Drawer",
+    "Dropzone",
+    "EmptyState",
+    "FileInput",
+    "Flex",
+    "FloatLabel",
+    "FocusTrap",
+    "Footer",
+    "FormField",
+    "Grid",
+    "Group",
+    "Header",
+    "Highlight",
+    "HoverCard",
+    "IconButton",
+    "InlineCode",
+    "Input",
+    "Kbd",
+    "Layout",
+    "LayoutShell",
+    "Link",
+    "ListBox",
+    "Loader",
+    "Menu",
+    "Modal",
+    "MonthInput",
+    "MultiSelect",
+    "NativeSelect",
+    "Notification",
+    "NumberInput",
+    "Page",
+    "Pagination",
+    "Paper",
+    "PasswordInput",
+    "PinCode",
+    "PinInput",
+    "Popover",
+    "Portal",
+    "Progress",
+    "Prose",
+    "Radio",
+    "RangeSlider",
+    "Rating",
+    "ResizablePanel",
+    "ScrollArea",
+    "ScrollLock",
+    "SearchInput",
+    "Section",
+    "SegmentedControl",
+    "Select",
+    "Sidebar",
+    "SimpleGrid",
+    "Skeleton",
+    "Slider",
+    "Spacer",
+    "Spinner",
+    "SplitPane",
+    "Spotlight",
+    "Stack",
+    "StatusBar",
+    "Stepper",
+    "Switch",
+    "Table",
+    "TableOfContents",
+    "Tabs",
+    "TagsInput",
+    "Textarea",
+    "TextInput",
+    "TimeInput",
+    "Timeline",
+    "TimePicker",
+    "Toast",
+    "Toolbar",
+    "Tooltip",
+    "TransferList",
+    "Tree",
+    "TreeSelect",
+    "TreeView",
+    "VisuallyHidden",
+    "WeekInput",
+    "YearInput"
+  ],
+  "dist": [
+    {
+      "root": "packages/react/dist",
+      "exists": true,
+      "files": 1948,
+      "bytes": 2167888,
+      "hasJs": true,
+      "hasTypes": true,
+      "hasCss": false
+    },
+    {
+      "root": "packages/styles/dist",
+      "exists": true,
+      "files": 8,
+      "bytes": 89436,
+      "hasJs": true,
+      "hasTypes": true,
+      "hasCss": false
+    },
+    {
+      "root": "packages/tokens/dist",
+      "exists": true,
+      "files": 516,
+      "bytes": 295133,
+      "hasJs": true,
+      "hasTypes": true,
+      "hasCss": false
+    },
+    {
+      "root": "packages/utils/dist",
+      "exists": true,
+      "files": 12,
+      "bytes": 2954,
+      "hasJs": true,
+      "hasTypes": true,
+      "hasCss": false
+    },
+    {
+      "root": "apps/docs/dist",
+      "exists": true,
+      "files": 3,
+      "bytes": 614930,
+      "hasJs": true,
+      "hasTypes": false,
+      "hasCss": true
+    }
+  ],
+  "criticalReports": [
+    {
+      "path": "component-inventory-audit-report.md",
+      "title": "Noctra Component Inventory Audit",
+      "generated": "2026-05-07T01:38:11.739Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "-",
+      "sha256": "6e60ee1affd3584e8ffba2c5645450c2dac50460fb4525a0e2ca6afdab32c246"
+    },
+    {
+      "path": "component-prop-conflict-audit-report.md",
+      "title": "Noctra Component Prop Conflict Audit",
+      "generated": "2026-05-07T01:38:11.875Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "-",
+      "sha256": "ab7184b7eb74880fee56271a98395b0c1f1a826d9cca168cf7ea718ecb7b756f"
+    },
+    {
+      "path": "workspace-dependency-boundary-audit-report.md",
+      "title": "Noctra Workspace Dependency Boundary Audit",
+      "generated": "2026-05-07T01:38:11.586Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "-",
+      "sha256": "e65307d17140ecd41e8d4ec4acd4b43d8ed46c277723a02207f4f56baf484bb2"
+    },
+    {
+      "path": "release-metadata-audit-report.md",
+      "title": "Noctra Release Metadata Audit",
+      "generated": "2026-05-07T01:38:11.637Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "-",
+      "sha256": "433c055e104e7f731f3c6a9146cfd4982b235eafa8c7fb307c04ad294dd7453d"
+    },
+    {
+      "path": "package-entry-point-audit-report.md",
+      "title": "Noctra Package Entry Point Audit",
+      "generated": "2026-05-07T01:38:07.982Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "-",
+      "sha256": "7fd4d34acc63df53f19701bb178d20528b296d8913e77ce6bc05c658b868267d"
+    },
+    {
+      "path": "dist-artifact-audit-report.md",
+      "title": "Noctra Dist Artifact Audit",
+      "generated": "2026-05-07T01:38:08.073Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "-",
+      "sha256": "236242cb5830dc5f661bf03ea1d2d303367511b9e71e16d4546e7826aa0c82a0"
+    },
+    {
+      "path": "npm-pack-dry-run-audit-report.md",
+      "title": "Noctra NPM Pack Dry Run Audit",
+      "generated": "2026-05-07T01:38:11.531Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "-",
+      "sha256": "190d323775208968e015e077000e0f269b9b8f99c6126fe429bd7ee91ae33c17"
+    },
+    {
+      "path": "final-release-readiness-snapshot-report.md",
+      "title": "Noctra Final Release Readiness Snapshot Gate Report",
+      "generated": "2026-05-07T01:38:12.369Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "READY_FOR_FINAL_REVIEW",
+      "sha256": "747bd8e2342b8f03c5073e3ed4a0e11b5dfbc44ab07ad57c3a4199f8084ffb52"
+    }
+  ],
+  "optionalReports": [
+    {
+      "path": "docs-component-usage-audit-report.md",
+      "title": "Noctra Docs Component Usage Audit",
+      "generated": "2026-05-07T01:38:11.809Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "-",
+      "sha256": "8da9569df6d571da3af4ccbe5d5806151650b62f22c8448f60008a73281c82bf"
+    },
+    {
+      "path": "noctra-quality-reports-index.md",
+      "title": "Noctra Quality Reports Index",
+      "generated": "2026-05-07T01:38:11.944Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "-",
+      "sha256": "24ab83e20c3fbaba0afd2912c288839bcc63db80af1ef2a39f2565b4dd630a9c"
+    },
+    {
+      "path": "final-quality-gate-report.md",
+      "title": "Noctra Final Quality Gate Report",
+      "generated": "-",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "-",
+      "sha256": "8bea5f5c8c4a668c226780ee9fbc6cdaa60e3474cc7917b45719a4b98349a20e"
+    },
+    {
+      "path": "final-release-notes-publish-checklist-report.md",
+      "title": "Noctra Final Release Notes And Publish Checklist Gate Report",
+      "generated": "2026-05-07T01:38:12.216Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "-",
+      "sha256": "5649c8982afac27c3204aabe31b7357f4097637a03f8e5779e710031dc04fa86"
+    },
+    {
+      "path": "final-release-readiness-snapshot-report.md",
+      "title": "Noctra Final Release Readiness Snapshot Gate Report",
+      "generated": "2026-05-07T01:38:12.369Z",
+      "problems": 0,
+      "warnings": 0,
+      "changes": 0,
+      "status": "READY_FOR_FINAL_REVIEW",
+      "sha256": "747bd8e2342b8f03c5073e3ed4a0e11b5dfbc44ab07ad57c3a4199f8084ffb52"
+    }
+  ],
+  "requiredFileHashes": [
+    {
+      "file": "package.json",
+      "sha256": "4eac56161501b3113895c9ecd47aae8ade7ccf3dd3f6a27336215d92b4d4c90a"
+    },
+    {
+      "file": "pnpm-lock.yaml",
+      "sha256": "f6655c460fd55af32ceabd29d0ecab7a99cccacf1be9f4a111acc103bb2a34ba"
+    },
+    {
+      "file": "pnpm-workspace.yaml",
+      "sha256": "9250753e34f84fffb69d1b040530c6daa564fad994ec8366d2d767801aaaf547"
+    },
+    {
+      "file": "README.md",
+      "sha256": "d88a44e54fbe193c789edfb5a9cd102c24405b1cf9c7311641713a13442fa1cd"
+    },
+    {
+      "file": "CHANGELOG.md",
+      "sha256": "12b6686efda17890fe2ffd469dbc52628c8d561acf4a0f5f6707a5bc217ddf5c"
+    },
+    {
+      "file": "RELEASE_NOTES.md",
+      "sha256": "865e6b3958adf6348b89d47e911031a123f4b390b882a004f1d7b17a9133de8f"
+    },
+    {
+      "file": "PUBLISH_CHECKLIST.md",
+      "sha256": "4edfcd8d70766be61bc3600d003e88409a12fdd344521de37bc98817c20769df"
+    },
+    {
+      "file": "final-quality-gate-report.md",
+      "sha256": "8bea5f5c8c4a668c226780ee9fbc6cdaa60e3474cc7917b45719a4b98349a20e"
+    },
+    {
+      "file": "component-inventory-audit-report.md",
+      "sha256": "6e60ee1affd3584e8ffba2c5645450c2dac50460fb4525a0e2ca6afdab32c246"
+    },
+    {
+      "file": "component-prop-conflict-audit-report.md",
+      "sha256": "ab7184b7eb74880fee56271a98395b0c1f1a826d9cca168cf7ea718ecb7b756f"
+    },
+    {
+      "file": "workspace-dependency-boundary-audit-report.md",
+      "sha256": "e65307d17140ecd41e8d4ec4acd4b43d8ed46c277723a02207f4f56baf484bb2"
+    },
+    {
+      "file": "release-metadata-audit-report.md",
+      "sha256": "433c055e104e7f731f3c6a9146cfd4982b235eafa8c7fb307c04ad294dd7453d"
+    },
+    {
+      "file": "package-entry-point-audit-report.md",
+      "sha256": "7fd4d34acc63df53f19701bb178d20528b296d8913e77ce6bc05c658b868267d"
+    },
+    {
+      "file": "dist-artifact-audit-report.md",
+      "sha256": "236242cb5830dc5f661bf03ea1d2d303367511b9e71e16d4546e7826aa0c82a0"
+    },
+    {
+      "file": "npm-pack-dry-run-audit-report.md",
+      "sha256": "190d323775208968e015e077000e0f269b9b8f99c6126fe429bd7ee91ae33c17"
+    },
+    {
+      "file": "noctra-release-candidate-manifest.json",
+      "sha256": "15e8aa4dd4775de78b115c7d864d9c5ba09d70503f0aecc030fcce1e2ddebf71"
+    },
+    {
+      "file": "noctra-release-candidate-manifest.md",
+      "sha256": "d97fe744692aa2aefcf7995504d0218548ef1f074a7c05347c8b78fc03764590"
+    },
+    {
+      "file": "FINAL_RELEASE_READINESS_SNAPSHOT.json",
+      "sha256": "f34c3e1671cc907674cdbd5f2571759a32d6f3c7ff3f07ce09a59317de31d283"
+    },
+    {
+      "file": "FINAL_RELEASE_READINESS_SNAPSHOT.md",
+      "sha256": "d12e5080df8e2cb8765687063810e72b3a0a90cc5c4170ddc6ce96b57b0b03e0"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "generatedAt": "2026-05-07T02:01:14.753Z",
+  "decision": "PASS_FINAL_DOCS_RELEASE_GATE",
+  "blockers": [],
+  "warnings": [],
+  "summary": {
+    "auditProblems": 0,
+    "auditWarnings": 0,
+    "generatedComponents": 119,
+    "generatedProps": 2786,
+    "generatedTokens": 1661,
+    "curatedExamples": 34,
+    "propDescriptions": 108,
+    "docsDistFiles": 3,
+    "docsDistBytes": 614930
+  },
+  "files": [
+    {
+      "file": "apps/docs/src/main.tsx",
+      "sha256": "e9c28786ac0842d763457c8e2a59621de220766b18d86f9e7097f4c5f77054e5"
+    },
+    {
+      "file": "apps/docs/src/docs.css",
+      "sha256": "b747c8710becc3c0ceeb4fc43ffdda0acf8fcc6e787875e1e79b4e705d514a38"
+    },
+    {
+      "file": "apps/docs/src/components/DocsChrome.tsx",
+      "sha256": "672418e655c938f72b26a451643892c23821ae9bd156d0f07a94511b915b1dfc"
+    },
+    {
+      "file": "apps/docs/src/pages/OverviewPage.tsx",
+      "sha256": "58e223c183eeb6a75eed0d8375d6e68aa824ba644ba647a2d0e0e379f30f5fd8"
+    },
+    {
+      "file": "apps/docs/src/pages/ComponentsPage.tsx",
+      "sha256": "2ce4245c888101d05857df263fee0ad083139779829c542f8f0fcbed31dc6f1e"
+    },
+    {
+      "file": "apps/docs/src/pages/ComponentDetailPage.tsx",
+      "sha256": "3c5cc16fb9457574b8b0a0a85a5a7e343133c98864701545c92686d8ac93f316"
+    },
+    {
+      "file": "apps/docs/src/pages/ArchitecturePage.tsx",
+      "sha256": "f1ed2f565f2d18886d2742b26e6bf804087c24c79d7c3df6a0185a5acc1595c4"
+    },
+    {
+      "file": "apps/docs/src/pages/ThemingPage.tsx",
+      "sha256": "dbb5cc18caccda2eb3b0c422160801d636d9f88bf278389f429a868899cd20ce"
+    },
+    {
+      "file": "apps/docs/src/pages/QualityPage.tsx",
+      "sha256": "8dce6260050e3022bf4cedb6fb9d94e7ed5a2798ed83ce7f01853aba95f8b129"
+    },
+    {
+      "file": "apps/docs/src/pages/ReleasePage.tsx",
+      "sha256": "4c962874a8590defb80459a00d8b8a94f566ccde997ef391230139cecf3b0961"
+    },
+    {
+      "file": "apps/docs/src/data/componentExamples.tsx",
+      "sha256": "4e911f62467ccb4087c6af7f2755104e30bb882942d78060ddba7a3c1d0d0a55"
+    },
+    {
+      "file": "apps/docs/src/data/propDescriptions.ts",
+      "sha256": "4756b5993db763a2e241ecf2a42c32dd865afa0399dfd58446586bf22fff1af8"
+    },
+    {
+      "file": "apps/docs/src/generated/noctra-professional-docs.generated.ts",
+      "sha256": "c0e06040d5d4e64e38c97d64df4bb79a94fb0902349ebae1fbba04d6adb0c864"
+    },
+    {
+      "file": "professional-docs-audit-report.md",
+      "sha256": "bfc55ebaa64602e4575aadb9a76437d6e1cb4c7d2eeb395632c2e70675e6e9c3"
+    },
+    {
+      "file": "professional-docs-data-generation-report.md",
+      "sha256": "d7b2bc845c19b60dbae8696700b0e260c8d06beddb8da34f39c9e8e25d77720e"
+    },
+    {
+      "file": "docs-typecheck-debug.log",
+      "sha256": "d14f63ee551260745a3e658dc4777b46d3e041d4acdfff19cbc236d5caad9ad1"
+    },
+    {
+      "file": "docs-build-debug.log",
+      "sha256": "24d6c5bd8fccfd0584b9de0dd9c68e8c50a61bc4910b386e9c9b994d9bcb999b"
+    }
+  ],
+  "distSamples": [
+    "apps/docs/dist/assets/index-Bzuwqdnb.css",
+    "apps/docs/dist/assets/index-j8YKOYT1.js",
+    "apps/docs/dist/index.html"
+  ]
+}
