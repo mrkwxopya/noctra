@@ -13,7 +13,6 @@ import { MantineStyleComponentDocs } from "../components/MantineStyleComponentDo
 import { getCategoryLabel, getPropDescription } from "../data/propDescriptions";
 import { noctraDocsComponents, type NoctraDocsComponent } from "../generated/noctra-professional-docs.generated";
 import { docsHref } from "../lib/docsRouting";
-import { ButtonReferencePage } from "./ButtonReferencePage";
 
 const componentPageAnchors = [
   { href: "#usage", label: "Usage", description: "Import and basic usage" },
@@ -243,10 +242,6 @@ function getAccessibilityNotes(component: NoctraDocsComponent) {
 }
 
 export function ComponentDetailPage({ component }: { component: NoctraDocsComponent }) {
-  if (component.name === "Button") {
-    return <ButtonReferencePage component={component} />;
-  }
-
   const relatedComponents = noctraDocsComponents
     .filter((item) => item.group === component.group && item.name !== component.name)
     .slice(0, 8);
