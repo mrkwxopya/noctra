@@ -64,9 +64,9 @@ jobs:
       - name: Typecheck docs with log
         run: pnpm --filter @noctra/docs typecheck > docs-typecheck-debug.log 2>&1
 
-      - name: Build docs with log
+      - name: Build docs with GitHub Pages base
         env:
-          GITHUB_PAGES_BASE: /${{ github.event.repository.name }}/
+          GITHUB_PAGES_BASE: /noctra/
         run: pnpm --filter @noctra/docs build > docs-build-debug.log 2>&1
 
       - name: Print docs logs
@@ -76,6 +76,12 @@ jobs:
           if [ -f docs-typecheck-debug.log ]; then cat docs-typecheck-debug.log; fi
           echo "----- docs build log -----"
           if [ -f docs-build-debug.log ]; then cat docs-build-debug.log; fi
+
+      - name: Verify built asset paths
+        run: |
+          test -f apps/docs/dist/index.html
+          grep -q '"/noctra/assets/' apps/docs/dist/index.html
+          cp apps/docs/dist/index.html apps/docs/dist/404.html
 
       - name: Final quality gate
         run: pnpm exec node scripts/final-quality-gate.mjs
