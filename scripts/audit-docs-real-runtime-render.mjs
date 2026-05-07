@@ -66,23 +66,7 @@ function toViteFsId(path) {
   return `/@fs/${resolve(path).replace(/\\/g, "/")}`;
 }
 
-function extractComponents() {
-  const generated = readText("apps/docs/src/generated/noctra-professional-docs.generated.ts");
-  const names = new Set();
-
-  for (const match of generated.matchAll(/name:\s*"([A-Z][A-Za-z0-9]*)"/g)) {
-    const name = match[1];
-
-    if (name && !removedComponents.has(name)) {
-      names.add(name);
-    }
-  }
-
-  return Array.from(names).sort((a, b) => a.localeCompare(b));
-}
-
-function compilePresetsRuntimeModule() {
-  const sourcePath = "apps/docs/src/data/interactiveDemoPresets.ts";
+function compileTsModule(sourcePath, outName) {
   const source = readText(sourcePath);
 
   if (!source) {
@@ -108,15 +92,55 @@ function compilePresetsRuntimeModule() {
       .map((diagnostic) => `TS${diagnostic.code}: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")}`)
       .join("\n");
 
-    throw new Error(`interactiveDemoPresets.ts transpile failed:\n${message}`);
+    throw new Error(`${sourcePath} transpile failed:\n${message}`);
   }
 
   mkdirSync("apps/docs/.tmp-docs-runtime", { recursive: true });
 
-  const runtimePath = "apps/docs/.tmp-docs-runtime/interactiveDemoPresets.runtime.mjs";
+  const runtimePath = `apps/docs/.tmp-docs-runtime/${outName}.mjs`;
   writeText(runtimePath, result.outputText);
 
   return pathToFileURL(resolve(runtimePath)).href;
+}
+
+async function getGeneratedComponentNames() {
+  const moduleUrl = compileTsModule(
+    "apps/docs/src/generated/noctra-professional-docs.generated.ts",
+    "noctra-professional-docs.generated.runtime"
+  );
+
+  const generatedModule = await import(`${moduleUrl}?v=${Date.now()}`);
+  const candidates = [
+    generatedModule.noctraDocsComponents,
+    generatedModule.components,
+    generatedModule.default
+  ];
+
+  for (const candidate of candidates) {
+    if (Array.isArray(candidate)) {
+      return candidate
+        .map((component) => component?.name)
+        .filter((name) => typeof name === "string" && !removedComponents.has(name))
+        .sort((a, b) => a.localeCompare(b));
+    }
+  }
+
+  const text = readText("apps/docs/src/generated/noctra-professional-docs.generated.ts");
+  const names = new Set();
+
+  for (const match of text.matchAll(/\b(?:name|componentName)\s*:\s*["'`]([A-Z][A-Za-z0-9]*)["'`]/g)) {
+    const name = match[1];
+
+    if (name && !removedComponents.has(name)) {
+      names.add(name);
+    }
+  }
+
+  return Array.from(names).sort((a, b) => a.localeCompare(b));
+}
+
+function compilePresetsRuntimeModule() {
+  return compileTsModule("apps/docs/src/data/interactiveDemoPresets.ts", "interactiveDemoPresets.runtime");
 }
 
 async function loadReactRuntimeWithVite() {
@@ -236,7 +260,7 @@ const passed = [];
 let viteServer;
 
 try {
-  const componentNames = extractComponents();
+  const componentNames = await getGeneratedComponentNames();
   const loadedRuntime = await loadReactRuntimeWithVite();
   const reactRuntime = loadedRuntime.runtime;
   viteServer = loadedRuntime.server;

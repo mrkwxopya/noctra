@@ -1,3 +1,22 @@
+
+const NOCTRA_REMOVED_DOC_COMPONENTS = new Set([
+  "DateInput",
+  "DateTimeInput",
+  "MonthInput",
+  "TimeInput",
+  "WeekInput",
+  "YearInput",
+  "TimePicker",
+  "Calendar",
+  "DatePicker",
+  "DateTimePicker",
+  "DateRangePicker"
+]);
+
+function isNoctraRemovedDocComponent(name) {
+  return NOCTRA_REMOVED_DOC_COMPONENTS.has(name);
+}
+
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -156,7 +175,7 @@ function inferDescription(name, group) {
 
 const componentNames = listComponentDirs();
 
-const components = componentNames.map((name) => {
+const components = componentNames.filter((name) => !isNoctraRemovedDocComponent(name)).map((name) => {
   const kebab = toKebabCase(name);
   const reactDir = `packages/react/src/components/${name}`;
   const typePath = `${reactDir}/${name}.types.ts`;

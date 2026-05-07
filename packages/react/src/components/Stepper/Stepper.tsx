@@ -61,7 +61,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(function Stepper
     error,
     successMessage,
     warningMessage,
-    emptyMessage = "No steps available",
+    emptyMessage = "Configure step items to display the workflow.",
     variant = "surface",
     orientation = "horizontal",
     size = "md",

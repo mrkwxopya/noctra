@@ -1,18 +1,18 @@
 # Professional Docs Data Generation Report
 
-Generated: 2026-05-07T02:00:39.512Z
+Generated: 2026-05-07T14:52:29.872Z
 
-Components: 119
+Components: 108
 Groups: 7
-Props extracted: 2786
-Tokens extracted: 1661
+Props extracted: 2477
+Tokens extracted: 1505
 
 ## Groups
 
 - Data display: 6
 - Feedback: 9
-- General: 54
-- Inputs: 19
+- General: 45
+- Inputs: 17
 - Layout: 14
 - Navigation: 9
 - Overlay: 8
@@ -32,7 +32,6 @@ Tokens extracted: 1661
 - Breadcrumb: props=17, anatomy=9, tokens=16
 - Breadcrumbs: props=10, anatomy=8, tokens=12
 - Button: props=9, anatomy=4, tokens=18
-- Calendar: props=21, anatomy=8, tokens=17
 - Card: props=31, anatomy=15, tokens=17
 - Center: props=18, anatomy=2, tokens=10
 - Checkbox: props=25, anatomy=8, tokens=13
@@ -49,11 +48,6 @@ Tokens extracted: 1661
 - ContextMenu: props=33, anatomy=21, tokens=19
 - CreditCard: props=31, anatomy=15, tokens=12
 - DataGrid: props=28, anatomy=20, tokens=15
-- DateInput: props=30, anatomy=10, tokens=14
-- DatePicker: props=36, anatomy=19, tokens=13
-- DateRangePicker: props=37, anatomy=21, tokens=14
-- DateTimeInput: props=31, anatomy=10, tokens=14
-- DateTimePicker: props=16, anatomy=8, tokens=14
 - Dialog: props=21, anatomy=10, tokens=14
 - Divider: props=17, anatomy=3, tokens=10
 - Dock: props=20, anatomy=9, tokens=17
@@ -82,7 +76,6 @@ Tokens extracted: 1661
 - Loader: props=16, anatomy=9, tokens=12
 - Menu: props=36, anatomy=22, tokens=20
 - Modal: props=30, anatomy=11, tokens=16
-- MonthInput: props=30, anatomy=10, tokens=14
 - MultiSelect: props=40, anatomy=26, tokens=21
 - NativeSelect: props=14, anatomy=8, tokens=19
 - Notification: props=16, anatomy=8, tokens=14
@@ -125,9 +118,7 @@ Tokens extracted: 1661
 - TagsInput: props=36, anatomy=12, tokens=15
 - Textarea: props=35, anatomy=11, tokens=15
 - TextInput: props=29, anatomy=11, tokens=14
-- TimeInput: props=31, anatomy=10, tokens=14
 - Timeline: props=26, anatomy=17, tokens=14
-- TimePicker: props=14, anatomy=8, tokens=14
 - Toast: props=17, anatomy=8, tokens=15
 - Toolbar: props=24, anatomy=15, tokens=17
 - Tooltip: props=29, anatomy=6, tokens=14
@@ -136,5 +127,3 @@ Tokens extracted: 1661
 - TreeSelect: props=31, anatomy=23, tokens=19
 - TreeView: props=32, anatomy=17, tokens=13
 - VisuallyHidden: props=10, anatomy=1, tokens=8
-- WeekInput: props=30, anatomy=10, tokens=14
-- YearInput: props=33, anatomy=12, tokens=14
