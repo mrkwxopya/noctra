@@ -1,4 +1,3 @@
-import { docsHref } from "../lib/docsRouting";
 export type DocsRouteId =
   | "home"
   | "getting-started"
