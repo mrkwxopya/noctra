@@ -64,7 +64,6 @@ const variants: ButtonVariant[] = ["filled", "light", "outline", "subtle", "ghos
 const tones: ButtonTone[] = ["primary", "neutral", "success", "warning", "danger"];
 const sizes: ButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
 const radii: ButtonRadius[] = ["none", "sm", "md", "lg", "xl", "full"];
-const labels = ["Button", "Save changes", "Continue", "Delete"] as const;
 
 function cleanButtonProps(state: ButtonPlaygroundState) {
   const props: Record<string, unknown> = {
@@ -117,88 +116,22 @@ function ButtonPreview({
   );
 }
 
-function ControlButton({
-  active,
-  children,
-  onClick
-}: {
-  active: boolean;
-  children: ReactNode;
-  onClick: () => void;
-}) {
-  return createElement(
-    ButtonRuntime,
-    {
-      type: "button",
-      variant: active ? "filled" : "subtle",
-      tone: active ? "primary" : "neutral",
-      size: "sm",
-      radius: "md",
-      onClick,
-      "aria-pressed": active
-    },
-    children
-  );
-}
-
-function ControlGroup<TValue extends string>({
-  label,
-  value,
-  options,
-  onChange
-}: {
-  label: string;
-  value: TValue;
-  options: readonly TValue[];
-  onChange: (value: TValue) => void;
-}) {
-  return (
-    <DocCard title={label}>
-      <div className="nd-related-grid">
-        {options.map((option) => (
-          <ControlButton key={option} active={value === option} onClick={() => onChange(option)}>
-            {option}
-          </ControlButton>
-        ))}
-      </div>
-    </DocCard>
-  );
-}
-
-function BooleanControl({
-  label,
-  checked,
-  onChange
-}: {
-  label: string;
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-}) {
-  return (
-    <DocCard title={label}>
-      <div className="nd-related-grid">
-        <ControlButton active={!checked} onClick={() => onChange(false)}>
-          Off
-        </ControlButton>
-        <ControlButton active={checked} onClick={() => onChange(true)}>
-          On
-        </ControlButton>
-      </div>
-    </DocCard>
-  );
-}
-
-function ExampleCard({
-  label,
+function PreviewSurface({
+  title,
+  description,
   children
 }: {
-  label: string;
+  title: string;
+  description?: string;
   children: ReactNode;
 }) {
   return (
     <div className="nd-related-card">
-      <strong>{label}</strong>
-      <span>{children}</span>
+      <strong>{title}</strong>
+      {description ? <span>{description}</span> : null}
+      <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", paddingTop: 12 }}>
+        {children}
+      </div>
     </div>
   );
 }
@@ -217,12 +150,74 @@ function ExampleRow({
       <p>{description}</p>
       <div className="nd-related-grid">
         {examples.map((example) => (
-          <ExampleCard key={example.label} label={example.label}>
+          <PreviewSurface key={example.label} title={example.label}>
             <ButtonPreview state={example.state}>{example.state.children}</ButtonPreview>
-          </ExampleCard>
+          </PreviewSurface>
         ))}
       </div>
     </DocCard>
+  );
+}
+
+function SelectControl<TValue extends string>({
+  label,
+  value,
+  options,
+  onChange
+}: {
+  label: string;
+  value: TValue;
+  options: readonly TValue[];
+  onChange: (value: TValue) => void;
+}) {
+  return (
+    <label className="nd-related-card">
+      <strong>{label}</strong>
+      <select value={value} onChange={(event) => onChange(event.currentTarget.value as TValue)}>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
+function TextControl({
+  label,
+  value,
+  onChange
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="nd-related-card">
+      <strong>{label}</strong>
+      <input value={value} onChange={(event) => onChange(event.currentTarget.value)} />
+    </label>
+  );
+}
+
+function ToggleControl({
+  label,
+  checked,
+  onChange
+}: {
+  label: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+}) {
+  return (
+    <label className="nd-related-card">
+      <strong>{label}</strong>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+        <input type="checkbox" checked={checked} onChange={(event) => onChange(event.currentTarget.checked)} />
+        {checked ? "Enabled" : "Disabled"}
+      </span>
+    </label>
   );
 }
 
@@ -248,13 +243,13 @@ export function ButtonReferencePage({ component }: { component: NoctraDocsCompon
         <PageHero
           eyebrow="Core component"
           title="Button"
-          description="Button is the primary action component in Noctra. This curated page is the visual and structural reference for the rest of the component documentation."
+          description="Button is the primary action component in Noctra. This curated page is the reference quality target for the rest of the documentation system."
         >
           <div className="nd-stats-grid">
-            <StatCard label="Package" value="react" />
-            <StatCard label="Export" value="Button" />
-            <StatCard label="API" value={`${component.props.length} props`} />
-            <StatCard label="Page" value="Curated" />
+            <StatCard label="Package" value="@noctra/react" />
+            <StatCard label="Import" value="Button" />
+            <StatCard label="Props" value={component.props.length} />
+            <StatCard label="Status" value="Curated reference" />
           </div>
         </PageHero>
 
@@ -272,9 +267,9 @@ export function ButtonReferencePage({ component }: { component: NoctraDocsCompon
             </DocCard>
 
             <DocCard title="Basic example">
-              <div className="nd-related-grid">
+              <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 16 }}>
                 <ButtonPreview state={defaultButtonState} />
-                <ButtonPreview state={{ ...defaultButtonState, variant: "outline", tone: "neutral", children: "Secondary" }} />
+                <ButtonPreview state={{ ...defaultButtonState, variant: "outline", children: "Secondary" }} />
               </div>
               <CodeBlock>{`<Button>Button</Button>`}</CodeBlock>
             </DocCard>
@@ -291,38 +286,26 @@ export function ButtonReferencePage({ component }: { component: NoctraDocsCompon
 
           <DocCard title="Live demo">
             <div className="nd-two-grid">
-              <DocCard title="Preview">
-                <p>Rendered with the current Button state.</p>
+              <PreviewSurface title="Preview" description="Rendered with the current playground state.">
+                <ButtonPreview state={state} />
+              </PreviewSurface>
+
+              <div>
+                <p>Controls are specific to Button. There is no generic Canvas, Density, or unsupported prop control here.</p>
                 <div className="nd-related-grid">
-                  <ButtonPreview state={state} />
+                  <SelectControl label="Variant" value={state.variant} options={variants} onChange={(variant) => setState((current) => ({ ...current, variant }))} />
+                  <SelectControl label="Tone" value={state.tone} options={tones} onChange={(tone) => setState((current) => ({ ...current, tone }))} />
+                  <SelectControl label="Size" value={state.size} options={sizes} onChange={(size) => setState((current) => ({ ...current, size }))} />
+                  <SelectControl label="Radius" value={state.radius} options={radii} onChange={(radius) => setState((current) => ({ ...current, radius }))} />
+                  <TextControl label="Label" value={state.children} onChange={(children) => setState((current) => ({ ...current, children }))} />
+                  <ToggleControl label="Disabled" checked={state.disabled} onChange={(disabled) => setState((current) => ({ ...current, disabled }))} />
+                  <ToggleControl label="Loading" checked={state.loading} onChange={(loading) => setState((current) => ({ ...current, loading }))} />
                 </div>
-              </DocCard>
-
-              <DocCard title="Code">
-                <p>Updates immediately when controls change.</p>
-                <CodeBlock>{code}</CodeBlock>
-              </DocCard>
+              </div>
             </div>
+
+            <CodeBlock>{code}</CodeBlock>
           </DocCard>
-
-          <div className="nd-doc-section">
-            <SectionTitle
-              id="playground-controls-title"
-              eyebrow="Controls"
-              title="Button-specific controls"
-              description="Only Button-supported controls are shown. There is no generic Canvas, Density, or unrelated generated control."
-            />
-
-            <div className="nd-two-grid">
-              <ControlGroup label="Variant" value={state.variant} options={variants} onChange={(variant) => setState((current) => ({ ...current, variant }))} />
-              <ControlGroup label="Tone" value={state.tone} options={tones} onChange={(tone) => setState((current) => ({ ...current, tone }))} />
-              <ControlGroup label="Size" value={state.size} options={sizes} onChange={(size) => setState((current) => ({ ...current, size }))} />
-              <ControlGroup label="Radius" value={state.radius} options={radii} onChange={(radius) => setState((current) => ({ ...current, radius }))} />
-              <ControlGroup label="Label" value={state.children} options={labels} onChange={(children) => setState((current) => ({ ...current, children }))} />
-              <BooleanControl label="Disabled" checked={state.disabled} onChange={(disabled) => setState((current) => ({ ...current, disabled }))} />
-              <BooleanControl label="Loading" checked={state.loading} onChange={(loading) => setState((current) => ({ ...current, loading }))} />
-            </div>
-          </div>
         </section>
 
         <section id="variants" className="nd-doc-section">
