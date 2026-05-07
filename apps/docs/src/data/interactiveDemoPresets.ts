@@ -203,7 +203,7 @@ export function getInteractiveDemoPreset(component: NoctraDocsComponent): Intera
     Breadcrumbs: {
       title: "Breadcrumbs",
       description: "Real Breadcrumbs rendered with docs path.",
-      props: { items: [{ label: "Docs", href: "#/" }, { label: "Components", href: "#/components" }, { label: component.name }] }
+      props: { items: [{ label: "Docs", href: "/" }, { label: "Components", href: "/components" }, { label: component.name }] }
     },
     Pagination: {
       title: "Pagination",

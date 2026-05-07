@@ -23,7 +23,7 @@ export const docsRoutes: Array<{
   {
     id: "home",
     label: "Overview",
-    href: "#/",
+    href: "/",
     description: "Noctra introduction, package overview, and project direction."
   },
   {
@@ -35,7 +35,7 @@ export const docsRoutes: Array<{
   {
     id: "components",
     label: "Components",
-    href: "#/components",
+    href: "/components",
     description: "Component inventory grouped by usage area."
   },
   {
@@ -47,7 +47,7 @@ export const docsRoutes: Array<{
   {
     id: "theming",
     label: "Theming",
-    href: "#/theming",
+    href: "/theming",
     description: "Dark mode, CSS variables, tones, variants, radius, density, and size conventions."
   },
   {
@@ -65,7 +65,7 @@ export const docsRoutes: Array<{
   {
     id: "release",
     label: "Release",
-    href: "#/release",
+    href: "/release",
     description: "Quality gates, reports, publish checklist, and package release readiness."
   }
 ];
