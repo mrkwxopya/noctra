@@ -1,4 +1,4 @@
-﻿import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+﻿import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 const distRoot = "apps/docs/dist";
@@ -11,126 +11,153 @@ function readText(path) {
 }
 
 function writeText(path, content) {
-  const parent = dirname(path);
-  if (!existsSync(parent)) mkdirSync(parent, { recursive: true });
-  writeFileSync(path, content, "utf8");
+  const dir = dirname(path);
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  writeFileSync(path, `${content.trimEnd()}\n`, "utf8");
 }
 
 function cleanRoute(route) {
-  const value = String(route || "").trim();
+  if (!route || typeof route !== "string") return "/";
+  let out = route.trim();
 
-  if (!value || value === "/") return "/";
+  if (!out.startsWith("/")) out = "/" + out;
 
-  return `/${value.replace(/^\/+|\/+$/g, "")}`;
+  out = out.split("?")[0].split("#")[0];
+  out = out.replace(/\/+/g, "/");
+
+  if (out !== "/") out = out.replace(/\/+$/, "");
+
+  return out || "/";
 }
 
-function addRoute(routes, route) {
-  routes.add(cleanRoute(route));
+function routeToIndexPath(route) {
+  const clean = cleanRoute(route);
+
+  if (clean === "/") return indexPath;
+
+  return join(distRoot, clean.slice(1), "index.html");
+}
+
+function kebabToCompactAlias(slug) {
+  return slug.replace(/-/g, "");
+}
+
+function addRoute(set, route) {
+  const clean = cleanRoute(route);
+  set.add(clean);
+
+  if (clean !== "/") {
+    set.add(clean + "/");
+  }
 }
 
 if (!existsSync(indexPath)) {
-  throw new Error(`${indexPath} bulunamadı. Önce docs build çalışmalı.`);
+  throw new Error(`Missing dist index: ${indexPath}`);
 }
 
 const indexHtml = readText(indexPath);
-const sidebar = readText(sidebarPath);
-
 const routes = new Set();
 
-for (const route of [
+const generalRoutes = [
   "/",
+  "/overview",
+  "/getting-started",
   "/components",
   "/architecture",
-  "/theming",
   "/tokens",
+  "/theming",
   "/quality",
-  "/release"
-]) {
+  "/release",
+  "/layout",
+  "/accessibility"
+];
+
+for (const route of generalRoutes) {
   addRoute(routes, route);
 }
 
-for (const match of sidebar.matchAll(/href:\s*["']([^"']+)["']/g)) {
-  addRoute(routes, match[1]);
-}
+const sidebar = readText(sidebarPath);
+const hrefs = [...sidebar.matchAll(/href["']?\s*:\s*["']([^"']+)["']/g)]
+  .map((match) => match[1])
+  .filter((href) => href.startsWith("/"));
 
-for (const match of sidebar.matchAll(/"href":\s*"([^"]+)"/g)) {
-  addRoute(routes, match[1]);
-}
+for (const href of hrefs) {
+  addRoute(routes, href);
 
-const aliases = {
-  "/components/listbox": "/components/list-box",
-  "/components/creditcard": "/components/credit-card",
-  "/components/pincode": "/components/pin-code",
-  "/components/pininput": "/components/pin-input",
-  "/components/textinput": "/components/text-input",
-  "/components/searchinput": "/components/search-input",
-  "/components/passwordinput": "/components/password-input",
-  "/components/numberinput": "/components/number-input",
-  "/components/iconbutton": "/components/icon-button",
-  "/components/codeblock": "/components/code-block",
-  "/components/datagrid": "/components/data-grid",
-  "/components/hovercard": "/components/hover-card",
-  "/components/contextmenu": "/components/context-menu",
-  "/components/multiselect": "/components/multi-select",
-  "/components/nativeselect": "/components/native-select",
-  "/components/rangeslider": "/components/range-slider",
-  "/components/tableofcontents": "/components/table-of-contents",
-  "/components/transferlist": "/components/transfer-list",
-  "/components/treeselect": "/components/tree-select",
-  "/components/treeview": "/components/tree-view",
-  "/components/visuallyhidden": "/components/visually-hidden"
-};
+  if (href.startsWith("/components/")) {
+    const slug = cleanRoute(href).replace("/components/", "");
+    const compact = kebabToCompactAlias(slug);
 
-for (const alias of Object.keys(aliases)) {
-  addRoute(routes, alias);
+    if (compact && compact !== slug) {
+      addRoute(routes, `/components/${compact}`);
+    }
+  }
 }
 
 const written = [];
+const uniqueCleanRoutes = [...routes]
+  .map(cleanRoute)
+  .filter((route, index, all) => all.indexOf(route) === index)
+  .sort((a, b) => a.localeCompare(b));
 
-for (const route of [...routes].sort()) {
-  if (route === "/") continue;
-
-  const target = join(distRoot, route.replace(/^\/+/, ""), "index.html");
-  writeText(target, indexHtml);
-  written.push(target.replace(/\\/g, "/"));
+for (const route of uniqueCleanRoutes) {
+  const outPath = routeToIndexPath(route);
+  writeText(outPath, indexHtml);
+  written.push(route);
 }
 
 writeText(join(distRoot, "404.html"), indexHtml);
 
-const deployInfoPath = join(distRoot, "noctra-deploy-info.json");
-
-let asset = "";
 const assetMatch = indexHtml.match(/assets\/index-[^"]+\.js/);
+const asset = assetMatch ? assetMatch[0] : "";
 
-if (assetMatch) {
-  asset = assetMatch[0];
+const deployInfoPath = join(distRoot, "noctra-deploy-info.json");
+let deployInfo = {};
+
+if (existsSync(deployInfoPath)) {
+  try {
+    deployInfo = JSON.parse(readText(deployInfoPath));
+  } catch {
+    deployInfo = {};
+  }
 }
 
-const info = {
+deployInfo = {
+  ...deployInfo,
   generatedAt: new Date().toISOString(),
-  sha: process.env.GITHUB_SHA || "",
-  asset,
-  base: process.env.GITHUB_PAGES_BASE || "/noctra/",
-  routeFallbacks: written.map((file) => file.replace(/^apps\/docs\/dist/, ""))
+  sha: process.env.GITHUB_SHA || deployInfo.sha || "",
+  asset: asset || deployInfo.asset || "",
+  base: process.env.GITHUB_PAGES_BASE || deployInfo.base || "/noctra/",
+  routeFallbacks: written
 };
 
-writeText(deployInfoPath, `${JSON.stringify(info, null, 2)}\n`);
+writeText(deployInfoPath, JSON.stringify(deployInfo, null, 2));
+
+const important = [
+  "/overview",
+  "/overview/",
+  "/getting-started",
+  "/getting-started/",
+  "/accessibility",
+  "/accessibility/",
+  "/components/button",
+  "/components/button/",
+  "/components/listbox",
+  "/components/listbox/"
+];
 
 const problems = [];
 
-for (const required of [
-  "apps/docs/dist/404.html",
-  "apps/docs/dist/components/index.html",
-  "apps/docs/dist/components/button/index.html",
-  "apps/docs/dist/components/card/index.html",
-  "apps/docs/dist/components/list-box/index.html",
-  "apps/docs/dist/components/listbox/index.html",
-  "apps/docs/dist/components/text-input/index.html",
-  "apps/docs/dist/components/textinput/index.html"
-]) {
-  if (!existsSync(required)) {
-    problems.push(`Missing generated fallback: ${required}`);
+for (const route of important) {
+  const outPath = routeToIndexPath(route);
+
+  if (!existsSync(outPath)) {
+    problems.push(`Missing generated fallback: ${route} -> ${outPath}`);
   }
+}
+
+if (!asset) {
+  problems.push("Could not detect Vite JS asset from index.html.");
 }
 
 const report = [
@@ -147,28 +174,22 @@ const report = [
   "",
   "## Important generated routes",
   "",
-  "- /components",
-  "- /components/button",
-  "- /components/card",
-  "- /components/list-box",
-  "- /components/listbox",
-  "- /components/text-input",
-  "- /components/textinput",
+  ...important.map((route) => `- ${route}`),
   "",
   "## Applied",
   "",
-  "- Copied Vite index.html into every docs route directory.",
-  "- Copied Vite index.html into every component route directory.",
-  "- Added alias route directories for non-canonical component slugs.",
+  "- Rebuilt static route fallback generator with explicit general docs routes.",
+  "- Added /overview, /getting-started and /accessibility fallbacks.",
+  "- Preserved all component route fallbacks from docsSidebarLinks.",
+  "- Added compact component aliases such as /components/listbox and /components/textinput.",
   "- Recreated 404.html as SPA fallback.",
   "- Added routeFallbacks into noctra-deploy-info.json."
 ].join("\n");
 
-writeText(reportPath, `${report}\n`);
+writeText(reportPath, report);
 
-console.log(`Static route fallbacks completed. Problems: ${problems.length}. Report: ${reportPath}`);
+console.log(report);
 
 if (problems.length > 0) {
-  console.error(report);
-  throw new Error("Static route fallbacks failed.");
+  process.exitCode = 1;
 }
