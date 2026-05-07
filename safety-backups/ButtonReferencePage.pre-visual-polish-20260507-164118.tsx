@@ -116,26 +116,6 @@ function ButtonPreview({
   );
 }
 
-function PreviewSurface({
-  title,
-  description,
-  children
-}: {
-  title: string;
-  description?: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className="nd-related-card">
-      <strong>{title}</strong>
-      {description ? <span>{description}</span> : null}
-      <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", paddingTop: 12 }}>
-        {children}
-      </div>
-    </div>
-  );
-}
-
 function ExampleRow({
   title,
   description,
@@ -150,9 +130,12 @@ function ExampleRow({
       <p>{description}</p>
       <div className="nd-related-grid">
         {examples.map((example) => (
-          <PreviewSurface key={example.label} title={example.label}>
-            <ButtonPreview state={example.state}>{example.state.children}</ButtonPreview>
-          </PreviewSurface>
+          <div key={example.label} className="nd-related-card">
+            <strong>{example.label}</strong>
+            <span>
+              <ButtonPreview state={example.state}>{example.state.children}</ButtonPreview>
+            </span>
+          </div>
         ))}
       </div>
     </DocCard>
@@ -171,8 +154,8 @@ function SelectControl<TValue extends string>({
   onChange: (value: TValue) => void;
 }) {
   return (
-    <label className="nd-related-card">
-      <strong>{label}</strong>
+    <label>
+      <span>{label}</span>
       <select value={value} onChange={(event) => onChange(event.currentTarget.value as TValue)}>
         {options.map((option) => (
           <option key={option} value={option}>
@@ -180,43 +163,6 @@ function SelectControl<TValue extends string>({
           </option>
         ))}
       </select>
-    </label>
-  );
-}
-
-function TextControl({
-  label,
-  value,
-  onChange
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <label className="nd-related-card">
-      <strong>{label}</strong>
-      <input value={value} onChange={(event) => onChange(event.currentTarget.value)} />
-    </label>
-  );
-}
-
-function ToggleControl({
-  label,
-  checked,
-  onChange
-}: {
-  label: string;
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-}) {
-  return (
-    <label className="nd-related-card">
-      <strong>{label}</strong>
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-        <input type="checkbox" checked={checked} onChange={(event) => onChange(event.currentTarget.checked)} />
-        {checked ? "Enabled" : "Disabled"}
-      </span>
     </label>
   );
 }
@@ -243,7 +189,7 @@ export function ButtonReferencePage({ component }: { component: NoctraDocsCompon
         <PageHero
           eyebrow="Core component"
           title="Button"
-          description="Button is the primary action component in Noctra. This curated page is the reference quality target for the rest of the documentation system."
+          description="Button is the primary action component in Noctra. It should feel compact, intentional, theme-aware, and predictable across variants, tones, sizes, radius values, and interaction states."
         >
           <div className="nd-stats-grid">
             <StatCard label="Package" value="@noctra/react" />
@@ -258,7 +204,7 @@ export function ButtonReferencePage({ component }: { component: NoctraDocsCompon
             id="usage-title"
             eyebrow="Usage"
             title="Import and basic usage"
-            description="Use Button for primary and secondary actions across forms, dialogs, toolbars, cards, and page flows."
+            description="Use Button for the main action in a form, dialog, toolbar, card, or application flow."
           />
 
           <div className="nd-two-grid">
@@ -267,10 +213,6 @@ export function ButtonReferencePage({ component }: { component: NoctraDocsCompon
             </DocCard>
 
             <DocCard title="Basic example">
-              <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 16 }}>
-                <ButtonPreview state={defaultButtonState} />
-                <ButtonPreview state={{ ...defaultButtonState, variant: "outline", children: "Secondary" }} />
-              </div>
               <CodeBlock>{`<Button>Button</Button>`}</CodeBlock>
             </DocCard>
           </div>
@@ -281,25 +223,50 @@ export function ButtonReferencePage({ component }: { component: NoctraDocsCompon
             id="playground-title"
             eyebrow="Playground"
             title="Configurator"
-            description="The preview and code are generated from the same state. Empty, default, and unsupported props are not written to the code block."
+            description="The preview and code are generated from the same state. Unsupported or empty props are not written to the code block."
           />
 
-          <DocCard title="Live demo">
+          <DocCard title="Live preview">
             <div className="nd-two-grid">
-              <PreviewSurface title="Preview" description="Rendered with the current playground state.">
+              <div>
+                <p>Preview</p>
                 <ButtonPreview state={state} />
-              </PreviewSurface>
+              </div>
 
               <div>
-                <p>Controls are specific to Button. There is no generic Canvas, Density, or unsupported prop control here.</p>
-                <div className="nd-related-grid">
+                <p>Controls</p>
+
+                <div className="nd-stats-grid">
                   <SelectControl label="Variant" value={state.variant} options={variants} onChange={(variant) => setState((current) => ({ ...current, variant }))} />
                   <SelectControl label="Tone" value={state.tone} options={tones} onChange={(tone) => setState((current) => ({ ...current, tone }))} />
                   <SelectControl label="Size" value={state.size} options={sizes} onChange={(size) => setState((current) => ({ ...current, size }))} />
                   <SelectControl label="Radius" value={state.radius} options={radii} onChange={(radius) => setState((current) => ({ ...current, radius }))} />
-                  <TextControl label="Label" value={state.children} onChange={(children) => setState((current) => ({ ...current, children }))} />
-                  <ToggleControl label="Disabled" checked={state.disabled} onChange={(disabled) => setState((current) => ({ ...current, disabled }))} />
-                  <ToggleControl label="Loading" checked={state.loading} onChange={(loading) => setState((current) => ({ ...current, loading }))} />
+
+                  <label>
+                    <span>Label</span>
+                    <input
+                      value={state.children}
+                      onChange={(event) => setState((current) => ({ ...current, children: event.currentTarget.value }))}
+                    />
+                  </label>
+
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={state.disabled}
+                      onChange={(event) => setState((current) => ({ ...current, disabled: event.currentTarget.checked }))}
+                    />
+                    Disabled
+                  </label>
+
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={state.loading}
+                      onChange={(event) => setState((current) => ({ ...current, loading: event.currentTarget.checked }))}
+                    />
+                    Loading
+                  </label>
                 </div>
               </div>
             </div>
@@ -331,7 +298,7 @@ export function ButtonReferencePage({ component }: { component: NoctraDocsCompon
             id="tones-title"
             eyebrow="Color system"
             title="Tones"
-            description="Tones express semantic intent. Avoid danger or warning unless the action truly needs that meaning."
+            description="Tones express semantic intent. Avoid using danger or warning unless the action truly needs that meaning."
           />
 
           <ExampleRow
@@ -349,7 +316,7 @@ export function ButtonReferencePage({ component }: { component: NoctraDocsCompon
             id="sizes-title"
             eyebrow="Scale"
             title="Sizes"
-            description="Button size should match the density of the surrounding surface."
+            description="Button sizes should match the density of the surrounding surface."
           />
 
           <ExampleRow
