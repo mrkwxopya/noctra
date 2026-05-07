@@ -112,3 +112,4 @@ This is an internal foundation release baseline. Public API is not stable yet.
 - Final professional docs polish and audit added before GitHub publish.
 - Final professional docs release gate added for GitHub publish readiness.
 - Premium professional documentation shell and component detail UI redesign added.
+- Premium static documentation pages added for Architecture, Theming, Quality, and Release sections.
