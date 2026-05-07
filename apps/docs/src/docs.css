@@ -864,3 +864,100 @@ html{scroll-behavior:smooth}
 .ncu-native-visually-hidden{display:grid;gap:8px;min-width:240px;padding:14px;text-align:left}.ncu-native-visually-hidden span{font-weight:700}.ncu-native-visually-hidden code{color:#c4b5fd}
 .ncu-native-generic{display:none!important}
 /* COMPONENT_GENERIC_VISUAL_UPGRADE_END */
+
+/* REMOVE_EXAMPLES_BOTTOM_TAIL_RESET_CSS_START */
+
+/* Hide examples tab/button/anchor/section if any exists */
+#examples,
+[id="examples"],
+[href="#examples"],
+[aria-controls*="examples" i],
+[data-section="examples"],
+[data-panel="examples"],
+[data-tab="examples"],
+[data-value="examples"],
+[value="examples"],
+button[data-value="examples"],
+button[value="examples"],
+.nmx-examples,
+.ncd-examples,
+.ncd2-examples,
+.ncd3-examples,
+.ncu-examples,
+.ncu-example-grid,
+.ncu-example-card,
+.ncd-example-grid,
+.ncd-example-card,
+.nmx-example-grid,
+.nmx-example-card,
+.ncd-docs-examples,
+.ncd-page-examples {
+  display: none !important;
+}
+
+/* Hide content after examples when a stable examples marker exists */
+#examples ~ *,
+[id="examples"] ~ *,
+[data-section="examples"] ~ *,
+[data-panel="examples"] ~ *,
+.nmx-examples ~ *,
+.ncd-examples ~ *,
+.ncd2-examples ~ *,
+.ncd3-examples ~ *,
+.ncu-examples ~ *,
+.ncd-docs-examples ~ *,
+.ncd-page-examples ~ * {
+  display: none !important;
+}
+
+/* Hide Previous / Next navigation */
+.nmx-prev-next,
+.ncd-prev-next,
+.ncd2-prev-next,
+.ncd3-prev-next,
+.nd-prev-next,
+.ncd-docs-prev-next,
+.ncd-page-prev-next,
+.nmx-previous-next,
+.ncd-previous-next,
+.ncd2-previous-next,
+.ncd3-previous-next,
+[class*="previous-next"],
+[class*="prev-next"] {
+  display: none !important;
+}
+
+/* Hide bottom duplicate divider leftovers */
+.nmx-content > hr:last-child,
+.nmx-content > hr:nth-last-child(2),
+.nmx-static-content > hr:last-child,
+.nmx-static-content > hr:nth-last-child(2),
+.ncd-content > hr:last-child,
+.ncd-content > hr:nth-last-child(2),
+.ncd2-content > hr:last-child,
+.ncd2-content > hr:nth-last-child(2),
+.ncd3-content > hr:last-child,
+.ncd3-content > hr:nth-last-child(2),
+.ncd-docs-main > hr:last-child,
+.ncd-docs-main > hr:nth-last-child(2),
+.nmx-main > hr:last-child,
+.nmx-main > hr:nth-last-child(2),
+.nmx-main > .nmx-divider:last-child,
+.nmx-main > .nmx-divider:nth-last-child(2),
+.ncd-docs-main > .ncd-divider:last-child,
+.ncd-docs-main > .ncd-divider:nth-last-child(2) {
+  display: none !important;
+}
+
+/* Reduce bottom tail spacing */
+.nmx-content,
+.nmx-static-content,
+.ncd-content,
+.ncd2-content,
+.ncd3-content,
+.ncd-docs-main,
+.nmx-main {
+  padding-bottom: 32px !important;
+}
+
+/* REMOVE_EXAMPLES_BOTTOM_TAIL_RESET_CSS_END */
