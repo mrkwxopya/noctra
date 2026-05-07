@@ -5,8 +5,7 @@ import {
   type ReactNode
 } from "react";
 import * as NoctraReact from "@noctra/react";
-import { docsComponentLinks, docsPrimaryLinks } from "../../data/docsSidebarLinks";
-
+import { noctraDocsComponents } from "../../generated/noctra-professional-docs.generated";
 import { docsHref } from "../../lib/docsRouting";
 
 type RuntimeComponent = ElementType<any>;
@@ -17,6 +16,41 @@ const runtime = NoctraReact as AnyProps;
 const ButtonRuntime = (runtime.Button ?? "button") as RuntimeComponent;
 const TextInputRuntime = (runtime.TextInput ?? "input") as RuntimeComponent;
 const InlineCodeRuntime = (runtime.InlineCode ?? "code") as RuntimeComponent;
+
+function getNoctraDocsComponentHref(component: any) {
+  const slug = component.slug || component.id || kebabComponentName(component.name);
+  return docsHref(`/components/${slug}`);
+}
+
+function kebabComponentName(value: unknown) {
+  return String(value || "")
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+    .replace(/[\s_]+/g, "-")
+    .replace(/[^a-zA-Z0-9-]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .toLowerCase();
+}
+
+const docsPrimaryLinks = [
+  { label: "Overview", href: docsHref("/") },
+  { label: "Getting started", href: docsHref("/getting-started") },
+  { label: "Components", href: docsHref("/components") },
+  { label: "Layout", href: docsHref("/layout") },
+  { label: "Tokens", href: docsHref("/tokens") },
+  { label: "Accessibility", href: docsHref("/accessibility") },
+  { label: "Architecture", href: docsHref("/architecture") },
+  { label: "Theming", href: docsHref("/theming") },
+  { label: "Quality", href: docsHref("/quality") },
+  { label: "Release", href: docsHref("/release") }
+] as const;
+
+const docsComponentLinks = [...noctraDocsComponents]
+  .sort((a: any, b: any) => String(a.name).localeCompare(String(b.name)))
+  .map((component: any) => ({
+    label: String(component.name),
+    href: getNoctraDocsComponentHref(component)
+  }));
 
 export type NoctraDocsTabId = "documentation" | "props" | "styles";
 
