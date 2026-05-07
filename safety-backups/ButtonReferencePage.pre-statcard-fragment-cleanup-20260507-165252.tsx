@@ -248,7 +248,14 @@ export function ButtonReferencePage({ component }: { component: NoctraDocsCompon
           eyebrow="Core component"
           title="Button"
           description="Button is the primary action component in Noctra. This curated page is the visual and structural reference for the rest of the component documentation."
-         />
+        >
+          <div className="nd-stats-grid">
+            <StatCard label="Package" value="react" />
+            <StatCard label="Export" value="Button" />
+            <StatCard label="API" value={`${component.props.length} props`} />
+            <StatCard label="Page" value="Curated" />
+          </div>
+        </PageHero>
 
         <section className="nd-doc-section">
           <div className="nd-two-grid">
