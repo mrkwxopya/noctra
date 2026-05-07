@@ -15,3 +15,9 @@
 .nd-noctra-runtime :where(.nc-button,.noctra-button,button){min-height:2.25rem}
 .nd-noctra-runtime :where(.nc-card,.noctra-card){max-width:100%}
 @media (max-width:760px){.nd-example-header{display:grid}.nd-example-actions{justify-content:flex-start}.nd-example-runtime-notice{display:grid}}
+.nd-anchor-list button{appearance:none;width:100%;display:grid;gap:.1rem;padding:.58rem;border:0;border-radius:.75rem;background:transparent;color:var(--nd-muted);text-align:left;font:inherit;cursor:pointer}
+.nd-anchor-list button:hover{background:rgba(139,92,246,.12);color:#ddd6fe}
+.nd-anchor-list button:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(139,92,246,.2)}
+.nd-anchor-list button span{font-size:.82rem;font-weight:850;color:inherit}
+.nd-anchor-list button small{font-size:.72rem;color:inherit;opacity:.82}
+.nd-anchor-list a{display:none}

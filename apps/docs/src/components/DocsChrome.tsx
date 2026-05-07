@@ -252,14 +252,29 @@ export function SectionTitle({ id, eyebrow, title, description }: { id: string; 
 }
 
 export function AnchorList({ items }: { items: readonly { href: string; label: string; description?: string }[] }) {
+  function handleScroll(targetHref: string) {
+    const targetId = targetHref.replace(/^#/, "");
+    const target = document.getElementById(targetId);
+
+    if (!target) return;
+
+    const topbarOffset = 96;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - topbarOffset;
+
+    window.scrollTo({
+      top: Math.max(0, targetTop),
+      behavior: "smooth"
+    });
+  }
+
   return (
     <nav className="nd-anchor-list" aria-label="On this page">
       <strong>On this page</strong>
       {items.map((item) => (
-        <a key={item.href} href={item.href}>
+        <button key={item.href} type="button" onClick={() => handleScroll(item.href)}>
           <span>{item.label}</span>
           {item.description ? <small>{item.description}</small> : null}
-        </a>
+        </button>
       ))}
     </nav>
   );

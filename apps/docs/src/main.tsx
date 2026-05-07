@@ -51,6 +51,18 @@ function App() {
     document.title = component ? `Noctra Docs — ${component.name}` : "Noctra Professional Docs";
   }, [component]);
 
+  // Smooth scroll to top on route changes.
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [parsedRoute.route, parsedRoute.componentSlug]);
+
   const page = useMemo(() => {
     if (parsedRoute.route === "component") {
       return component ? <ComponentDetailPage component={component} /> : <ComponentsPage />;
