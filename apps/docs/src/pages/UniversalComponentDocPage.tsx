@@ -76,14 +76,49 @@ const radii: readonly ControlOption[] = [
   { label: "Full", value: "full" }
 ];
 
+const slugAliases: Record<string, string> = {
+  listbox: "list-box",
+  creditcard: "credit-card",
+  pincode: "pin-code",
+  pininput: "pin-input",
+  textinput: "text-input",
+  searchinput: "search-input",
+  passwordinput: "password-input",
+  numberinput: "number-input",
+  colorinput: "color-input",
+  colorpicker: "color-picker",
+  iconbutton: "icon-button",
+  codeblock: "code-block",
+  commandbar: "command-bar",
+  datagrid: "data-grid",
+  hovercard: "hover-card",
+  contextmenu: "context-menu",
+  multiselect: "multi-select",
+  nativeselect: "native-select",
+  segmentedcontrol: "segmented-control",
+  rangeslider: "range-slider",
+  scrollarea: "scroll-area",
+  scrolllock: "scroll-lock",
+  simplegrid: "simple-grid",
+  statubar: "status-bar",
+  tableofcontents: "table-of-contents",
+  tagsinput: "tags-input",
+  transferlist: "transfer-list",
+  treeselect: "tree-select",
+  treeview: "tree-view",
+  visuallyhidden: "visually-hidden"
+};
+
 function slugify(value: string): string {
-  return value
+  const slug = value
     .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
     .replace(/[\s_]+/g, "-")
     .replace(/[^a-zA-Z0-9-]/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "")
     .toLowerCase();
+
+  return slugAliases[slug] ?? slug;
 }
 
 function pascalCase(slug: string): string {
@@ -117,7 +152,7 @@ function getPathSlug(): string {
 
   const match = window.location.pathname.match(/\/components\/([^/?#]+)/);
 
-  return match?.[1] ?? "button";
+  return slugify(match?.[1] ?? "button");
 }
 
 function resolveSlug(props: UniversalComponentDocPageProps): string {
@@ -127,14 +162,7 @@ function resolveSlug(props: UniversalComponentDocPageProps): string {
     return slugify(direct.replace(/^\/components\//, ""));
   }
 
-  return slugify(getPathSlug());
-}
-
-function resolveComponent(slug: string): any {
-  const name = pascalCase(slug);
-  const runtime = NoctraRuntime as Record<string, any>;
-
-  return runtime[name] ?? runtime.DefaultNoctraMock ?? "div";
+  return getPathSlug();
 }
 
 function getComponentMeta(slug: string) {
@@ -148,101 +176,182 @@ function getComponentMeta(slug: string) {
   };
 }
 
-function isTextLike(slug: string): boolean {
-  return /input|textarea|select|combobox|autocomplete|search|password|number|color|pin-code|pin-input|tags-input|multi-select|native-select/.test(slug);
+function stateClass(state: VisualState): string {
+  return [
+    "ncu-visual",
+    `ncr-variant-${state.variant}`,
+    `ncr-tone-${state.tone}`,
+    `ncr-size-${state.size}`,
+    `ncr-radius-${state.radius}`,
+    state.disabled ? "ncr-disabled" : "",
+    state.loading ? "ncr-loading" : "",
+    state.fullWidth ? "ncr-full-width" : ""
+  ].filter(Boolean).join(" ");
 }
 
-function isChoiceLike(slug: string): boolean {
-  return /checkbox|radio|switch|segmented-control|rating|slider|range-slider/.test(slug);
+function runtimeComponent(slug: string): any {
+  const name = pascalCase(slug);
+  const runtime = NoctraRuntime as Record<string, any>;
+
+  return runtime[name] ?? runtime.DefaultNoctraMock ?? "div";
 }
 
-function isStatusLike(slug: string): boolean {
-  return /badge|alert|notification|toast|progress|loader|spinner|skeleton|empty-state/.test(slug);
+function isButtonLike(slug: string): boolean {
+  return /button|icon-button|clipboard|link|toolbar|command|command-bar/.test(slug);
 }
 
-function isOverlayLike(slug: string): boolean {
-  return /modal|dialog|drawer|popover|tooltip|hover-card|context-menu|menu|dropdown/.test(slug);
-}
+function NativeVisual({
+  slug,
+  label,
+  state
+}: {
+  slug: string;
+  label: string;
+  state: VisualState;
+}) {
+  const cls = stateClass(state);
 
-function isNavigationLike(slug: string): boolean {
-  return /tabs|breadcrumb|breadcrumbs|pagination|stepper|timeline|table-of-contents|sidebar|dock|toolbar|command|command-bar/.test(slug);
-}
+  if (slug === "button" || isButtonLike(slug)) {
+    const Component = runtimeComponent(slug);
 
-function isDataLike(slug: string): boolean {
-  return /table|data-grid|list-box|tree|tree-view|tree-select|transfer-list/.test(slug);
-}
-
-function isLayoutLike(slug: string): boolean {
-  return /grid|group|stack|simple-grid|container|box|paper|card|layout|shell|section|center|flex|app-shell|split-pane|resizable-panel/.test(slug);
-}
-
-function createVisualChildren(slug: string, label: string): ReactNode {
-  if (isTextLike(slug)) {
-    return undefined;
+    return createElement(
+      Component,
+      {
+        variant: state.variant,
+        tone: state.tone,
+        size: state.size,
+        radius: state.radius,
+        disabled: state.disabled,
+        loading: state.loading,
+        fullWidth: state.fullWidth
+      },
+      label
+    );
   }
 
-  if (slug.includes("card") || slug.includes("paper")) {
+  if (/text-input|input|search-input|password-input|number-input|color-input|textarea|autocomplete|tags-input|pin-code|pin-input/.test(slug)) {
     return (
-      <div className="ncu-card-sample">
-        <strong>{label}</strong>
-        <span>Clean content container for product interfaces.</span>
-        <button type="button">Action</button>
+      <div className={`${cls} ncu-native-field`}>
+        <label>{label}</label>
+        <input disabled={state.disabled} placeholder={`${label} value`} readOnly />
       </div>
     );
   }
 
-  if (slug.includes("avatar")) {
-    return label
+  if (/select|multi-select|native-select|combobox|list-box|tree-select|transfer-list/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-listbox`}>
+        <label>{label}</label>
+        <div role="listbox">
+          <span aria-selected="true">Documentation</span>
+          <span>Components</span>
+          <span>Styles API</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (/card|paper|box|container/.test(slug)) {
+    return (
+      <article className={`${cls} ncu-native-card`}>
+        <header>
+          <strong>{label}</strong>
+          <span>Surface component</span>
+        </header>
+        <p>Structured content area for product interfaces.</p>
+        <footer>
+          <button type="button">Primary action</button>
+          <button type="button">Secondary</button>
+        </footer>
+      </article>
+    );
+  }
+
+  if (/alert|notification|toast|empty-state|blockquote/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-message`}>
+        <strong>{label}</strong>
+        <p>Clear feedback message with title and supporting text.</p>
+      </div>
+    );
+  }
+
+  if (/badge|code|inline-code|kbd|highlight/.test(slug)) {
+    return <span className={`${cls} ncu-native-badge`}>{label}</span>;
+  }
+
+  if (/avatar/.test(slug)) {
+    const initials = label
       .split(" ")
       .map((part) => part[0])
       .join("")
       .slice(0, 2)
       .toUpperCase();
+
+    return <span className={`${cls} ncu-native-avatar`}>{initials}</span>;
   }
 
-  if (slug.includes("badge")) {
-    return "Status";
-  }
-
-  if (slug.includes("alert") || slug.includes("notification") || slug.includes("toast")) {
+  if (/checkbox|radio|switch/.test(slug)) {
     return (
-      <div className="ncu-message-sample">
+      <label className={`${cls} ncu-native-check`}>
+        <input checked readOnly type={slug.includes("radio") ? "radio" : "checkbox"} />
+        <span>{label}</span>
+      </label>
+    );
+  }
+
+  if (/slider|range-slider|progress|rating/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-meter`}>
         <strong>{label}</strong>
-        <span>Important interface feedback message.</span>
+        <div><span /></div>
       </div>
     );
   }
 
-  if (slug.includes("table") || slug.includes("data-grid")) {
+  if (/table|data-grid/.test(slug)) {
     return (
-      <div className="ncu-table-sample">
-        <div><strong>Name</strong><strong>Status</strong></div>
-        <div><span>Noctra UI</span><span>Ready</span></div>
-        <div><span>Docs System</span><span>Active</span></div>
+      <div className={`${cls} ncu-native-table`}>
+        <div><strong>Name</strong><strong>Status</strong><strong>Type</strong></div>
+        <div><span>Noctra UI</span><span>Ready</span><span>Core</span></div>
+        <div><span>Docs</span><span>Active</span><span>System</span></div>
       </div>
     );
   }
 
-  if (slug.includes("tabs")) {
+  if (/tabs/.test(slug)) {
     return (
-      <div className="ncu-tabs-sample">
-        <div><button type="button">Overview</button><button type="button">Settings</button></div>
-        <p>Selected tab content</p>
+      <div className={`${cls} ncu-native-tabs`}>
+        <div>
+          <button type="button">Documentation</button>
+          <button type="button">Props</button>
+          <button type="button">Styles API</button>
+        </div>
+        <p>Active tab content is displayed here.</p>
       </div>
     );
   }
 
-  if (slug.includes("breadcrumb")) {
-    return "Docs / Components / Current";
-  }
-
-  if (slug.includes("pagination")) {
-    return "1 2 3";
-  }
-
-  if (slug.includes("timeline")) {
+  if (/accordion/.test(slug)) {
     return (
-      <div className="ncu-timeline-sample">
+      <div className={`${cls} ncu-native-accordion`}>
+        <strong>Component anatomy</strong>
+        <p>Expandable content section.</p>
+      </div>
+    );
+  }
+
+  if (/breadcrumb|breadcrumbs/.test(slug)) {
+    return <div className={`${cls} ncu-native-breadcrumb`}>Docs / Components / {label}</div>;
+  }
+
+  if (/pagination/.test(slug)) {
+    return <div className={`${cls} ncu-native-pagination`}><button>1</button><button>2</button><button>3</button></div>;
+  }
+
+  if (/timeline|stepper/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-timeline`}>
         <span>Created</span>
         <span>Reviewed</span>
         <span>Released</span>
@@ -250,39 +359,26 @@ function createVisualChildren(slug: string, label: string): ReactNode {
     );
   }
 
-  if (slug.includes("modal") || slug.includes("dialog") || slug.includes("drawer")) {
+  if (/modal|dialog|drawer|popover|hover-card|tooltip|menu|context-menu/.test(slug)) {
     return (
-      <div className="ncu-overlay-sample">
+      <div className={`${cls} ncu-native-overlay`}>
         <strong>{label}</strong>
-        <span>Layered surface content</span>
+        <p>Layered floating surface.</p>
       </div>
     );
   }
 
-  if (slug.includes("menu") || slug.includes("popover") || slug.includes("tooltip") || slug.includes("hover-card")) {
-    return "Open menu";
+  if (/loader|spinner/.test(slug)) {
+    return <span className={`${cls} ncu-native-spinner`} aria-label={label} />;
   }
 
-  if (slug.includes("progress")) {
-    return "68%";
+  if (/skeleton/.test(slug)) {
+    return <div className={`${cls} ncu-native-skeleton`}><span /><span /><span /></div>;
   }
 
-  if (slug.includes("loader") || slug.includes("spinner") || slug.includes("skeleton")) {
-    return undefined;
-  }
-
-  if (slug.includes("accordion")) {
+  if (/grid|simple-grid|group|stack|flex|center|layout|layout-shell|app-shell|split-pane|resizable-panel|section|page|sidebar|dock|header|footer/.test(slug)) {
     return (
-      <div className="ncu-accordion-sample">
-        <strong>Section title</strong>
-        <span>Expandable content</span>
-      </div>
-    );
-  }
-
-  if (isLayoutLike(slug)) {
-    return (
-      <div className="ncu-layout-sample">
+      <div className={`${cls} ncu-native-layout`}>
         <span>Header</span>
         <span>Content</span>
         <span>Aside</span>
@@ -290,40 +386,33 @@ function createVisualChildren(slug: string, label: string): ReactNode {
     );
   }
 
-  if (isChoiceLike(slug)) {
-    return label;
+  if (/tree|tree-view/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-tree`}>
+        <span>Components</span>
+        <span>Forms</span>
+        <span>Overlays</span>
+      </div>
+    );
   }
 
-  if (isNavigationLike(slug) || isDataLike(slug) || isStatusLike(slug) || isOverlayLike(slug)) {
-    return label;
-  }
-
-  return label;
+  return <span className={`${cls} ncu-native-generic`}>{label}</span>;
 }
 
-function createVisualProps(slug: string, label: string, state: VisualState): Record<string, unknown> {
-  const props: Record<string, unknown> = {
-    variant: state.variant,
-    tone: state.tone,
-    size: state.size,
-    radius: state.radius,
-    disabled: state.disabled,
-    loading: state.loading,
-    fullWidth: state.fullWidth,
-    title: label,
-    label
-  };
-
-  if (isTextLike(slug)) {
-    props.placeholder = `${label} value`;
-    props.value = "";
-  }
-
-  if (isChoiceLike(slug)) {
-    props.checked = true;
-  }
-
-  return props;
+function ComponentVisual({
+  slug,
+  label,
+  state
+}: {
+  slug: string;
+  label: string;
+  state: VisualState;
+}) {
+  return (
+    <div className="ncu-stage">
+      <NativeVisual label={label} slug={slug} state={state} />
+    </div>
+  );
 }
 
 function ControlGroup({
@@ -377,26 +466,6 @@ function BooleanControl({
   );
 }
 
-function ComponentVisual({
-  slug,
-  label,
-  state
-}: {
-  slug: string;
-  label: string;
-  state: VisualState;
-}) {
-  const Component = resolveComponent(slug);
-  const props = createVisualProps(slug, label, state);
-  const children = createVisualChildren(slug, label);
-
-  return (
-    <div className="ncu-stage">
-      {createElement(Component, props, children)}
-    </div>
-  );
-}
-
 function buildCode(slug: string, label: string, state: VisualState) {
   const name = pascalCase(slug);
 
@@ -430,7 +499,7 @@ function createPropsRows(label: string): readonly NoctraDocsPropRow[] {
 
 function createStylesRows(slug: string): readonly NoctraDocsStyleRow[] {
   return [
-    { selector: `.ncr-mock-${slug}`, description: "Root selector.", value: "Selector" },
+    { selector: `.ncu-native-${slug}`, description: "Docs sample selector.", value: "Selector" },
     { selector: "[data-variant]", description: "Current variant state.", value: "Data attribute" },
     { selector: "[data-tone]", description: "Current tone state.", value: "Data attribute" },
     { selector: "[data-size]", description: "Current size state.", value: "Data attribute" },
@@ -554,7 +623,7 @@ export function UniversalComponentDocPage(props: UniversalComponentDocPageProps)
       title="Styles API"
     >
       <NoctraDocsStylesTable rows={createStylesRows(slug)} />
-      <NoctraDocsCodeBlock code={`.ncr-mock-${slug}[data-variant="${variant}"] {
+      <NoctraDocsCodeBlock code={`.ncu-native-${slug}[data-variant="${variant}"] {
   /* component state styling */
 }`} />
     </NoctraDocsSection>

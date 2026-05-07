@@ -126,10 +126,6 @@ export const docsSidebarSections = [
         "href": "/components/checkbox"
       },
       {
-        "label": "Click Outside",
-        "href": "/components/click-outside"
-      },
-      {
         "label": "Clipboard",
         "href": "/components/clipboard"
       },
@@ -208,10 +204,6 @@ export const docsSidebarSections = [
       {
         "label": "Float Label",
         "href": "/components/float-label"
-      },
-      {
-        "label": "Focus Trap",
-        "href": "/components/focus-trap"
       },
       {
         "label": "Footer",
@@ -362,16 +354,8 @@ export const docsSidebarSections = [
         "href": "/components/scroll-area"
       },
       {
-        "label": "Scroll Lock",
-        "href": "/components/scroll-lock"
-      },
-      {
         "label": "Search Input",
         "href": "/components/search-input"
-      },
-      {
-        "label": "Section",
-        "href": "/components/section"
       },
       {
         "label": "Segmented Control",

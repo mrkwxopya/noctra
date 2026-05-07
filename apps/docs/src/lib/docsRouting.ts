@@ -97,6 +97,40 @@ export function isDocsInternalUrl(url: URL): boolean {
 export const isInternalDocsUrl = isDocsInternalUrl;
 export const isDocsUrl = isDocsInternalUrl;
 
+
+export function normalizeDocsComponentSlugAlias(slug = ""): string {
+  const clean = slug
+    .trim()
+    .replace(/^\/+|\/+$/g, "")
+    .toLowerCase();
+
+  const aliases: Record<string, string> = {
+    listbox: "list-box",
+    creditcard: "credit-card",
+    pincode: "pin-code",
+    pininput: "pin-input",
+    textinput: "text-input",
+    searchinput: "search-input",
+    passwordinput: "password-input",
+    numberinput: "number-input",
+    iconbutton: "icon-button",
+    codeblock: "code-block",
+    datagrid: "data-grid",
+    hovercard: "hover-card",
+    contextmenu: "context-menu",
+    multiselect: "multi-select",
+    nativeselect: "native-select",
+    rangeslider: "range-slider",
+    tableofcontents: "table-of-contents",
+    transferlist: "transfer-list",
+    treeselect: "tree-select",
+    treeview: "tree-view",
+    visuallyhidden: "visually-hidden"
+  };
+
+  return aliases[clean] ?? clean;
+}
+
 export function resolveDocsRouteFromPath(path = "/", hash = ""): NoctraDocsRoute {
   const hashPath = String(hash || "");
 
@@ -117,7 +151,7 @@ export function resolveDocsRouteFromPath(path = "/", hash = ""): NoctraDocsRoute
   if (clean.startsWith("/components/")) {
     return {
       route: "component",
-      componentSlug: clean.replace("/components/", "")
+      componentSlug: normalizeDocsComponentSlugAlias(clean.replace("/components/", ""))
     };
   }
 
