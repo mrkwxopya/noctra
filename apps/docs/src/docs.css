@@ -489,3 +489,14 @@ pre.ncd-code,
 .ncd3-anchor-list a:hover{color:var(--nc-text,#fff)}
 @media (max-width:760px){.ncd3-topbar{padding:12px 14px;align-items:flex-start;flex-direction:column;height:auto}.ncd3-topnav{width:100%}.ncd3-page-hero{padding:28px 14px 20px}.ncd3-page-hero h1{font-size:34px}}
 /* NOCTRA_DOCSCHROME_NATIVE_EXPORTS_END */
+
+/* NOCTRA_DOCS_SAFE_RUNTIME_PREVIEW_START */
+.ncr-provider{display:contents}
+.ncr-mock{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:34px;padding:0 12px;border:1px solid rgba(148,163,184,.18);background:rgba(15,23,42,.48);color:var(--nc-text,#f8fafc);border-radius:10px;text-decoration:none;font:inherit;font-size:13px;line-height:1.2;vertical-align:middle}
+.ncr-mock:hover{background:rgba(148,163,184,.1);border-color:rgba(148,163,184,.28)}
+.ncr-mock-button,.ncr-mock-icon-button{cursor:pointer;background:rgba(124,58,237,.28);border-color:rgba(139,92,246,.46)}
+.ncr-mock-input,.ncr-mock-text-input,.ncr-mock-textarea,.ncr-mock-search-input,.ncr-mock-password-input,.ncr-mock-number-input{justify-content:flex-start;min-width:180px;background:rgba(2,6,23,.42)}
+.ncr-mock-card,.ncr-mock-paper,.ncr-mock-modal,.ncr-mock-drawer,.ncr-mock-dialog,.ncr-mock-card-body,.ncr-mock-card-header,.ncr-mock-card-footer{display:flex;min-height:54px;align-items:flex-start;justify-content:flex-start;padding:16px;background:rgba(15,23,42,.56)}
+.ncr-mock-list{font-size:11px;color:var(--nc-text-muted,#a7b2c3)}
+.ncr-mock small{font-size:11px;color:var(--nc-text-muted,#a7b2c3)}
+/* NOCTRA_DOCS_SAFE_RUNTIME_PREVIEW_END */
