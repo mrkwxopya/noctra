@@ -454,38 +454,3 @@ pre.ncd-code,
 .ncd3-content{min-width:0}
 @media (max-width:760px){.ncd3-topbar{padding:0 14px;align-items:flex-start;flex-direction:column;height:auto;padding-top:12px;padding-bottom:12px}.ncd3-topnav{width:100%}}
 /* NOCTRA_DOCSCHROME_NATIVE_RUNTIME_DECOUPLE_END */
-
-/* NOCTRA_DOCSCHROME_NATIVE_EXPORTS_START */
-.ncd3-chrome{min-height:100vh;background:var(--nc-page-bg,#050812);color:var(--nc-text,#f8fafc)}
-.ncd3-topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:58px;padding:0 24px;border-bottom:1px solid rgba(148,163,184,.14);background:rgba(5,8,18,.86);backdrop-filter:blur(14px)}
-.ncd3-brand{display:inline-flex;align-items:center;gap:10px;color:inherit;text-decoration:none;font-weight:800;letter-spacing:-.02em}
-.ncd3-brand-mark{width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#8b5cf6,#06b6d4);box-shadow:0 0 24px rgba(139,92,246,.35)}
-.ncd3-topnav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.ncd3-topnav a{display:inline-flex;align-items:center;min-height:32px;padding:0 10px;border-radius:8px;color:var(--nc-text-muted,#a7b2c3);text-decoration:none;font-size:13px}
-.ncd3-topnav a:hover{background:rgba(148,163,184,.1);color:var(--nc-text,#f8fafc)}
-.ncd3-content{min-width:0}
-.ncd3-page-hero{padding:42px 24px 24px;max-width:1120px;margin:0 auto;border-bottom:1px solid rgba(148,163,184,.12)}
-.ncd3-page-hero h1{font-size:42px;line-height:1.08;letter-spacing:-.045em;margin:8px 0 10px}
-.ncd3-page-hero p,.ncd3-section-title p,.ncd3-card p,.ncd3-stat-card p{color:var(--nc-text-muted,#a7b2c3);line-height:1.65}
-.ncd3-eyebrow{font-size:10px;line-height:1;letter-spacing:.13em;text-transform:uppercase;color:var(--nc-color-primary-300,#9b7cff);font-weight:800;margin:0 0 9px}
-.ncd3-actions,.ncd3-link-grid,.ncd3-stat-grid,.ncd3-group-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:16px}
-.ncd3-section-title{margin:0 0 16px}
-.ncd3-section-title h2{font-size:24px;line-height:1.2;margin:0 0 8px}
-.ncd3-card,.ncd3-stat-card,.ncd3-table-card{display:block;border:1px solid rgba(148,163,184,.16);background:rgba(15,23,42,.42);border-radius:12px;padding:16px;color:inherit;text-decoration:none}
-.ncd3-card h3,.ncd3-table-card h3{font-size:16px;margin:0 0 8px}
-.ncd3-card-link:hover{border-color:rgba(139,92,246,.42);background:rgba(15,23,42,.58)}
-.ncd3-stat-card span{font-size:12px;color:var(--nc-text-muted,#a7b2c3)}
-.ncd3-stat-card strong{display:block;font-size:22px;margin-top:4px}
-.ncd3-code-block{display:block;overflow:auto;margin:12px 0;padding:14px;border-radius:10px;background:rgba(2,6,23,.78);border:1px solid rgba(148,163,184,.13);font-size:12px;line-height:1.58;color:#dbeafe}
-.ncd3-copy-button{appearance:none;border:1px solid rgba(148,163,184,.2);background:rgba(15,23,42,.46);color:var(--nc-text,#f8fafc);border-radius:8px;min-height:30px;padding:0 12px;font:inherit;font-size:13px;cursor:pointer}
-.ncd3-copy-button:hover{background:rgba(148,163,184,.12)}
-.ncd3-table{width:100%;border-collapse:collapse;font-size:13px}
-.ncd3-table th{text-align:left;font-weight:700;color:var(--nc-text,#f5f7fb);padding:11px 12px;border-bottom:1px solid rgba(148,163,184,.18)}
-.ncd3-table td{vertical-align:top;padding:11px 12px;border-bottom:1px solid rgba(148,163,184,.11);color:var(--nc-text-muted,#a7b2c3)}
-.ncd3-tag-list{display:flex;gap:8px;flex-wrap:wrap}
-.ncd3-tag-list span{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;border:1px solid rgba(148,163,184,.16);background:rgba(2,6,23,.3);font-size:12px;color:var(--nc-text-muted,#a7b2c3)}
-.ncd3-anchor-list{display:flex;flex-direction:column;gap:6px}
-.ncd3-anchor-list a{color:var(--nc-text-muted,#a7b2c3);text-decoration:none;font-size:13px}
-.ncd3-anchor-list a:hover{color:var(--nc-text,#fff)}
-@media (max-width:760px){.ncd3-topbar{padding:12px 14px;align-items:flex-start;flex-direction:column;height:auto}.ncd3-topnav{width:100%}.ncd3-page-hero{padding:28px 14px 20px}.ncd3-page-hero h1{font-size:34px}}
-/* NOCTRA_DOCSCHROME_NATIVE_EXPORTS_END */

@@ -1,4 +1,30 @@
-import {
+﻿import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import ts from "typescript";
+
+const chromePath = "apps/docs/src/components/DocsChrome.tsx";
+const cssPath = "apps/docs/src/docs.css";
+const reportPath = "docschrome-native-exports-restore-report.md";
+
+function readText(path) {
+  return existsSync(path) ? readFileSync(path, "utf8").replace(/^\uFEFF/, "") : "";
+}
+
+function writeText(path, content) {
+  writeFileSync(path, `${content.trimEnd()}\n`, "utf8");
+}
+
+const beforeChrome = readText(chromePath);
+const beforeCss = readText(cssPath);
+
+if (!beforeChrome) {
+  throw new Error(`${chromePath} missing or empty.`);
+}
+
+if (!beforeCss) {
+  throw new Error(`${cssPath} missing or empty.`);
+}
+
+const chrome = `import {
   isValidElement,
   useState,
   type CSSProperties,
@@ -32,23 +58,6 @@ function cx(...values: Array<string | false | null | undefined>) {
   return values.filter(Boolean).join(" ");
 }
 
-function optionalNode(value: unknown): ReactNode | undefined {
-  if (value === null || value === undefined || value === "") return undefined;
-  return renderUnknown(value);
-}
-
-function optionalString(value: unknown): string | undefined {
-  return typeof value === "string" && value.length > 0 ? value : undefined;
-}
-
-function optionalStyle(value: unknown): CSSProperties | undefined {
-  return value && typeof value === "object" && !Array.isArray(value) ? value as CSSProperties : undefined;
-}
-
-function optionalClassName(value: unknown): string | undefined {
-  return typeof value === "string" ? value : undefined;
-}
-
 function renderUnknown(value: unknown): ReactNode {
   if (value === null || value === undefined) return "—";
   if (isValidElement(value)) return value;
@@ -71,7 +80,7 @@ export type DocsChromeProps = LooseProps;
 
 export function DocsChrome({ children, className, style }: DocsChromeProps) {
   return (
-    <div className={cx("ncd3-chrome", optionalClassName(className))} style={optionalStyle(style)} data-noctra-docs-system="chrome">
+    <div className={cx("ncd3-chrome", className)} style={style} data-noctra-docs-system="chrome">
       <header className="ncd3-topbar">
         <a className="ncd3-brand" href={docsHref("/")}>
           <span className="ncd3-brand-mark" aria-hidden="true" />
@@ -132,7 +141,7 @@ export function PageHero({
   style
 }: PageHeroProps) {
   return (
-    <header className={cx("ncd3-page-hero", optionalClassName(className))} style={optionalStyle(style)}>
+    <header className={cx("ncd3-page-hero", className)} style={style}>
       {eyebrow || kicker ? <div className="ncd3-eyebrow">{eyebrow ?? kicker}</div> : null}
       {title ? <h1>{title}</h1> : null}
       {description || subtitle ? <p>{description ?? subtitle}</p> : null}
@@ -141,18 +150,9 @@ export function PageHero({
 
       {stats && stats.length > 0 ? (
         <div className="ncd3-stat-grid">
-          {stats.map((stat, index) => {
-            const record = typeof stat === "object" && stat !== null ? stat as Record<string, unknown> : { value: stat };
-
-            return (
-              <StatCard
-                key={index}
-                label={optionalNode(record.label ?? record.title)}
-                value={optionalNode(record.value ?? record.count ?? record.total ?? stat)}
-                description={optionalNode(record.description ?? record.summary)}
-              />
-            );
-          })}
+          {stats.map((stat, index) => (
+            <StatCard key={index} {...(typeof stat === "object" && stat !== null ? stat as Record<string, unknown> : { value: stat })} />
+          ))}
         </div>
       ) : null}
 
@@ -195,7 +195,7 @@ export function SectionTitle({
   style
 }: SectionTitleProps) {
   return (
-    <div className={cx("ncd3-section-title", optionalClassName(className))} style={optionalStyle(style)}>
+    <div className={cx("ncd3-section-title", className)} style={style}>
       {eyebrow || kicker ? <div className="ncd3-eyebrow">{eyebrow ?? kicker}</div> : null}
       {title ? <h2>{title}</h2> : null}
       {description || subtitle ? <p>{description ?? subtitle}</p> : null}
@@ -208,7 +208,7 @@ export type DocCardProps = LooseProps & {
   title?: ReactNode;
   description?: ReactNode;
   subtitle?: ReactNode;
-  href?: string | undefined;
+  href?: string;
   tone?: string;
 };
 
@@ -231,14 +231,14 @@ export function DocCard({
 
   if (href) {
     return (
-      <a className={cx("ncd3-card", "ncd3-card-link", optionalClassName(className))} style={optionalStyle(style)} href={href}>
+      <a className={cx("ncd3-card", "ncd3-card-link", className)} style={style} href={href}>
         {content}
       </a>
     );
   }
 
   return (
-    <article className={cx("ncd3-card", optionalClassName(className))} style={optionalStyle(style)}>
+    <article className={cx("ncd3-card", className)} style={style}>
       {content}
     </article>
   );
@@ -252,7 +252,7 @@ export type StatCardProps = LooseProps & {
 
 export function StatCard({ label, value, description, children, className, style }: StatCardProps) {
   return (
-    <div className={cx("ncd3-stat-card", optionalClassName(className))} style={optionalStyle(style)}>
+    <div className={cx("ncd3-stat-card", className)} style={style}>
       {label ? <span>{label}</span> : null}
       {value ? <strong>{value}</strong> : null}
       {description ? <p>{description}</p> : null}
@@ -271,7 +271,7 @@ export function CodeBlock({ code, value, children, className, style }: CodeBlock
   const content = code ?? value ?? (typeof children === "string" ? children : "");
 
   return (
-    <pre className={cx("ncd3-code-block", optionalClassName(className))} style={optionalStyle(style)}>
+    <pre className={cx("ncd3-code-block", className)} style={style}>
       <code>{content || children}</code>
     </pre>
   );
@@ -300,7 +300,7 @@ export function CopyButton({ value, text, code, label, children, className, styl
   }
 
   return (
-    <button type="button" className={cx("ncd3-copy-button", optionalClassName(className))} style={optionalStyle(style)} onClick={copy}>
+    <button type="button" className={cx("ncd3-copy-button", className)} style={style} onClick={copy}>
       {children ?? label ?? (copied ? "Copied" : "Copy")}
     </button>
   );
@@ -363,7 +363,7 @@ export function DataTable({
   const tableRows = rows ?? data ?? items ?? [];
 
   return (
-    <div className={cx("ncd3-table-card", optionalClassName(className))} style={optionalStyle(style)}>
+    <div className={cx("ncd3-table-card", className)} style={style}>
       {title ? <h3>{title}</h3> : null}
 
       <table className="ncd3-table">
@@ -402,7 +402,7 @@ export function TagList({ tags, items, children, className, style }: TagListProp
   const values = tags ?? items ?? [];
 
   return (
-    <div className={cx("ncd3-tag-list", optionalClassName(className))} style={optionalStyle(style)}>
+    <div className={cx("ncd3-tag-list", className)} style={style}>
       {values.map((item, index) => (
         <span key={index}>{renderUnknown(item)}</span>
       ))}
@@ -420,7 +420,7 @@ export function AnchorList({ items, links, children, className, style }: AnchorL
   const values = items ?? links ?? [];
 
   return (
-    <nav className={cx("ncd3-anchor-list", optionalClassName(className))} style={optionalStyle(style)}>
+    <nav className={cx("ncd3-anchor-list", className)} style={style}>
       {values.map((item, index) => {
         const record = typeof item === "object" && item !== null ? item as Record<string, unknown> : { label: item };
         const href = typeof record.href === "string" ? record.href : "#";
@@ -444,7 +444,7 @@ export function GroupSummary({ groups, items, children, className, style }: Grou
   const values = groups ?? items ?? [];
 
   return (
-    <div className={cx("ncd3-group-summary", optionalClassName(className))} style={optionalStyle(style)}>
+    <div className={cx("ncd3-group-summary", className)} style={style}>
       {values.map((item, index) => {
         const record = typeof item === "object" && item !== null ? item as Record<string, unknown> : { title: item };
 
@@ -452,8 +452,8 @@ export function GroupSummary({ groups, items, children, className, style }: Grou
           <DocCard
             key={index}
             title={renderUnknown(record.title ?? record.label ?? item)}
-            description={optionalNode(record.description ?? record.summary)}
-            {...(typeof record.href === "string" ? { href: record.href } : {})}
+            description={renderUnknown(record.description ?? record.summary ?? "")}
+            href={typeof record.href === "string" ? record.href : undefined}
           />
         );
       })}
@@ -463,3 +463,141 @@ export function GroupSummary({ groups, items, children, className, style }: Grou
 }
 
 export default DocsChrome;
+`;
+
+writeText(chromePath, chrome);
+
+let css = beforeCss;
+
+const cssBlock = `
+/* NOCTRA_DOCSCHROME_NATIVE_EXPORTS_START */
+.ncd3-chrome{min-height:100vh;background:var(--nc-page-bg,#050812);color:var(--nc-text,#f8fafc)}
+.ncd3-topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:58px;padding:0 24px;border-bottom:1px solid rgba(148,163,184,.14);background:rgba(5,8,18,.86);backdrop-filter:blur(14px)}
+.ncd3-brand{display:inline-flex;align-items:center;gap:10px;color:inherit;text-decoration:none;font-weight:800;letter-spacing:-.02em}
+.ncd3-brand-mark{width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#8b5cf6,#06b6d4);box-shadow:0 0 24px rgba(139,92,246,.35)}
+.ncd3-topnav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.ncd3-topnav a{display:inline-flex;align-items:center;min-height:32px;padding:0 10px;border-radius:8px;color:var(--nc-text-muted,#a7b2c3);text-decoration:none;font-size:13px}
+.ncd3-topnav a:hover{background:rgba(148,163,184,.1);color:var(--nc-text,#f8fafc)}
+.ncd3-content{min-width:0}
+.ncd3-page-hero{padding:42px 24px 24px;max-width:1120px;margin:0 auto;border-bottom:1px solid rgba(148,163,184,.12)}
+.ncd3-page-hero h1{font-size:42px;line-height:1.08;letter-spacing:-.045em;margin:8px 0 10px}
+.ncd3-page-hero p,.ncd3-section-title p,.ncd3-card p,.ncd3-stat-card p{color:var(--nc-text-muted,#a7b2c3);line-height:1.65}
+.ncd3-eyebrow{font-size:10px;line-height:1;letter-spacing:.13em;text-transform:uppercase;color:var(--nc-color-primary-300,#9b7cff);font-weight:800;margin:0 0 9px}
+.ncd3-actions,.ncd3-link-grid,.ncd3-stat-grid,.ncd3-group-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:16px}
+.ncd3-section-title{margin:0 0 16px}
+.ncd3-section-title h2{font-size:24px;line-height:1.2;margin:0 0 8px}
+.ncd3-card,.ncd3-stat-card,.ncd3-table-card{display:block;border:1px solid rgba(148,163,184,.16);background:rgba(15,23,42,.42);border-radius:12px;padding:16px;color:inherit;text-decoration:none}
+.ncd3-card h3,.ncd3-table-card h3{font-size:16px;margin:0 0 8px}
+.ncd3-card-link:hover{border-color:rgba(139,92,246,.42);background:rgba(15,23,42,.58)}
+.ncd3-stat-card span{font-size:12px;color:var(--nc-text-muted,#a7b2c3)}
+.ncd3-stat-card strong{display:block;font-size:22px;margin-top:4px}
+.ncd3-code-block{display:block;overflow:auto;margin:12px 0;padding:14px;border-radius:10px;background:rgba(2,6,23,.78);border:1px solid rgba(148,163,184,.13);font-size:12px;line-height:1.58;color:#dbeafe}
+.ncd3-copy-button{appearance:none;border:1px solid rgba(148,163,184,.2);background:rgba(15,23,42,.46);color:var(--nc-text,#f8fafc);border-radius:8px;min-height:30px;padding:0 12px;font:inherit;font-size:13px;cursor:pointer}
+.ncd3-copy-button:hover{background:rgba(148,163,184,.12)}
+.ncd3-table{width:100%;border-collapse:collapse;font-size:13px}
+.ncd3-table th{text-align:left;font-weight:700;color:var(--nc-text,#f5f7fb);padding:11px 12px;border-bottom:1px solid rgba(148,163,184,.18)}
+.ncd3-table td{vertical-align:top;padding:11px 12px;border-bottom:1px solid rgba(148,163,184,.11);color:var(--nc-text-muted,#a7b2c3)}
+.ncd3-tag-list{display:flex;gap:8px;flex-wrap:wrap}
+.ncd3-tag-list span{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:999px;border:1px solid rgba(148,163,184,.16);background:rgba(2,6,23,.3);font-size:12px;color:var(--nc-text-muted,#a7b2c3)}
+.ncd3-anchor-list{display:flex;flex-direction:column;gap:6px}
+.ncd3-anchor-list a{color:var(--nc-text-muted,#a7b2c3);text-decoration:none;font-size:13px}
+.ncd3-anchor-list a:hover{color:var(--nc-text,#fff)}
+@media (max-width:760px){.ncd3-topbar{padding:12px 14px;align-items:flex-start;flex-direction:column;height:auto}.ncd3-topnav{width:100%}.ncd3-page-hero{padding:28px 14px 20px}.ncd3-page-hero h1{font-size:34px}}
+/* NOCTRA_DOCSCHROME_NATIVE_EXPORTS_END */
+`;
+
+const blockPattern = /\/\* NOCTRA_DOCSCHROME_NATIVE_EXPORTS_START \*\/[\s\S]*?\/\* NOCTRA_DOCSCHROME_NATIVE_EXPORTS_END \*\//;
+
+if (blockPattern.test(css)) {
+  css = css.replace(blockPattern, cssBlock.trim());
+} else {
+  css = `${css.trimEnd()}\n\n${cssBlock.trim()}\n`;
+}
+
+writeText(cssPath, css);
+
+const afterChrome = readText(chromePath);
+const afterCss = readText(cssPath);
+const requiredExports = [
+  "DocsChrome",
+  "DocsRoute",
+  "PageHero",
+  "SectionTitle",
+  "DocCard",
+  "StatCard",
+  "CodeBlock",
+  "CopyButton",
+  "DataTable",
+  "TagList",
+  "AnchorList",
+  "GroupSummary"
+];
+
+const problems = [];
+
+for (const exportName of requiredExports) {
+  if (!new RegExp(`export function ${exportName}\\b`).test(afterChrome)) {
+    problems.push(`Missing export function ${exportName}.`);
+  }
+}
+
+if (afterChrome.includes("@noctra/react")) {
+  problems.push("DocsChrome still imports @noctra/react.");
+}
+
+if (afterChrome.includes("#/")) {
+  problems.push("DocsChrome still contains #/ hash route fragment.");
+}
+
+if (!afterCss.includes(".ncd3-card")) {
+  problems.push("docs.css missing native DocsChrome card styles.");
+}
+
+const syntaxResult = ts.transpileModule(afterChrome, {
+  compilerOptions: {
+    target: ts.ScriptTarget.ES2022,
+    module: ts.ModuleKind.ESNext,
+    jsx: ts.JsxEmit.ReactJSX
+  },
+  reportDiagnostics: true,
+  fileName: chromePath
+});
+
+for (const diagnostic of syntaxResult.diagnostics ?? []) {
+  problems.push(`TS${diagnostic.code}: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")}`);
+}
+
+const report = [
+  "# DocsChrome Native Exports Restore Report",
+  "",
+  `Generated: ${new Date().toISOString()}`,
+  "",
+  `Chrome changed: ${beforeChrome === afterChrome ? "no" : "yes"}`,
+  `CSS changed: ${beforeCss === afterCss ? "no" : "yes"}`,
+  `Required exports: ${requiredExports.length}`,
+  `Problems found: ${problems.length}`,
+  "",
+  "## Required exports",
+  "",
+  ...requiredExports.map((item) => `- ${item}`),
+  "",
+  "## Problems",
+  "",
+  ...(problems.length ? problems.map((problem) => `- ${problem}`) : ["- None"]),
+  "",
+  "## Applied",
+  "",
+  "- Restored previous DocsChrome helper export API.",
+  "- Kept DocsChrome native and decoupled from @noctra/react.",
+  "- Fixed chromeLinks external typing.",
+  "- Added native styles for cards, tables, code blocks, tags, anchors and hero sections."
+].join("\n");
+
+writeFileSync(reportPath, `${report}\n`, "utf8");
+
+console.log(`DocsChrome native exports restore completed. Problems: ${problems.length}. Report: ${reportPath}`);
+
+if (problems.length > 0) {
+  console.error(report);
+  throw new Error("DocsChrome native exports restore failed.");
+}

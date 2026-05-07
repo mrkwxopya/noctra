@@ -32,23 +32,6 @@ function cx(...values: Array<string | false | null | undefined>) {
   return values.filter(Boolean).join(" ");
 }
 
-function optionalNode(value: unknown): ReactNode | undefined {
-  if (value === null || value === undefined || value === "") return undefined;
-  return renderUnknown(value);
-}
-
-function optionalString(value: unknown): string | undefined {
-  return typeof value === "string" && value.length > 0 ? value : undefined;
-}
-
-function optionalStyle(value: unknown): CSSProperties | undefined {
-  return value && typeof value === "object" && !Array.isArray(value) ? value as CSSProperties : undefined;
-}
-
-function optionalClassName(value: unknown): string | undefined {
-  return typeof value === "string" ? value : undefined;
-}
-
 function renderUnknown(value: unknown): ReactNode {
   if (value === null || value === undefined) return "—";
   if (isValidElement(value)) return value;
@@ -71,7 +54,7 @@ export type DocsChromeProps = LooseProps;
 
 export function DocsChrome({ children, className, style }: DocsChromeProps) {
   return (
-    <div className={cx("ncd3-chrome", optionalClassName(className))} style={optionalStyle(style)} data-noctra-docs-system="chrome">
+    <div className={cx("ncd3-chrome", className)} style={style} data-noctra-docs-system="chrome">
       <header className="ncd3-topbar">
         <a className="ncd3-brand" href={docsHref("/")}>
           <span className="ncd3-brand-mark" aria-hidden="true" />
@@ -132,7 +115,7 @@ export function PageHero({
   style
 }: PageHeroProps) {
   return (
-    <header className={cx("ncd3-page-hero", optionalClassName(className))} style={optionalStyle(style)}>
+    <header className={cx("ncd3-page-hero", className)} style={style}>
       {eyebrow || kicker ? <div className="ncd3-eyebrow">{eyebrow ?? kicker}</div> : null}
       {title ? <h1>{title}</h1> : null}
       {description || subtitle ? <p>{description ?? subtitle}</p> : null}
@@ -141,18 +124,9 @@ export function PageHero({
 
       {stats && stats.length > 0 ? (
         <div className="ncd3-stat-grid">
-          {stats.map((stat, index) => {
-            const record = typeof stat === "object" && stat !== null ? stat as Record<string, unknown> : { value: stat };
-
-            return (
-              <StatCard
-                key={index}
-                label={optionalNode(record.label ?? record.title)}
-                value={optionalNode(record.value ?? record.count ?? record.total ?? stat)}
-                description={optionalNode(record.description ?? record.summary)}
-              />
-            );
-          })}
+          {stats.map((stat, index) => (
+            <StatCard key={index} {...(typeof stat === "object" && stat !== null ? stat as Record<string, unknown> : { value: stat })} />
+          ))}
         </div>
       ) : null}
 
@@ -195,7 +169,7 @@ export function SectionTitle({
   style
 }: SectionTitleProps) {
   return (
-    <div className={cx("ncd3-section-title", optionalClassName(className))} style={optionalStyle(style)}>
+    <div className={cx("ncd3-section-title", className)} style={style}>
       {eyebrow || kicker ? <div className="ncd3-eyebrow">{eyebrow ?? kicker}</div> : null}
       {title ? <h2>{title}</h2> : null}
       {description || subtitle ? <p>{description ?? subtitle}</p> : null}
@@ -208,7 +182,7 @@ export type DocCardProps = LooseProps & {
   title?: ReactNode;
   description?: ReactNode;
   subtitle?: ReactNode;
-  href?: string | undefined;
+  href?: string;
   tone?: string;
 };
 
@@ -231,14 +205,14 @@ export function DocCard({
 
   if (href) {
     return (
-      <a className={cx("ncd3-card", "ncd3-card-link", optionalClassName(className))} style={optionalStyle(style)} href={href}>
+      <a className={cx("ncd3-card", "ncd3-card-link", className)} style={style} href={href}>
         {content}
       </a>
     );
   }
 
   return (
-    <article className={cx("ncd3-card", optionalClassName(className))} style={optionalStyle(style)}>
+    <article className={cx("ncd3-card", className)} style={style}>
       {content}
     </article>
   );
@@ -252,7 +226,7 @@ export type StatCardProps = LooseProps & {
 
 export function StatCard({ label, value, description, children, className, style }: StatCardProps) {
   return (
-    <div className={cx("ncd3-stat-card", optionalClassName(className))} style={optionalStyle(style)}>
+    <div className={cx("ncd3-stat-card", className)} style={style}>
       {label ? <span>{label}</span> : null}
       {value ? <strong>{value}</strong> : null}
       {description ? <p>{description}</p> : null}
@@ -271,7 +245,7 @@ export function CodeBlock({ code, value, children, className, style }: CodeBlock
   const content = code ?? value ?? (typeof children === "string" ? children : "");
 
   return (
-    <pre className={cx("ncd3-code-block", optionalClassName(className))} style={optionalStyle(style)}>
+    <pre className={cx("ncd3-code-block", className)} style={style}>
       <code>{content || children}</code>
     </pre>
   );
@@ -300,7 +274,7 @@ export function CopyButton({ value, text, code, label, children, className, styl
   }
 
   return (
-    <button type="button" className={cx("ncd3-copy-button", optionalClassName(className))} style={optionalStyle(style)} onClick={copy}>
+    <button type="button" className={cx("ncd3-copy-button", className)} style={style} onClick={copy}>
       {children ?? label ?? (copied ? "Copied" : "Copy")}
     </button>
   );
@@ -363,7 +337,7 @@ export function DataTable({
   const tableRows = rows ?? data ?? items ?? [];
 
   return (
-    <div className={cx("ncd3-table-card", optionalClassName(className))} style={optionalStyle(style)}>
+    <div className={cx("ncd3-table-card", className)} style={style}>
       {title ? <h3>{title}</h3> : null}
 
       <table className="ncd3-table">
@@ -402,7 +376,7 @@ export function TagList({ tags, items, children, className, style }: TagListProp
   const values = tags ?? items ?? [];
 
   return (
-    <div className={cx("ncd3-tag-list", optionalClassName(className))} style={optionalStyle(style)}>
+    <div className={cx("ncd3-tag-list", className)} style={style}>
       {values.map((item, index) => (
         <span key={index}>{renderUnknown(item)}</span>
       ))}
@@ -420,7 +394,7 @@ export function AnchorList({ items, links, children, className, style }: AnchorL
   const values = items ?? links ?? [];
 
   return (
-    <nav className={cx("ncd3-anchor-list", optionalClassName(className))} style={optionalStyle(style)}>
+    <nav className={cx("ncd3-anchor-list", className)} style={style}>
       {values.map((item, index) => {
         const record = typeof item === "object" && item !== null ? item as Record<string, unknown> : { label: item };
         const href = typeof record.href === "string" ? record.href : "#";
@@ -444,7 +418,7 @@ export function GroupSummary({ groups, items, children, className, style }: Grou
   const values = groups ?? items ?? [];
 
   return (
-    <div className={cx("ncd3-group-summary", optionalClassName(className))} style={optionalStyle(style)}>
+    <div className={cx("ncd3-group-summary", className)} style={style}>
       {values.map((item, index) => {
         const record = typeof item === "object" && item !== null ? item as Record<string, unknown> : { title: item };
 
@@ -452,8 +426,8 @@ export function GroupSummary({ groups, items, children, className, style }: Grou
           <DocCard
             key={index}
             title={renderUnknown(record.title ?? record.label ?? item)}
-            description={optionalNode(record.description ?? record.summary)}
-            {...(typeof record.href === "string" ? { href: record.href } : {})}
+            description={renderUnknown(record.description ?? record.summary ?? "")}
+            href={typeof record.href === "string" ? record.href : undefined}
           />
         );
       })}

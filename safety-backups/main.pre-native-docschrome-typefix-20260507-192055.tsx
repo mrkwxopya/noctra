@@ -45,7 +45,7 @@ function locationKey() {
   return `${window.location.pathname}${window.location.search}${window.location.hash}`;
 }
 
-function parseRoute(): { route: string; componentSlug?: string } {
+function parseRoute(): { route: DocsRoute; componentSlug?: string } {
   return parseDocsRouteFromLocation(window.location);
 }
 
