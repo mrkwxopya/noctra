@@ -1214,7 +1214,7 @@ export function isRemovedInteractiveDemoComponent(component: string | {
     name: string;
 }) {
     const componentName = typeof component === "string" ? component : component.name;
-    return ((removedInteractiveDemoComponents) as any).has(componentName);
+    return removedInteractiveDemoComponents.has(componentName);
 }
 export function hasInteractiveDemoPreset(component: string | {
     name: string;
@@ -1294,7 +1294,7 @@ function hasRuntimeProp(component: string | DemoComponentLike, propName: string)
         return true;
     if (preset?.state && Object.prototype.hasOwnProperty.call(preset.state, propName))
         return true;
-    if (Array.isArray(preset?.controls) && ((preset.controls) as readonly unknown[]).includes(propName))
+    if (Array.isArray(preset?.controls) && preset.controls.includes(propName))
         return true;
     return props.some((prop) => prop.name === propName);
 }

@@ -1214,7 +1214,7 @@ export function isRemovedInteractiveDemoComponent(component: string | {
     name: string;
 }) {
     const componentName = typeof component === "string" ? component : component.name;
-    return ((removedInteractiveDemoComponents) as any).has(componentName);
+    return removedInteractiveDemoComponents.has(componentName);
 }
 export function hasInteractiveDemoPreset(component: string | {
     name: string;
