@@ -345,298 +345,45 @@ export const interactiveDemoPresets: Record<string, InteractiveDemoPreset> = {
     },
     controls: ["value", "placeholder"]
   },
+
   Spotlight: {
-      title: "Spotlight",
-      description: "Spotlight search with iterable actions array.",
-      previewWidth: 460,
-      props: {
-        open: true,
-        value: "",
-        query: "",
-        placeholder: "Search actions",
-        actions: [
-          {
-            id: "search-docs",
-            value: "search-docs",
-            label: "Search docs",
-            description: "Open documentation search"
-          },
-          {
-            id: "copy-import",
-            value: "copy-import",
-            label: "Copy import",
-            description: "Copy package import"
-          },
-          {
-            id: "open-release",
-            value: "open-release",
-            label: "Open release",
-            description: "Review release checklist"
-          }
-        ],
-        items: [
-          {
-            id: "search-docs",
-            value: "search-docs",
-            label: "Search docs",
-            description: "Open documentation search"
-          },
-          {
-            id: "copy-import",
-            value: "copy-import",
-            label: "Copy import",
-            description: "Copy package import"
-          },
-          {
-            id: "open-release",
-            value: "open-release",
-            label: "Open release",
-            description: "Review release checklist"
-          }
-        ],
-        data: [
-          {
-            id: "search-docs",
-            value: "search-docs",
-            label: "Search docs",
-            description: "Open documentation search"
-          },
-          {
-            id: "copy-import",
-            value: "copy-import",
-            label: "Copy import",
-            description: "Copy package import"
-          },
-          {
-            id: "open-release",
-            value: "open-release",
-            label: "Open release",
-            description: "Review release checklist"
-          }
-        ]
-      },
-      controls: [
-        "open",
-        "value",
-        "placeholder"
-      ]
+    title: "Spotlight",
+    description: "Spotlight search with iterable items.",
+    previewWidth: 460,
+    props: {
+      open: true,
+      value: "",
+      items: commandItems,
+      data: commandItems,
+      placeholder: "Search actions"
     },
+    controls: ["open", "value", "placeholder"]
+  },
+
   Tree: {
-      title: "Tree",
-      description: "Tree with iterable nested nodes array.",
-      previewWidth: 360,
-      props: {
-        nodes: [
-          {
-            value: "components",
-            label: "components",
-            children: [
-              {
-                value: "button",
-                label: "Button"
-              },
-              {
-                value: "input",
-                label: "Input"
-              }
-            ]
-          },
-          {
-            value: "docs",
-            label: "docs",
-            children: [
-              {
-                value: "usage",
-                label: "Usage"
-              },
-              {
-                value: "props",
-                label: "Props"
-              }
-            ]
-          }
-        ],
-        items: [
-          {
-            value: "components",
-            label: "components",
-            children: [
-              {
-                value: "button",
-                label: "Button"
-              },
-              {
-                value: "input",
-                label: "Input"
-              }
-            ]
-          },
-          {
-            value: "docs",
-            label: "docs",
-            children: [
-              {
-                value: "usage",
-                label: "Usage"
-              },
-              {
-                value: "props",
-                label: "Props"
-              }
-            ]
-          }
-        ],
-        data: [
-          {
-            value: "components",
-            label: "components",
-            children: [
-              {
-                value: "button",
-                label: "Button"
-              },
-              {
-                value: "input",
-                label: "Input"
-              }
-            ]
-          },
-          {
-            value: "docs",
-            label: "docs",
-            children: [
-              {
-                value: "usage",
-                label: "Usage"
-              },
-              {
-                value: "props",
-                label: "Props"
-              }
-            ]
-          }
-        ],
-        value: [
-          "components"
-        ],
-        expanded: [
-          "components",
-          "docs"
-        ]
-      },
-      controls: [
-        "value",
-        "multiple"
-      ]
+    title: "Tree",
+    description: "Nested expandable hierarchy.",
+    previewWidth: 360,
+    props: {
+      items: treeItems,
+      data: treeItems,
+      value: ["src"]
     },
+    controls: ["value", "multiple"]
+  },
+
   TreeSelect: {
-      title: "TreeSelect",
-      description: "TreeSelect with iterable nested nodes array.",
-      previewWidth: 360,
-      props: {
-        nodes: [
-          {
-            value: "components",
-            label: "components",
-            children: [
-              {
-                value: "button",
-                label: "Button"
-              },
-              {
-                value: "input",
-                label: "Input"
-              }
-            ]
-          },
-          {
-            value: "docs",
-            label: "docs",
-            children: [
-              {
-                value: "usage",
-                label: "Usage"
-              },
-              {
-                value: "props",
-                label: "Props"
-              }
-            ]
-          }
-        ],
-        items: [
-          {
-            value: "components",
-            label: "components",
-            children: [
-              {
-                value: "button",
-                label: "Button"
-              },
-              {
-                value: "input",
-                label: "Input"
-              }
-            ]
-          },
-          {
-            value: "docs",
-            label: "docs",
-            children: [
-              {
-                value: "usage",
-                label: "Usage"
-              },
-              {
-                value: "props",
-                label: "Props"
-              }
-            ]
-          }
-        ],
-        data: [
-          {
-            value: "components",
-            label: "components",
-            children: [
-              {
-                value: "button",
-                label: "Button"
-              },
-              {
-                value: "input",
-                label: "Input"
-              }
-            ]
-          },
-          {
-            value: "docs",
-            label: "docs",
-            children: [
-              {
-                value: "usage",
-                label: "Usage"
-              },
-              {
-                value: "props",
-                label: "Props"
-              }
-            ]
-          }
-        ],
-        value: "button",
-        placeholder: "Select node",
-        expanded: [
-          "components",
-          "docs"
-        ]
-      },
-      controls: [
-        "value",
-        "placeholder",
-        "disabled"
-      ]
+    title: "TreeSelect",
+    description: "Tree select with nested data.",
+    previewWidth: 360,
+    props: {
+      items: treeItems,
+      data: treeItems,
+      value: "components",
+      placeholder: "Select node"
     },
+    controls: ["value", "placeholder", "disabled"]
+  },
 
   TransferList: {
     title: "TransferList",
@@ -834,64 +581,16 @@ export const interactiveDemoPresets: Record<string, InteractiveDemoPreset> = {
     },
     controls: ["columns", "gap"]
   },
+
   Anchor: {
-      title: "Anchor",
-      description: "Safe anchor/link preview with href, label, children, and list-like fallback data.",
-      props: {
-        href: "/noctra/components",
-        label: "Browse components",
-        children: "Browse components",
-        items: [
-          {
-            label: "Docs",
-            href: "/noctra/"
-          },
-          {
-            label: "Components",
-            href: "/noctra/components"
-          },
-          {
-            label: "Button",
-            href: "/noctra/components/button"
-          }
-        ],
-        data: [
-          {
-            label: "Docs",
-            href: "/noctra/"
-          },
-          {
-            label: "Components",
-            href: "/noctra/components"
-          },
-          {
-            label: "Button",
-            href: "/noctra/components/button"
-          }
-        ],
-        links: [
-          {
-            label: "Docs",
-            href: "/noctra/"
-          },
-          {
-            label: "Components",
-            href: "/noctra/components"
-          },
-          {
-            label: "Button",
-            href: "/noctra/components/button"
-          }
-        ],
-        value: "/noctra/components"
-      },
-      controls: [
-        "href",
-        "children",
-        "label",
-        "disabled"
-      ]
+    title: "Anchor",
+    description: "Simple link with independent href behavior.",
+    props: {
+      href: "/noctra/components",
+      children: "Browse components"
     },
+    controls: ["href", "children"]
+  },
 
   Avatar: {
     title: "Avatar",
@@ -951,43 +650,18 @@ export const interactiveDemoPresets: Record<string, InteractiveDemoPreset> = {
     },
     controls: ["number", "holder", "expiry", "brand"]
   },
+
   FileInput: {
-      title: "File input",
-      description: "File input with array-based currentFiles shape.",
-      previewWidth: 340,
-      props: {
-        placeholder: "Choose file",
-        label: "Upload file",
-        value: [],
-        files: [
-          {
-            name: "noctra-release-notes.md",
-            size: 12400,
-            type: "text/markdown"
-          }
-        ],
-        currentFiles: [
-          {
-            name: "noctra-release-notes.md",
-            size: 12400,
-            type: "text/markdown"
-          }
-        ],
-        selectedFiles: [
-          {
-            name: "noctra-release-notes.md",
-            size: 12400,
-            type: "text/markdown"
-          }
-        ]
-      },
-      controls: [
-        "placeholder",
-        "disabled",
-        "size",
-        "radius"
-      ]
+    title: "File input",
+    description: "File input with placeholder and selected file label.",
+    previewWidth: 340,
+    props: {
+      placeholder: "Choose file",
+      value: "noctra-release-notes.md",
+      label: "Upload file"
     },
+    controls: ["placeholder", "value", "disabled", "size", "radius"]
+  },
 
   FloatLabel: {
     title: "Float label",
@@ -1116,167 +790,7 @@ export const interactiveDemoPresets: Record<string, InteractiveDemoPreset> = {
       content: "Popover content"
     },
     controls: ["open", "label", "title", "content"]
-  },
-
-  Breadcrumb: {
-      title: "Breadcrumb",
-      description: "Breadcrumb preview with non-empty items array.",
-      props: {
-        items: [
-          {
-            label: "Docs",
-            href: "/noctra/"
-          },
-          {
-            label: "Components",
-            href: "/noctra/components"
-          },
-          {
-            label: "Button",
-            href: "/noctra/components/button"
-          }
-        ],
-        data: [
-          {
-            label: "Docs",
-            href: "/noctra/"
-          },
-          {
-            label: "Components",
-            href: "/noctra/components"
-          },
-          {
-            label: "Button",
-            href: "/noctra/components/button"
-          }
-        ],
-        links: [
-          {
-            label: "Docs",
-            href: "/noctra/"
-          },
-          {
-            label: "Components",
-            href: "/noctra/components"
-          },
-          {
-            label: "Button",
-            href: "/noctra/components/button"
-          }
-        ],
-        value: "button"
-      },
-      controls: []
-    },
-
-  Breadcrumbs: {
-      title: "Breadcrumbs",
-      description: "Breadcrumbs preview with non-empty items array.",
-      props: {
-        items: [
-          {
-            label: "Docs",
-            href: "/noctra/"
-          },
-          {
-            label: "Components",
-            href: "/noctra/components"
-          },
-          {
-            label: "Button",
-            href: "/noctra/components/button"
-          }
-        ],
-        data: [
-          {
-            label: "Docs",
-            href: "/noctra/"
-          },
-          {
-            label: "Components",
-            href: "/noctra/components"
-          },
-          {
-            label: "Button",
-            href: "/noctra/components/button"
-          }
-        ],
-        links: [
-          {
-            label: "Docs",
-            href: "/noctra/"
-          },
-          {
-            label: "Components",
-            href: "/noctra/components"
-          },
-          {
-            label: "Button",
-            href: "/noctra/components/button"
-          }
-        ],
-        value: "button"
-      },
-      controls: []
-    },
-
-  SegmentedControl: {
-      title: "Segmented control",
-      description: "Segmented control with data array and selected value.",
-      previewWidth: 360,
-      props: {
-        value: "docs",
-        defaultValue: "docs",
-        data: [
-          {
-            value: "overview",
-            label: "Overview"
-          },
-          {
-            value: "docs",
-            label: "Docs"
-          },
-          {
-            value: "api",
-            label: "API"
-          }
-        ],
-        items: [
-          {
-            value: "overview",
-            label: "Overview"
-          },
-          {
-            value: "docs",
-            label: "Docs"
-          },
-          {
-            value: "api",
-            label: "API"
-          }
-        ],
-        options: [
-          {
-            value: "overview",
-            label: "Overview"
-          },
-          {
-            value: "docs",
-            label: "Docs"
-          },
-          {
-            value: "api",
-            label: "API"
-          }
-        ]
-      },
-      controls: [
-        "value",
-        "disabled",
-        "size",
-        "radius"
-      ]
-    }
+  }
 };
 
 export const componentInteractiveDemoPresets = interactiveDemoPresets;

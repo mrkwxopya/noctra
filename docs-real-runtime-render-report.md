@@ -1,11 +1,11 @@
 # Docs Real Runtime Render Report
 
-Generated: 2026-05-07T12:50:46.470Z
+Generated: 2026-05-07T13:00:50.278Z
 
-Components checked: 0
-Passed: 0
+Components checked: 108
+Passed: 108
 Problems found: 0
-Warnings found: 0
+Warnings found: 52
 
 ## Problems
 
@@ -13,8 +13,166 @@ Warnings found: 0
 
 ## Warnings
 
-- None
+- Alert: no component-specific preset found; runtime render used fallback
+- AppShell: no component-specific preset found; runtime render used fallback
+- AspectRatio: no component-specific preset found; runtime render used fallback
+- Badge: no component-specific preset found; runtime render used fallback
+- Blockquote: no component-specific preset found; runtime render used fallback
+- Box: no component-specific preset found; runtime render used fallback
+- Button: no component-specific preset found; runtime render used fallback
+- Card: no component-specific preset found; runtime render used fallback
+- Center: no component-specific preset found; runtime render used fallback
+- CodeBlock: no component-specific preset found; runtime render used fallback
+- ColorPicker: no component-specific preset found; runtime render used fallback
+- Divider: no component-specific preset found; runtime render used fallback
+- Drawer: rendered output looks empty
+- EmptyState: no component-specific preset found; runtime render used fallback
+- FocusTrap: no component-specific preset found; runtime render used fallback
+- Footer: no component-specific preset found; runtime render used fallback
+- FormField: no component-specific preset found; runtime render used fallback
+- Group: no component-specific preset found; runtime render used fallback
+- Header: no component-specific preset found; runtime render used fallback
+- Highlight: no component-specific preset found; runtime render used fallback
+- IconButton: no component-specific preset found; runtime render used fallback
+- InlineCode: no component-specific preset found; runtime render used fallback
+- Kbd: no component-specific preset found; runtime render used fallback
+- Layout: no component-specific preset found; runtime render used fallback
+- LayoutShell: no component-specific preset found; runtime render used fallback
+- Link: no component-specific preset found; runtime render used fallback
+- Loader: no component-specific preset found; runtime render used fallback
+- Modal: rendered output looks empty
+- NativeSelect: no component-specific preset found; runtime render used fallback
+- Notification: no component-specific preset found; runtime render used fallback
+- Page: no component-specific preset found; runtime render used fallback
+- Paper: no component-specific preset found; runtime render used fallback
+- PasswordInput: no component-specific preset found; runtime render used fallback
+- PinCode: no component-specific preset found; runtime render used fallback
+- PinInput: no component-specific preset found; runtime render used fallback
+- Portal: no component-specific preset found; runtime render used fallback
+- Portal: rendered output looks empty
+- Progress: no component-specific preset found; runtime render used fallback
+- Prose: no component-specific preset found; runtime render used fallback
+- RangeSlider: no component-specific preset found; runtime render used fallback
+- Rating: no component-specific preset found; runtime render used fallback
+- Section: no component-specific preset found; runtime render used fallback
+- Sidebar: no component-specific preset found; runtime render used fallback
+- SimpleGrid: no component-specific preset found; runtime render used fallback
+- Spacer: no component-specific preset found; runtime render used fallback
+- Spinner: no component-specific preset found; runtime render used fallback
+- SplitPane: rendered output contains placeholder-like text
+- Stack: no component-specific preset found; runtime render used fallback
+- StatusBar: no component-specific preset found; runtime render used fallback
+- Stepper: no component-specific preset found; runtime render used fallback
+- Toast: no component-specific preset found; runtime render used fallback
+- TreeView: no component-specific preset found; runtime render used fallback
 
 ## Passed
 
-- None
+- Accordion
+- Alert
+- Anchor
+- AppShell
+- AspectRatio
+- Autocomplete
+- Avatar
+- Badge
+- Blockquote
+- Box
+- Breadcrumb
+- Breadcrumbs
+- Button
+- Card
+- Center
+- Checkbox
+- ClickOutside
+- Clipboard
+- Code
+- CodeBlock
+- ColorInput
+- ColorPicker
+- Combobox
+- Command
+- CommandBar
+- Container
+- ContextMenu
+- CreditCard
+- DataGrid
+- Dialog
+- Divider
+- Dock
+- Drawer
+- Dropzone
+- EmptyState
+- FileInput
+- Flex
+- FloatLabel
+- FocusTrap
+- Footer
+- FormField
+- Grid
+- Group
+- Header
+- Highlight
+- HoverCard
+- IconButton
+- InlineCode
+- Input
+- Kbd
+- Layout
+- LayoutShell
+- Link
+- ListBox
+- Loader
+- Menu
+- Modal
+- MultiSelect
+- NativeSelect
+- Notification
+- NumberInput
+- Page
+- Pagination
+- Paper
+- PasswordInput
+- PinCode
+- PinInput
+- Popover
+- Portal
+- Progress
+- Prose
+- Radio
+- RangeSlider
+- Rating
+- ResizablePanel
+- ScrollArea
+- ScrollLock
+- SearchInput
+- Section
+- SegmentedControl
+- Select
+- Sidebar
+- SimpleGrid
+- Skeleton
+- Slider
+- Spacer
+- Spinner
+- SplitPane
+- Spotlight
+- Stack
+- StatusBar
+- Stepper
+- Switch
+- Table
+- TableOfContents
+- Tabs
+- TagsInput
+- Textarea
+- TextInput
+- Timeline
+- Toast
+- Toolbar
+- Tooltip
+- TransferList
+- Tree
+- TreeSelect
+- TreeView
+- VisuallyHidden

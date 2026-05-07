@@ -279,6 +279,22 @@ export function AnchorList({ items }: { items: readonly { href: string; label: s
   );
 }
 
+: { label: string; value: number; max: number }) {
+  const percent = max <= 0 ? 0 : Math.min(100, Math.round((value / max) * 100));
+
+  return (
+    <div className="nd-coverage">
+      <div className="nd-coverage-row">
+        <span>{label}</span>
+        <strong>{value}/{max}</strong>
+      </div>
+      <div className="nd-coverage-track" aria-hidden="true">
+        <span style={{ width: `${percent}%` }} />
+      </div>
+    </div>
+  );
+}
+
 export function GroupSummary() {
   return (
     <div className="nd-group-summary">
