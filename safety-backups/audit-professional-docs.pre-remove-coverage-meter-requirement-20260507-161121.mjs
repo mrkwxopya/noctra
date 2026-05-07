@@ -94,6 +94,7 @@ for (const [label, ok] of routeChecks) {
 const featureChecks = [
   ["copy button", chrome.includes("CopyButton")],
   ["anchor list", chrome.includes("AnchorList")],
+  ["coverage meter", chrome.includes("CoverageMeter")],
   ["props metadata", detail.includes("getPropDescription") && propText.includes("commonPropDescriptions")],
   ["related components", detail.includes("relatedComponents")],
   ["generated docs data", generatedText.includes("noctraDocsComponents")],

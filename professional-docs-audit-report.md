@@ -1,14 +1,14 @@
 # Noctra Professional Docs Audit
 
-Generated: 2026-05-07T02:57:45.602Z
+Generated: 2026-05-07T13:11:22.042Z
 
 Required files checked: 17
-Generated components: 119
-Generated props: 2786
-Generated tokens: 1661
+Generated components: 108
+Generated props: 2477
+Generated tokens: 1505
 Prop descriptions: 108
 Named real demo adapters: 30
-Runtime demo coverage: 119
+Runtime demo coverage: 108
 Problems found: 0
 Warnings found: 0
 
@@ -46,7 +46,6 @@ Warnings found: 0
 
 - OK copy button
 - OK anchor list
-- OK coverage meter
 - OK props metadata
 - OK related components
 - OK generated docs data
