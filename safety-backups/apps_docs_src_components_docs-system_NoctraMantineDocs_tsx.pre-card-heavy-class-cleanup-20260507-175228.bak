@@ -144,7 +144,7 @@ export function NoctraDocsHeader({
               <DocsBox
                 key={`${link.label}-${link.value}`}
                 as={Wrapper}
-                className="ncd-compact-card"
+                className="ncd-card ncd-related-card"
                 {...(link.href ? { href: link.href } : {})}
               >
                 <strong>{link.label}</strong>
@@ -271,12 +271,12 @@ export function NoctraDocsDemo({
         {description ? <p>{description}</p> : null}
 
         <DocsTwoGrid>
-          <DocsBox className="ncd-compact-card">
+          <DocsBox className="ncd-card ncd-related-card">
             <strong>Preview</strong>
             <DocsBox className="ncd-grid">{preview}</DocsBox>
           </DocsBox>
 
-          <DocsBox className="ncd-compact-card">
+          <DocsBox className="ncd-card ncd-related-card">
             <strong>Code</strong>
             <NoctraCodeBlock code={code} />
           </DocsBox>
@@ -550,7 +550,7 @@ export function NoctraDocsExampleCard({
   children: ReactNode;
 }) {
   return (
-    <DocsBox className="ncd-compact-card">
+    <DocsBox className="ncd-card ncd-related-card">
       <strong>{label}</strong>
       <span>{children}</span>
     </DocsBox>
@@ -567,7 +567,7 @@ export function NoctraDocsPreviousNext({
   return (
     <DocsTwoGrid>
       {previous ? (
-        <a className="ncd-compact-card" href={previous.href}>
+        <a className="ncd-card ncd-related-card" href={previous.href}>
           <span>Previous</span>
           <strong>{previous.label}</strong>
         </a>
@@ -576,7 +576,7 @@ export function NoctraDocsPreviousNext({
       )}
 
       {next ? (
-        <a className="ncd-compact-card" href={next.href}>
+        <a className="ncd-card ncd-related-card" href={next.href}>
           <span>Next</span>
           <strong>{next.label}</strong>
         </a>
