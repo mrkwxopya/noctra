@@ -1,9 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-const githubPagesBase = process.env.GITHUB_PAGES_BASE?.trim();
+const base = process.env.GITHUB_PAGES_BASE?.trim() || "/noctra/";
 
 export default defineConfig({
-  base: githubPagesBase && githubPagesBase.length > 0 ? githubPagesBase : "/noctra/",
-  plugins: [react()]
+  base,
+  plugins: [react()],
+  build: {
+    chunkSizeWarningLimit: 1600
+  }
 });
