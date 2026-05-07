@@ -12,6 +12,7 @@ import {
 } from "../components/docs-system/NoctraMantineDocs";
 import * as NoctraRuntime from "../components/docs-system/NoctraRuntimeMock";
 import { docsComponentLinks } from "../data/docsSidebarLinks";
+import { getComponentDocsApiEntry } from "../data/componentDocsApiMap";
 import { docsHref } from "../lib/docsRouting";
 
 type UniversalComponentDocPageProps = {
@@ -726,12 +727,17 @@ function buildCode(slug: string, label: string, state: VisualState) {
 
 function createPropsRows(slug: string, label: string): readonly NoctraDocsPropRow[] {
   const kind = getComponentDocKind(slug);
+  const api = getComponentDocsApiEntry(slug);
 
   const commonRows: NoctraDocsPropRow[] = [
     { name: "className", type: "string", defaultValue: "—", description: "Adds a class to the root element." },
     { name: "style", type: "CSSProperties", defaultValue: "—", description: "Adds inline styles to the root element." },
     { name: "children", type: "ReactNode", defaultValue: "—", description: "Main rendered content." }
   ];
+
+  if (api?.props?.length) {
+    return [...api.props, ...commonRows];
+  }
 
   if (kind === "button-like") {
     return [
@@ -832,6 +838,7 @@ function createPropsRows(slug: string, label: string): readonly NoctraDocsPropRo
 
 function createStylesRows(slug: string): readonly NoctraDocsStyleRow[] {
   const kind = getComponentDocKind(slug);
+  const api = getComponentDocsApiEntry(slug);
 
   const shared: NoctraDocsStyleRow[] = [
     { selector: "[data-variant]", description: "Variant state attribute.", value: "Data attribute" },
@@ -839,6 +846,10 @@ function createStylesRows(slug: string): readonly NoctraDocsStyleRow[] {
     { selector: "[data-size]", description: "Size state attribute.", value: "Data attribute" },
     { selector: "[data-disabled]", description: "Disabled state attribute.", value: "Data attribute" }
   ];
+
+  if (api?.styles?.length) {
+    return [...api.styles, ...shared];
+  }
 
   if (kind === "button-like") {
     return [
