@@ -1,4 +1,4 @@
-﻿import { createElement, useMemo, useState, type ReactNode } from "react";
+import { createElement, useMemo, useState, type ReactNode } from "react";
 import {
   NoctraMantineDocs,
   NoctraDocsSection,
@@ -214,18 +214,159 @@ function NativeVisual({
   if (slug === "button" || isButtonLike(slug)) {
     const Component = runtimeComponent(slug);
 
-    return createElement(
-      Component,
-      {
-        variant: state.variant,
-        tone: state.tone,
-        size: state.size,
-        radius: state.radius,
-        disabled: state.disabled,
-        loading: state.loading,
-        fullWidth: state.fullWidth
-      },
-      label
+    return (
+      <div className="ncu-native-button">
+        {createElement(
+          Component,
+          {
+            variant: state.variant,
+            tone: state.tone,
+            size: state.size,
+            radius: state.radius,
+            disabled: state.disabled,
+            loading: state.loading,
+            fullWidth: state.fullWidth
+          },
+          label
+        )}
+      </div>
+    );
+  }
+
+  if (/checkbox|radio|switch/.test(slug)) {
+    return (
+      <label className={`${cls} ncu-native-check`}>
+        <input checked readOnly type={slug.includes("radio") ? "radio" : "checkbox"} />
+        <span>{label}</span>
+      </label>
+    );
+  }
+
+  if (/segmented-control/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-segmented`}>
+        <button aria-pressed="true" type="button">React</button>
+        <button type="button">CSS</button>
+        <button type="button">Docs</button>
+      </div>
+    );
+  }
+
+  if (/aspect-ratio/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-aspect`}>
+        <div>
+          <strong>16:9</strong>
+          <span>{label}</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (/color-picker/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-color-picker`}>
+        <div className="ncu-color-plane"><span /></div>
+        <div className="ncu-color-row"><span /><span /><span /><span /></div>
+        <code>#8B5CF6</code>
+      </div>
+    );
+  }
+
+  if (/divider/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-divider`}>
+        <span>Before</span>
+        <i />
+        <span>After</span>
+      </div>
+    );
+  }
+
+  if (/dropzone/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-dropzone`}>
+        <strong>Drop files here</strong>
+        <span>SVG, PNG, JPG or JSON</span>
+      </div>
+    );
+  }
+
+  if (/float-label/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-float-label`}>
+        <input readOnly value="Noctra" />
+        <label>Floating label</label>
+      </div>
+    );
+  }
+
+  if (/form-field/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-form-field`}>
+        <label>Email address</label>
+        <input readOnly placeholder="name@example.com" />
+        <small>Helper text for validation and guidance.</small>
+      </div>
+    );
+  }
+
+  if (/portal/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-portal`}>
+        <span>Page</span>
+        <strong>Portal layer</strong>
+      </div>
+    );
+  }
+
+  if (/prose/.test(slug)) {
+    return (
+      <article className={`${cls} ncu-native-prose`}>
+        <h3>Readable content</h3>
+        <p>Noctra prose styles keep documentation text calm, readable and aligned.</p>
+      </article>
+    );
+  }
+
+  if (/scroll-area/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-scroll-area`}>
+        <span>Components</span>
+        <span>Props</span>
+        <span>Styles API</span>
+        <span>Accessibility</span>
+        <span>Examples</span>
+      </div>
+    );
+  }
+
+  if (/spacer/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-spacer`}>
+        <span>Left</span>
+        <i />
+        <span>Right</span>
+      </div>
+    );
+  }
+
+  if (/status-bar/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-status-bar`}>
+        <span>Ready</span>
+        <span>3 warnings</span>
+        <span>v0.0.0</span>
+      </div>
+    );
+  }
+
+  if (/visually-hidden/.test(slug)) {
+    return (
+      <div className={`${cls} ncu-native-visually-hidden`}>
+        <span aria-hidden="true">Visible label</span>
+        <code>screen reader text</code>
+      </div>
     );
   }
 
@@ -251,7 +392,7 @@ function NativeVisual({
     );
   }
 
-  if (/card|paper|box|container/.test(slug)) {
+  if (/card|paper|box|container|credit-card/.test(slug)) {
     return (
       <article className={`${cls} ncu-native-card`}>
         <header>
@@ -291,15 +432,6 @@ function NativeVisual({
     return <span className={`${cls} ncu-native-avatar`}>{initials}</span>;
   }
 
-  if (/checkbox|radio|switch/.test(slug)) {
-    return (
-      <label className={`${cls} ncu-native-check`}>
-        <input checked readOnly type={slug.includes("radio") ? "radio" : "checkbox"} />
-        <span>{label}</span>
-      </label>
-    );
-  }
-
   if (/slider|range-slider|progress|rating/.test(slug)) {
     return (
       <div className={`${cls} ncu-native-meter`}>
@@ -309,7 +441,7 @@ function NativeVisual({
     );
   }
 
-  if (/table|data-grid/.test(slug)) {
+  if (/table|data-grid|table-of-contents/.test(slug)) {
     return (
       <div className={`${cls} ncu-native-table`}>
         <div><strong>Name</strong><strong>Status</strong><strong>Type</strong></div>
