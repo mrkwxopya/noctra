@@ -1,3 +1,4 @@
+import { docsHref } from "../lib/docsRouting";
 import { useMemo, useState, type ReactNode } from "react";
 import { noctraDocsComponents, noctraDocsGroups, noctraDocsSummary } from "../generated/noctra-professional-docs.generated";
 
@@ -9,12 +10,12 @@ export interface DocsChromeProps {
 }
 
 const navItems = [
-  { id: "overview", label: "Overview", href: "#/", description: "Start here" },
-  { id: "components", label: "Components", href: "#/components", description: "119 generated docs" },
-  { id: "architecture", label: "Architecture", href: "#/architecture", description: "Packages & exports" },
-  { id: "theming", label: "Theming", href: "#/theming", description: "Tokens & CSS variables" },
-  { id: "quality", label: "Quality", href: "#/quality", description: "Audit gates" },
-  { id: "release", label: "Release", href: "#/release", description: "Publish readiness" }
+  { id: "overview", label: "Overview", href: docsHref("/"), description: "Start here" },
+  { id: "components", label: "Components", href: docsHref("/components"), description: "119 generated docs" },
+  { id: "architecture", label: "Architecture", href: docsHref("/architecture"), description: "Packages & exports" },
+  { id: "theming", label: "Theming", href: docsHref("/theming"), description: "Tokens & CSS variables" },
+  { id: "quality", label: "Quality", href: docsHref("/quality"), description: "Audit gates" },
+  { id: "release", label: "Release", href: docsHref("/release"), description: "Publish readiness" }
 ] as const;
 
 export function DocsChrome({ route, children }: DocsChromeProps) {
@@ -33,7 +34,7 @@ export function DocsChrome({ route, children }: DocsChromeProps) {
   return (
     <div className="nd-shell">
       <aside className="nd-sidebar">
-        <a className="nd-brand" href="#/">
+        <a className="nd-brand" href={docsHref("/")}>
           <span className="nd-brand-logo">N</span>
           <span>
             <strong>Noctra</strong>
@@ -46,7 +47,7 @@ export function DocsChrome({ route, children }: DocsChromeProps) {
           {searchResults.length > 0 ? (
             <div className="nd-search-results">
               {searchResults.map((component) => (
-                <a key={component.name} href={`#/components/${component.kebab}`} onClick={() => setQuery("")}>
+                <a key={component.name} href={`/components/${component.kebab}`} onClick={() => setQuery("")}>
                   <strong>{component.name}</strong>
                   <small>{component.group}</small>
                 </a>
@@ -78,8 +79,8 @@ export function DocsChrome({ route, children }: DocsChromeProps) {
             <strong>Professional component documentation</strong>
           </div>
           <div className="nd-topbar-actions">
-            <a href="#/components">Browse components</a>
-            <a href="#/release" data-primary>Release gate</a>
+            <a href={docsHref("/components")}>Browse components</a>
+            <a href={docsHref("/release")} data-primary>Release gate</a>
           </div>
         </header>
 
@@ -252,7 +253,7 @@ export function SectionTitle({ id, eyebrow, title, description }: { id: string; 
 
 export function AnchorList({ items }: { items: readonly { href: string; label: string; description?: string }[] }) {
   function handleScroll(targetHref: string) {
-    const targetId = targetHref.replace(/^#/, "");
+    const targetId = targetHref.replace(/^/, "");
     const target = document.getElementById(targetId);
 
     if (!target) return;
@@ -283,7 +284,7 @@ export function GroupSummary() {
   return (
     <div className="nd-group-summary">
       {noctraDocsGroups.map((group) => (
-        <a key={group.group} href={`#/components?group=${encodeURIComponent(group.group)}`}>
+        <a key={group.group} href={`/components?group=${encodeURIComponent(group.group)}`}>
           <span>{group.group}</span>
           <strong>{group.count}</strong>
         </a>

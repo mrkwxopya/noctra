@@ -3,6 +3,23 @@ import {
   useEffect,
   useMemo,
   useState } from "react";
+
+function sanitizeNoctraHashRoute() {
+  if (typeof window === "undefined") return;
+
+  const hash = window.location.hash;
+
+  if (!hash.startsWith(docsHref("/"))) return;
+
+  const cleanPath = hash.slice(1);
+  const nextPath = cleanPath === "/" ? "/noctra/" : `/noctra${cleanPath}`;
+  const nextUrl = `${nextPath}${window.location.search || ""}`;
+
+  window.history.replaceState(null, "", nextUrl);
+}
+
+sanitizeNoctraHashRoute();
+
 import { createRoot } from "react-dom/client";
 import { DocsChrome,
   type DocsRoute } from "./components/DocsChrome";

@@ -39,30 +39,13 @@ function stripNoctraBase(pathname: string) {
   return normalized;
 }
 
-export function docsHref(pathname = "/") {
-  const cleanPath = stripNoctraBase(pathname);
-  const normalized = normalizePathname(cleanPath);
-
-  if (normalized === "/") return NOCTRA_DOCS_BASE;
-
-  return `${NOCTRA_DOCS_BASE.replace(/\/$/, "")}${normalized}`;
+export function docsHref(path = "/") {
+  const cleanPath = normalizeNoctraDocsPath(path);
+  return cleanPath === "/" ? "/noctra/" : `/noctra${cleanPath}`;
 }
 
-export function forceNoctraDocsHref(value: string) {
-  if (!value) return docsHref("/");
-
-  try {
-    const url = new URL(value, window.location.origin);
-    const cleanPath = stripNoctraBase(url.pathname);
-    return `${docsHref(cleanPath)}${url.search}${url.hash}`;
-  } catch {
-    const [pathAndSearch = "/", hash = ""] = value.split("#");
-    const [pathname = "/", search = ""] = pathAndSearch.split("?");
-    const nextHash = hash ? `#${hash}` : "";
-    const nextSearch = search ? `?${search}` : "";
-
-    return `${docsHref(pathname)}${nextSearch}${nextHash}`;
-  }
+export function forceNoctraDocsHref(path = "/") {
+  return docsHref(path);
 }
 
 export function isInternalDocsUrl(url: URL) {
@@ -83,7 +66,7 @@ export function isInternalDocsUrl(url: URL) {
 
 export function parseDocsRouteFromLocation(locationLike: Pick<Location, "pathname" | "hash">): DocsRoute {
   const pathname = stripNoctraBase(locationLike.pathname);
-  const hashPath = locationLike.hash.startsWith("#/") ? locationLike.hash.slice(1) : "";
+  const hashPath = locationLike.hash.startsWith(docsHref("/")) ? locationLike.hash.slice(1) : "";
   const routePath = normalizePathname(hashPath || pathname);
 
   if (routePath === "/" || routePath === "/overview") {
@@ -109,13 +92,14 @@ export function parseDocsRouteFromLocation(locationLike: Pick<Location, "pathnam
   return { route: "overview" };
 }
 
-export function canonicalizeDocsCleanRoute() {
-  const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-  const canonical = forceNoctraDocsHref(current);
+export function canonicalizeDocsCleanRoute(pathname = "/", hash = "") {
+  const hashValue = String(hash || "");
 
-  if (canonical !== current) {
-    window.history.replaceState(null, "", canonical);
+  if (hashValue.startsWith(docsHref("/"))) {
+    return normalizeNoctraDocsPath(hashValue.slice(1));
   }
+
+  return normalizeNoctraDocsPath(pathname);
 }
 
 export function sanitizeDocsAnchors(root: ParentNode = document) {
@@ -137,4 +121,19 @@ export function sanitizeDocsAnchors(root: ParentNode = document) {
 
     anchor.href = forceNoctraDocsHref(`${url.pathname}${url.search}${url.hash}`);
   }
+}
+
+export function normalizeNoctraDocsPath(path = "/") {
+  let value = String(path || "/").trim();
+
+  if (!value) value = "/";
+  if (value.startsWith(docsHref("/"))) value = value.slice(1);
+  if (value.startsWith("#")) value = value.slice(1);
+  if (value.startsWith("/noctra/")) value = value.slice("/noctra".length);
+  if (value === "/noctra") value = "/";
+  if (!value.startsWith("/")) value = `/${value}`;
+
+  value = value.replace(/\/+/g, "/");
+
+  return value === "" ? "/" : value;
 }
