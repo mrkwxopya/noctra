@@ -91,6 +91,40 @@ function resolveSafeTag(as: any, displayName: string, href?: string): any {
   return "div";
 }
 
+
+function safeAttr(value: unknown): string | undefined {
+  if (value === null || value === undefined || value === "") return undefined;
+  if (typeof value === "string") return value;
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  return undefined;
+}
+
+function boolAttr(value: unknown): string | undefined {
+  return value === true ? "true" : undefined;
+}
+
+function mockStateClass(displayName: string, props: Record<string, unknown>): string {
+  const parts = [
+    "ncr-mock",
+    `ncr-mock-${kebab(displayName)}`
+  ];
+
+  const variant = safeAttr(props.variant);
+  const tone = safeAttr(props.tone);
+  const size = safeAttr(props.size);
+  const radius = safeAttr(props.radius);
+
+  if (variant) parts.push(`ncr-variant-${kebab(variant)}`);
+  if (tone) parts.push(`ncr-tone-${kebab(tone)}`);
+  if (size) parts.push(`ncr-size-${kebab(size)}`);
+  if (radius) parts.push(`ncr-radius-${kebab(radius)}`);
+  if (props.loading === true) parts.push("ncr-loading");
+  if (props.disabled === true) parts.push("ncr-disabled");
+  if (props.fullWidth === true) parts.push("ncr-full-width");
+
+  return parts.join(" ");
+}
+
 function createNoctraMock(displayName: string) {
   const Component = forwardRef<any, NoctraMockProps>(function NoctraRuntimeMockComponent(
     props,
@@ -140,15 +174,22 @@ function createNoctraMock(displayName: string) {
     const commonProps: Record<string, any> = {
       ...safeProps,
       ref,
-      className: cx("ncr-mock", `ncr-mock-${kebab(displayName)}`, className),
-      style: typeof style === "object" && style !== null && !Array.isArray(style) ? style : undefined
+      className: cx(mockStateClass(displayName, props as Record<string, unknown>), className),
+      style: typeof style === "object" && style !== null && !Array.isArray(style) ? style : undefined,
+      "data-variant": safeAttr((props as Record<string, unknown>).variant),
+      "data-tone": safeAttr((props as Record<string, unknown>).tone),
+      "data-size": safeAttr((props as Record<string, unknown>).size),
+      "data-radius": safeAttr((props as Record<string, unknown>).radius ?? (props as Record<string, unknown>).radiusMode),
+      "data-loading": boolAttr((props as Record<string, unknown>).loading),
+      "data-disabled": boolAttr((props as Record<string, unknown>).disabled),
+      "data-full-width": boolAttr((props as Record<string, unknown>).fullWidth)
     };
 
     if (tag === "input" || tag === "textarea") {
       return createElement(tag, {
         ...commonProps,
         placeholder: typeof placeholder === "string" ? placeholder : displayName,
-        disabled: Boolean(disabled)
+        disabled: Boolean(disabled || (props as Record<string, unknown>).loading === true)
       });
     }
 
@@ -158,7 +199,7 @@ function createNoctraMock(displayName: string) {
 
     if (tag === "button") {
       commonProps.type = type ?? "button";
-      commonProps.disabled = Boolean(disabled);
+      commonProps.disabled = Boolean(disabled || (props as Record<string, unknown>).loading === true);
     }
 
     const childrenNodes: any[] = [
