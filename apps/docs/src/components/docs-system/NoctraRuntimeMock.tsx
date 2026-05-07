@@ -139,7 +139,6 @@ function createNoctraMock(displayName: string) {
       type,
       title,
       label,
-      description,
       data,
       items,
       rows,
@@ -153,8 +152,6 @@ function createNoctraMock(displayName: string) {
     const tag = resolveSafeTag(as, displayName, href);
     const list = data ?? items ?? rows ?? options ?? columns;
     const displayChildren = safeChildren(children, safeText(label) ?? safeText(title) ?? displayName);
-    const descriptionNode = safeNode(description);
-
     const safeProps: Record<string, any> = {};
 
     for (const [key, value] of Object.entries(rest)) {
@@ -205,12 +202,7 @@ function createNoctraMock(displayName: string) {
     const childrenNodes: any[] = [
       createElement("span", { className: "ncr-mock-label", key: "label" }, displayChildren)
     ];
-
-    if (descriptionNode !== undefined) {
-      childrenNodes.push(createElement("small", { key: "description" }, descriptionNode));
-    }
-
-    if (Array.isArray(list) && list.length > 0) {
+if (Array.isArray(list) && list.length > 0) {
       childrenNodes.push(createElement("span", { className: "ncr-mock-list", key: "list" }, `${list.length} items`));
     }
 

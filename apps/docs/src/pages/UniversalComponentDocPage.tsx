@@ -84,6 +84,16 @@ function pascalCase(slug: string): string {
     .join("");
 }
 
+function safeComponentLabel(slug: string, value: unknown): string {
+  const text = typeof value === "string" ? value.trim() : "";
+
+  if (!text || /\{[^}]*\}/.test(text) || /^item$/i.test(text) || /preview$/i.test(text)) {
+    return titleCase(slug);
+  }
+
+  return text.replace(/\s+preview$/i, "");
+}
+
 function titleCase(slug: string): string {
   return slug
     .split("-")
@@ -156,8 +166,7 @@ function createPreviewProps(slug: string, label: string, state: Record<string, u
     fullWidth: state.fullWidth,
     title: label,
     label,
-    description: `${label} preview`
-  };
+      };
 
   if (isTextLike(slug)) {
     props.placeholder = `${label} placeholder`;
@@ -264,7 +273,7 @@ export function Demo() {
 
 function getComponentMeta(slug: string) {
   const link = docsComponentLinks.find((item) => item.href.endsWith(`/${slug}`));
-  const label = link?.label ?? titleCase(slug);
+  const label = safeComponentLabel(slug, link?.label ?? titleCase(slug));
 
   return {
     label,

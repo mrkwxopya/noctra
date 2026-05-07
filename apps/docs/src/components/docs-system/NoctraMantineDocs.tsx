@@ -60,6 +60,27 @@ export type NoctraMantineDocsProps = {
   style?: CSSProperties;
 };
 
+
+function scrollToDocsTarget(href: string): void {
+  if (typeof window === "undefined") return;
+  if (!href.startsWith("#")) return;
+
+  const id = href.slice(1);
+  if (!id) return;
+
+  window.requestAnimationFrame(() => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    element.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+    window.history.replaceState(null, "", href);
+  });
+}
+
 function cx(...values: Array<string | false | null | undefined>) {
   return values.filter(Boolean).join(" ");
 }
@@ -95,6 +116,7 @@ function SectionList({ sections }: { sections: readonly DocsSidebarSection[] }) 
   );
 }
 
+
 export function NoctraDocsToc({ items = [] }: { items?: readonly NoctraDocsTocItem[] }) {
   return (
     <aside className="nmx-right-toc" aria-label="Table of contents">
@@ -102,7 +124,15 @@ export function NoctraDocsToc({ items = [] }: { items?: readonly NoctraDocsTocIt
       <nav>
         {items.length > 0 ? (
           items.map((item) => (
-            <a href={item.href} key={item.href}>
+            <a
+              href={item.href}
+              key={item.href}
+              onClick={(event) => {
+                if (!item.href.startsWith("#")) return;
+                event.preventDefault();
+                scrollToDocsTarget(item.href);
+              }}
+            >
               <span>{item.label}</span>
               {item.description ? <small>{item.description}</small> : null}
             </a>
@@ -150,28 +180,28 @@ export function NoctraDocsHeader({
   );
 }
 
+
 export function NoctraDocsTabs({
   documentation,
   props,
   styles
 }: {
-  documentation?: ReactNode;
-  props?: ReactNode;
-  styles?: ReactNode;
+  documentation?: ReactNode | undefined;
+  props?: ReactNode | undefined;
+  styles?: ReactNode | undefined;
 }) {
   const tabs = useMemo(
     () => [
       { id: "documentation", label: "Documentation", node: documentation },
-      { id: "props", label: "Props", node: props },
-      { id: "styles", label: "Styles API", node: styles }
+      { id: "props-panel", label: "Props", node: props },
+      { id: "styles-panel", label: "Styles API", node: styles }
     ].filter((tab) => hasNode(tab.node)),
     [documentation, props, styles]
   );
 
   const [active, setActive] = useState(() => tabs[0]?.id ?? "documentation");
-  const current = tabs.find((tab) => tab.id === active) ?? tabs[0];
 
-  if (!current) {
+  if (tabs.length === 0) {
     return null;
   }
 
@@ -180,9 +210,12 @@ export function NoctraDocsTabs({
       <div className="nmx-tabs" role="tablist" aria-label="Docs sections">
         {tabs.map((tab) => (
           <button
-            aria-selected={tab.id === current.id}
+            aria-selected={tab.id === active}
             key={tab.id}
-            onClick={() => setActive(tab.id)}
+            onClick={() => {
+              setActive(tab.id);
+              scrollToDocsTarget(`#${tab.id}`);
+            }}
             role="tab"
             type="button"
           >
@@ -191,8 +224,19 @@ export function NoctraDocsTabs({
         ))}
       </div>
 
-      <div className="nmx-tab-panel" role="tabpanel">
-        {current.node}
+      <div className="nmx-tab-panels">
+        {tabs.map((tab) => (
+          <section
+            aria-label={tab.label}
+            className="nmx-tab-panel"
+            data-active={tab.id === active ? "true" : "false"}
+            id={tab.id}
+            key={tab.id}
+            role="tabpanel"
+          >
+            {tab.node}
+          </section>
+        ))}
       </div>
     </div>
   );
