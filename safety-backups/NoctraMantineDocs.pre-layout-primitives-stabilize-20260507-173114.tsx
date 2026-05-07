@@ -11,10 +11,16 @@ type AnyProps = Record<string, any>;
 
 const runtime = NoctraReact as AnyProps;
 
-const BoxRuntime = (runtime.Box ?? "div") as RuntimeComponent;
-const ButtonRuntime = (runtime.Button ?? "button") as RuntimeComponent;
-const TextInputRuntime = (runtime.TextInput ?? "input") as RuntimeComponent;
+const Box = (runtime.Box ?? "div") as RuntimeComponent;
+const Stack = (runtime.Stack ?? "div") as RuntimeComponent;
+const Group = (runtime.Group ?? "div") as RuntimeComponent;
+const Card = (runtime.Card ?? "section") as RuntimeComponent;
+const Button = (runtime.Button ?? "button") as RuntimeComponent;
+const TextInput = (runtime.TextInput ?? "input") as RuntimeComponent;
+const CodeBlockRuntime = (runtime.CodeBlock ?? "pre") as RuntimeComponent;
 const InlineCodeRuntime = (runtime.InlineCode ?? "code") as RuntimeComponent;
+const TableRuntime = (runtime.Table ?? "table") as RuntimeComponent;
+const hasRuntimeTable = Boolean(runtime.Table);
 
 export type NoctraDocsTabId = "documentation" | "props" | "styles";
 
@@ -52,54 +58,6 @@ export type NoctraDocsStylesApiDataAttribute = {
   description: ReactNode;
 };
 
-function DocsBox({
-  as,
-  className,
-  children,
-  ...props
-}: {
-  as?: RuntimeComponent;
-  className?: string;
-  children?: ReactNode;
-  [key: string]: unknown;
-}) {
-  const Component = as ?? BoxRuntime;
-
-  return (
-    <Component className={className} {...props}>
-      {children}
-    </Component>
-  );
-}
-
-function DocsCard({
-  children,
-  className = "nd-card",
-  ...props
-}: {
-  children: ReactNode;
-  className?: string;
-  [key: string]: unknown;
-}) {
-  return (
-    <DocsBox className={className} {...props}>
-      {children}
-    </DocsBox>
-  );
-}
-
-function DocsStack({ children }: { children: ReactNode }) {
-  return <DocsBox className="nd-stack">{children}</DocsBox>;
-}
-
-function DocsGrid({ children }: { children: ReactNode }) {
-  return <DocsBox className="nd-related-grid">{children}</DocsBox>;
-}
-
-function DocsTwoGrid({ children }: { children: ReactNode }) {
-  return <DocsBox className="nd-two-grid">{children}</DocsBox>;
-}
-
 export function NoctraDocsShell({
   children,
   toc
@@ -108,15 +66,14 @@ export function NoctraDocsShell({
   toc?: readonly NoctraDocsTocItem[];
 }) {
   return (
-    <DocsBox className="nd-detail-layout" data-noctra-docs-system="shell">
-      <DocsBox className="nd-detail-main">{children}</DocsBox>
-
+    <Box className="nd-detail-layout" data-noctra-docs-system="shell">
+      <Box className="nd-detail-main">{children}</Box>
       {toc && toc.length > 0 ? (
         <aside className="nd-detail-aside">
           <NoctraDocsToc items={toc} />
         </aside>
       ) : null}
-    </DocsBox>
+    </Box>
   );
 }
 
@@ -130,31 +87,28 @@ export function NoctraDocsHeader({
   links?: readonly NoctraDocsHeaderLink[];
 }) {
   return (
-    <DocsBox className="nd-doc-section" data-noctra-docs-system="header">
-      <DocsBox className="nd-kicker">Component</DocsBox>
-      <h1>{title}</h1>
-      <p>{description}</p>
+    <Card className="nd-card" data-noctra-docs-system="header">
+      <Stack className="nd-stack">
+        <Box className="nd-kicker">Component</Box>
+        <h1>{title}</h1>
+        <p>{description}</p>
 
-      {links && links.length > 0 ? (
-        <DocsGrid>
-          {links.map((link) => {
-            const Wrapper = (link.href ? "a" : "div") as RuntimeComponent;
+        {links && links.length > 0 ? (
+          <Box className="nd-related-grid">
+            {links.map((link) => {
+              const LinkWrapper = (link.href ? "a" : Card) as RuntimeComponent;
 
-            return (
-              <DocsBox
-                key={`${link.label}-${link.value}`}
-                as={Wrapper}
-                className="nd-related-card"
-                {...(link.href ? { href: link.href } : {})}
-              >
-                <strong>{link.label}</strong>
-                <span>{link.value}</span>
-              </DocsBox>
-            );
-          })}
-        </DocsGrid>
-      ) : null}
-    </DocsBox>
+              return (
+                <LinkWrapper key={`${link.label}-${link.value}`} className="nd-related-card" {...(link.href ? { href: link.href } : {})}>
+                  <strong>{link.label}</strong>
+                  <span>{link.value}</span>
+                </LinkWrapper>
+              );
+            })}
+          </Box>
+        ) : null}
+      </Stack>
+    </Card>
   );
 }
 
@@ -172,25 +126,23 @@ export function NoctraDocsTabs({
   ];
 
   return (
-    <DocsBox className="nd-doc-section" data-noctra-docs-system="tabs">
-      <DocsGrid>
-        {tabs.map((tab) => (
-          <ButtonRuntime
-            key={tab.value}
-            type="button"
-            role="tab"
-            aria-selected={active === tab.value}
-            variant={active === tab.value ? "filled" : "outline"}
-            tone={active === tab.value ? "primary" : "neutral"}
-            size="sm"
-            radius="md"
-            onClick={() => onChange(tab.value)}
-          >
-            {tab.label}
-          </ButtonRuntime>
-        ))}
-      </DocsGrid>
-    </DocsBox>
+    <Group className="nd-related-grid" data-noctra-docs-system="tabs" role="tablist">
+      {tabs.map((tab) => (
+        <Button
+          key={tab.value}
+          type="button"
+          role="tab"
+          aria-selected={active === tab.value}
+          variant={active === tab.value ? "filled" : "outline"}
+          tone={active === tab.value ? "primary" : "neutral"}
+          size="sm"
+          radius="md"
+          onClick={() => onChange(tab.value)}
+        >
+          {tab.label}
+        </Button>
+      ))}
+    </Group>
   );
 }
 
@@ -243,7 +195,7 @@ export function NoctraDocsSection({
 }) {
   return (
     <section id={id} className="nd-doc-section">
-      {eyebrow ? <DocsBox className="nd-kicker">{eyebrow}</DocsBox> : null}
+      {eyebrow ? <Box className="nd-kicker">{eyebrow}</Box> : null}
       <h2>{title}</h2>
       {description ? <p>{description}</p> : null}
       {children}
@@ -265,26 +217,26 @@ export function NoctraDocsDemo({
   controls?: ReactNode;
 }) {
   return (
-    <DocsCard data-noctra-docs-system="demo">
-      <DocsStack>
+    <Card className="nd-card" data-noctra-docs-system="demo">
+      <Stack className="nd-stack">
         <h3>{title}</h3>
         {description ? <p>{description}</p> : null}
 
-        <DocsTwoGrid>
-          <DocsBox className="nd-related-card">
+        <Box className="nd-two-grid">
+          <Card className="nd-related-card">
             <strong>Preview</strong>
-            <DocsBox className="nd-related-grid">{preview}</DocsBox>
-          </DocsBox>
+            <Box className="nd-related-grid">{preview}</Box>
+          </Card>
 
-          <DocsBox className="nd-related-card">
+          <Card className="nd-related-card">
             <strong>Code</strong>
             <NoctraCodeBlock code={code} />
-          </DocsBox>
-        </DocsTwoGrid>
+          </Card>
+        </Box>
 
-        {controls ? <DocsBox>{controls}</DocsBox> : null}
-      </DocsStack>
-    </DocsCard>
+        {controls ? <Box>{controls}</Box> : null}
+      </Stack>
+    </Card>
   );
 }
 
@@ -300,11 +252,11 @@ export function NoctraDocsControlGroup<TValue extends string>({
   onChange: (value: TValue) => void;
 }) {
   return (
-    <DocsBox className="nd-related-card" data-noctra-docs-system="control-group">
+    <Card className="nd-related-card" data-noctra-docs-system="control-group">
       <strong>{label}</strong>
-      <DocsGrid>
+      <Group className="nd-related-grid">
         {options.map((option) => (
-          <ButtonRuntime
+          <Button
             key={option}
             type="button"
             variant={value === option ? "filled" : "subtle"}
@@ -315,10 +267,10 @@ export function NoctraDocsControlGroup<TValue extends string>({
             aria-pressed={value === option}
           >
             {option}
-          </ButtonRuntime>
+          </Button>
         ))}
-      </DocsGrid>
-    </DocsBox>
+      </Group>
+    </Card>
   );
 }
 
@@ -332,10 +284,10 @@ export function NoctraDocsBooleanControl({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <DocsBox className="nd-related-card" data-noctra-docs-system="boolean-control">
+    <Card className="nd-related-card" data-noctra-docs-system="boolean-control">
       <strong>{label}</strong>
-      <DocsGrid>
-        <ButtonRuntime
+      <Group className="nd-related-grid">
+        <Button
           type="button"
           variant={!checked ? "filled" : "subtle"}
           tone={!checked ? "primary" : "neutral"}
@@ -345,9 +297,9 @@ export function NoctraDocsBooleanControl({
           aria-pressed={!checked}
         >
           Off
-        </ButtonRuntime>
+        </Button>
 
-        <ButtonRuntime
+        <Button
           type="button"
           variant={checked ? "filled" : "subtle"}
           tone={checked ? "primary" : "neutral"}
@@ -357,9 +309,9 @@ export function NoctraDocsBooleanControl({
           aria-pressed={checked}
         >
           On
-        </ButtonRuntime>
-      </DocsGrid>
-    </DocsBox>
+        </Button>
+      </Group>
+    </Card>
   );
 }
 
@@ -381,18 +333,62 @@ export function NoctraDocsPropsPanel({
   }, [query, rows]);
 
   return (
-    <DocsStack>
-      <TextInputRuntime
+    <Stack className="nd-stack" data-noctra-docs-system="props-panel">
+      <TextInput
         value={query}
         placeholder="Search props"
         onChange={(event: { currentTarget: { value: string } }) => setQuery(event.currentTarget.value)}
       />
 
-      <DocsCard>
+      <Card className="nd-card">
         <h2>{title}</h2>
         <NoctraDocsPropsTable rows={filteredRows} />
-      </DocsCard>
-    </DocsStack>
+      </Card>
+    </Stack>
+  );
+}
+
+function NoctraDocsRuntimeTable({
+  columns,
+  rows,
+  system
+}: {
+  columns: readonly string[];
+  rows: readonly ReactNode[][];
+  system: string;
+}) {
+  if (hasRuntimeTable) {
+    return (
+      <TableRuntime
+        className="nd-table"
+        data-noctra-docs-system={system}
+        columns={columns}
+        rows={rows}
+        data={rows}
+      />
+    );
+  }
+
+  return (
+    <table className="nd-table" data-noctra-docs-system={system}>
+      <thead>
+        <tr>
+          {columns.map((column) => (
+            <th key={column}>{column}</th>
+          ))}
+        </tr>
+      </thead>
+
+      <tbody>
+        {rows.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {row.map((cell, cellIndex) => (
+              <td key={cellIndex}>{cell}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 
@@ -408,7 +404,7 @@ export function NoctraDocsPropsTable({ rows }: { rows: readonly NoctraDocsPropRo
   ]);
 
   return (
-    <NoctraDocsSimpleNativeTable
+    <NoctraDocsRuntimeTable
       columns={columns}
       rows={tableRows}
       system="props-table"
@@ -426,11 +422,11 @@ export function NoctraDocsStylesApiPanel({
   dataAttributes?: readonly NoctraDocsStylesApiDataAttribute[];
 }) {
   return (
-    <DocsStack>
-      <DocsCard>
+    <Stack className="nd-stack" data-noctra-docs-system="styles-api-panel">
+      <Card className="nd-card">
         <h2>Styles API</h2>
         <p>Use selectors, CSS variables, and data attributes to customize Noctra components without reaching into unstable DOM structure.</p>
-      </DocsCard>
+      </Card>
 
       <NoctraDocsSimpleTable
         title="Selectors"
@@ -462,7 +458,7 @@ export function NoctraDocsStylesApiPanel({
           ])}
         />
       ) : null}
-    </DocsStack>
+    </Stack>
   );
 }
 
@@ -476,70 +472,42 @@ export function NoctraDocsSimpleTable({
   rows: readonly ReactNode[][];
 }) {
   return (
-    <DocsCard>
+    <Card className="nd-card">
       <h2>{title}</h2>
-      <NoctraDocsSimpleNativeTable columns={columns} rows={rows} system="simple-table" />
-    </DocsCard>
-  );
-}
-
-function NoctraDocsSimpleNativeTable({
-  columns,
-  rows,
-  system
-}: {
-  columns: readonly string[];
-  rows: readonly ReactNode[][];
-  system: string;
-}) {
-  return (
-    <table className="nd-table" data-noctra-docs-system={system}>
-      <thead>
-        <tr>
-          {columns.map((column) => (
-            <th key={column}>{column}</th>
-          ))}
-        </tr>
-      </thead>
-
-      <tbody>
-        {rows.map((row, rowIndex) => (
-          <tr key={rowIndex}>
-            {row.map((cell, cellIndex) => (
-              <td key={cellIndex}>{cell}</td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+      <NoctraDocsRuntimeTable
+        columns={columns}
+        rows={rows}
+        system="simple-table"
+      />
+    </Card>
   );
 }
 
 export function NoctraCodeBlock({ code }: { code: string }) {
   return (
-    <pre className="nd-code-block" data-noctra-docs-system="code-block">
-      <code>{code}</code>
-    </pre>
+    <CodeBlockRuntime code={code} value={code}>
+      {code}
+    </CodeBlockRuntime>
   );
 }
 
 export function NoctraDocsToc({ items }: { items: readonly NoctraDocsTocItem[] }) {
   return (
-    <DocsCard data-noctra-docs-system="toc">
+    <Card className="nd-card" data-noctra-docs-system="toc">
       <h3>Table of contents</h3>
-      <DocsStack>
+      <Stack className="nd-stack">
         {items.map((item) => (
           <a key={item.href} href={item.href}>
             {item.label}
           </a>
         ))}
-      </DocsStack>
-    </DocsCard>
+      </Stack>
+    </Card>
   );
 }
 
 export function NoctraDocsExampleGrid({ children }: { children: ReactNode }) {
-  return <DocsGrid>{children}</DocsGrid>;
+  return <Box className="nd-related-grid">{children}</Box>;
 }
 
 export function NoctraDocsExampleCard({
@@ -550,10 +518,10 @@ export function NoctraDocsExampleCard({
   children: ReactNode;
 }) {
   return (
-    <DocsBox className="nd-related-card">
+    <Card className="nd-related-card">
       <strong>{label}</strong>
       <span>{children}</span>
-    </DocsBox>
+    </Card>
   );
 }
 
@@ -565,14 +533,14 @@ export function NoctraDocsPreviousNext({
   next?: { label: string; href: string };
 }) {
   return (
-    <DocsTwoGrid>
+    <Box className="nd-two-grid" data-noctra-docs-system="previous-next">
       {previous ? (
         <a className="nd-related-card" href={previous.href}>
           <span>Previous</span>
           <strong>{previous.label}</strong>
         </a>
       ) : (
-        <DocsBox />
+        <Box />
       )}
 
       {next ? (
@@ -581,6 +549,6 @@ export function NoctraDocsPreviousNext({
           <strong>{next.label}</strong>
         </a>
       ) : null}
-    </DocsTwoGrid>
+    </Box>
   );
 }
