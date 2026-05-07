@@ -1,7 +1,7 @@
-import { createElement, forwardRef, isValidElement, type ElementType, type ReactNode } from "react";
+import { createElement, forwardRef, type ElementType, type ReactNode } from "react";
 
 export type NoctraMockProps = {
-  as?: ElementType | string;
+  as?: ElementType;
   children?: ReactNode;
   className?: string;
   style?: any;
@@ -38,6 +38,12 @@ function cx(...values: any[]) {
   return values.filter((value) => typeof value === "string" && value.length > 0).join(" ");
 }
 
+function toNode(value: any): any {
+  if (value === null || value === undefined || value === "") return undefined;
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") return String(value);
+  return value as any;
+}
+
 function kebab(value: string) {
   return value
     .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
@@ -48,47 +54,12 @@ function kebab(value: string) {
     .toLowerCase();
 }
 
-function safeText(value: any): string | undefined {
-  if (value === null || value === undefined || value === "") return undefined;
-  if (typeof value === "string") return value;
-  if (typeof value === "number" || typeof value === "boolean" || typeof value === "bigint") return String(value);
-  if (typeof value === "function") return value.displayName || value.name || "function";
-  if (Array.isArray(value)) return value.length === 0 ? undefined : value.map((item) => safeText(item)).filter(Boolean).join(", ");
-  if (typeof value === "object") return undefined;
-  return undefined;
-}
-
-function safeNode(value: any): any {
-  if (value === null || value === undefined || value === "") return undefined;
-  if (isValidElement(value)) return value;
-  const text = safeText(value);
-  return text === undefined ? undefined : text;
-}
-
-function safeChildren(value: any, fallback: string): any {
-  if (value === null || value === undefined || value === "") return fallback;
-  if (isValidElement(value)) return value;
-  if (Array.isArray(value)) {
-    const nodes = value.map((item) => safeNode(item)).filter((item) => item !== undefined);
-    return nodes.length > 0 ? nodes : fallback;
-  }
-  return safeNode(value) ?? fallback;
-}
-
 function isInteractiveName(name: string) {
   return /button|tab|menu|select|checkbox|radio|switch|slider|pagination|rating|clipboard/i.test(name);
 }
 
 function isTextInputName(name: string) {
   return /input|textarea|search|password|number|color/i.test(name);
-}
-
-function resolveSafeTag(as: any, displayName: string, href?: string): any {
-  if (typeof as === "string") return as;
-  if (href) return "a";
-  if (isTextInputName(displayName)) return "input";
-  if (isInteractiveName(displayName)) return "button";
-  return "div";
 }
 
 function createNoctraMock(displayName: string) {
@@ -116,10 +87,9 @@ function createNoctraMock(displayName: string) {
       ...rest
     } = props;
 
-    const tag = resolveSafeTag(as, displayName, href);
-    const list = data ?? items ?? rows ?? options ?? columns;
-    const displayChildren = safeChildren(children, safeText(label) ?? safeText(title) ?? displayName);
-    const descriptionNode = safeNode(description);
+    const tag: any = as ?? (href ? "a" : isTextInputName(displayName) ? "input" : isInteractiveName(displayName) ? "button" : "div");
+    const displayChildren: any = children ?? toNode(label) ?? toNode(title) ?? displayName;
+    const list: any = data ?? items ?? rows ?? options ?? columns;
 
     const safeProps: Record<string, any> = {};
 
@@ -141,7 +111,7 @@ function createNoctraMock(displayName: string) {
       ...safeProps,
       ref,
       className: cx("ncr-mock", `ncr-mock-${kebab(displayName)}`, className),
-      style: typeof style === "object" && style !== null && !Array.isArray(style) ? style : undefined
+      style
     };
 
     if (tag === "input" || tag === "textarea") {
@@ -162,18 +132,20 @@ function createNoctraMock(displayName: string) {
     }
 
     const childrenNodes: any[] = [
-      createElement("span", { className: "ncr-mock-label", key: "label" }, displayChildren)
+      createElement("span", { className: "ncr-mock-label", key: "label" }, displayChildren as any)
     ];
 
+    const descriptionNode = toNode(description);
+
     if (descriptionNode !== undefined) {
-      childrenNodes.push(createElement("small", { key: "description" }, descriptionNode));
+      childrenNodes.push(createElement("small", { key: "description" }, descriptionNode as any));
     }
 
     if (Array.isArray(list) && list.length > 0) {
       childrenNodes.push(createElement("span", { className: "ncr-mock-list", key: "list" }, `${list.length} items`));
     }
 
-    return createElement(tag, commonProps, ...childrenNodes);
+    return createElement(tag, commonProps as any, ...childrenNodes);
   });
 
   Component.displayName = `NoctraDocsSafe${displayName}`;
@@ -184,10 +156,7 @@ function createNoctraMock(displayName: string) {
 export const DefaultNoctraMock: any = createNoctraMock("Default");
 
 export function NoctraProvider({ children, className, style }: NoctraProviderProps) {
-  return createElement("div", {
-    className: cx("ncr-provider", className),
-    style: typeof style === "object" && style !== null && !Array.isArray(style) ? style : undefined
-  }, safeChildren(children, ""));
+  return createElement("div", { className: cx("ncr-provider", className), style }, children as any);
 }
 
 export type AccordionProps = any;
