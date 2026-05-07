@@ -118,17 +118,6 @@ function getPreviewChildren(component: NoctraDocsComponent, state: DemoState) {
   return `${component.name} content`;
 }
 
-function getPreviewSizing(component: NoctraDocsComponent) {
-  const preset = getInteractiveDemoPreset(component);
-  const width = typeof preset?.previewWidth === "number" ? preset.previewWidth : undefined;
-  const height = typeof preset?.previewHeight === "number" ? preset.previewHeight : undefined;
-
-  return {
-    width,
-    height
-  };
-}
-
 function cleanRuntimeProps(props: Record<string, unknown>) {
   const next = { ...props };
 
@@ -251,8 +240,6 @@ export function InteractiveComponentDemo({ component }: { component: NoctraDocsC
     return getInteractiveDemoCode(component, state);
   }, [component, state]);
 
-  const previewSizing = useMemo(() => getPreviewSizing(component), [component]);
-
   function updateState(key: string, value: unknown) {
     setState((current) => ({
       ...current,
@@ -298,19 +285,7 @@ export function InteractiveComponentDemo({ component }: { component: NoctraDocsC
           <CopyButton value={code} />
         </div>
 
-        {activeTab === "preview" ? (
-          <PreviewFrame>
-            <div
-              style={{
-                width: previewSizing.width ? `${previewSizing.width}px` : "fit-content",
-                maxWidth: "100%",
-                minHeight: previewSizing.height ? `${previewSizing.height}px` : undefined
-              }}
-            >
-              {preview}
-            </div>
-          </PreviewFrame>
-        ) : null}
+        {activeTab === "preview" ? <PreviewFrame>{preview}</PreviewFrame> : null}
 
         {activeTab === "code" ? <CodeBlock>{code}</CodeBlock> : null}
 
