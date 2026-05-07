@@ -4,18 +4,19 @@ import {
   type ElementType,
   type ReactNode
 } from "react";
+import * as NoctraReact from "@noctra/react";
 import { docsComponentLinks, docsPrimaryLinks } from "../../data/docsSidebarLinks";
 
 import { docsHref } from "../../lib/docsRouting";
 
+type RuntimeComponent = ElementType<any>;
+type AnyProps = Record<string, any>;
 
+const runtime = NoctraReact as AnyProps;
 
-
-
-
-
-
-
+const ButtonRuntime = (runtime.Button ?? "button") as RuntimeComponent;
+const TextInputRuntime = (runtime.TextInput ?? "input") as RuntimeComponent;
+const InlineCodeRuntime = (runtime.InlineCode ?? "code") as RuntimeComponent;
 
 export type NoctraDocsTabId = "documentation" | "props" | "styles";
 
@@ -121,15 +122,15 @@ export function NoctraDocsHeader({
       {links && links.length > 0 ? (
         <dl className="ncd2-meta">
           {links.map((link) => {
+            const ValueWrapper = (link.href ? "a" : "span") as RuntimeComponent;
+
             return (
               <div key={`${link.label}-${link.value}`} className="ncd2-meta-row">
                 <dt>{link.label}</dt>
                 <dd>
-                  {link.href ? (
-                    <a href={link.href}>{link.value}</a>
-                  ) : (
-                    <span>{link.value}</span>
-                  )}
+                  <ValueWrapper {...(link.href ? { href: link.href } : {})}>
+                    {link.value}
+                  </ValueWrapper>
                 </dd>
               </div>
             );
@@ -156,16 +157,19 @@ export function NoctraDocsTabs({
   return (
     <nav className="ncd2-tabs" data-noctra-docs-system="tabs" role="tablist">
       {tabs.map((tab) => (
-        <button
+        <ButtonRuntime
           key={tab.value}
           type="button"
           role="tab"
           aria-selected={active === tab.value}
-          className={active === tab.value ? "ncd2-tab-button is-active" : "ncd2-tab-button"}
+          variant={active === tab.value ? "filled" : "outline"}
+          tone={active === tab.value ? "primary" : "neutral"}
+          size="sm"
+          radius="md"
           onClick={() => onChange(tab.value)}
         >
           {tab.label}
-        </button>
+        </ButtonRuntime>
       ))}
     </nav>
   );
@@ -281,15 +285,18 @@ export function NoctraDocsControlGroup<TValue extends string>({
       <strong>{label}</strong>
       <div className="ncd2-control-options">
         {options.map((option) => (
-          <button
+          <ButtonRuntime
             key={option}
             type="button"
-            className={value === option ? "ncd2-control-button is-active" : "ncd2-control-button"}
+            variant={value === option ? "filled" : "subtle"}
+            tone={value === option ? "primary" : "neutral"}
+            size="sm"
+            radius="md"
             onClick={() => onChange(option)}
             aria-pressed={value === option}
           >
             {option}
-          </button>
+          </ButtonRuntime>
         ))}
       </div>
     </div>
@@ -309,23 +316,29 @@ export function NoctraDocsBooleanControl({
     <div className="ncd2-control-card" data-noctra-docs-system="boolean-control">
       <strong>{label}</strong>
       <div className="ncd2-control-options">
-        <button
+        <ButtonRuntime
           type="button"
-          className={!checked ? "ncd2-control-button is-active" : "ncd2-control-button"}
+          variant={!checked ? "filled" : "subtle"}
+          tone={!checked ? "primary" : "neutral"}
+          size="sm"
+          radius="md"
           onClick={() => onChange(false)}
           aria-pressed={!checked}
         >
           Off
-        </button>
+        </ButtonRuntime>
 
-        <button
+        <ButtonRuntime
           type="button"
-          className={checked ? "ncd2-control-button is-active" : "ncd2-control-button"}
+          variant={checked ? "filled" : "subtle"}
+          tone={checked ? "primary" : "neutral"}
+          size="sm"
+          radius="md"
           onClick={() => onChange(true)}
           aria-pressed={checked}
         >
           On
-        </button>
+        </ButtonRuntime>
       </div>
     </div>
   );
@@ -350,11 +363,10 @@ export function NoctraDocsPropsPanel({
 
   return (
     <div className="ncd2-tab-panel" data-noctra-docs-system="props-panel">
-      <input
-        className="ncd2-search-input"
+      <TextInputRuntime
         value={query}
         placeholder="Search props"
-        onChange={(event) => setQuery(event.currentTarget.value)}
+        onChange={(event: { currentTarget: { value: string } }) => setQuery(event.currentTarget.value)}
       />
 
       <div className="ncd2-table-card">
@@ -369,7 +381,7 @@ export function NoctraDocsPropsTable({ rows }: { rows: readonly NoctraDocsPropRo
   const columns = ["Name", "Type", "Required", "Default", "Description"] as const;
 
   const tableRows = rows.map((row) => [
-    <code key={`${row.name}-name`}>{row.name}</code>,
+    <InlineCodeRuntime key={`${row.name}-name`}>{row.name}</InlineCodeRuntime>,
     row.type,
     row.required ? "Required" : "Optional",
     row.defaultValue ?? "—",
@@ -405,7 +417,7 @@ export function NoctraDocsStylesApiPanel({
         title="Selectors"
         columns={["Selector", "Description"]}
         rows={selectors.map((item) => [
-          <code key={`${item.selector}-selector`}>{item.selector}</code>,
+          <InlineCodeRuntime key={`${item.selector}-selector`}>{item.selector}</InlineCodeRuntime>,
           item.description
         ])}
       />
@@ -415,7 +427,7 @@ export function NoctraDocsStylesApiPanel({
           title="CSS variables"
           columns={["Variable", "Description"]}
           rows={variables.map((item) => [
-            <code key={`${item.variable}-variable`}>{item.variable}</code>,
+            <InlineCodeRuntime key={`${item.variable}-variable`}>{item.variable}</InlineCodeRuntime>,
             item.description
           ])}
         />
@@ -426,7 +438,7 @@ export function NoctraDocsStylesApiPanel({
           title="Data attributes"
           columns={["Attribute", "Description"]}
           rows={dataAttributes.map((item) => [
-            <code key={`${item.attribute}-attribute`}>{item.attribute}</code>,
+            <InlineCodeRuntime key={`${item.attribute}-attribute`}>{item.attribute}</InlineCodeRuntime>,
             item.description
           ])}
         />

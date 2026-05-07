@@ -433,3 +433,12 @@ pre.ncd-code,
 @media (max-width:1320px){.ncd2-shell{grid-template-columns:minmax(0,760px) 230px!important;max-width:1070px!important}.ncd2-left-rail{display:none!important}}
 @media (max-width:1180px){.ncd2-shell{grid-template-columns:minmax(0,760px)!important;max-width:808px!important}.ncd2-left-rail,.ncd2-rail{display:none!important}}
 /* NOCTRA_LEFT_NAV_AND_CLEAN_LINKS_END */
+
+/* NOCTRA_DOCS_FOUNDATION_NATIVE_CONTROLS_START */
+.ncd2-tab-button,.ncd2-control-button{appearance:none;border:1px solid rgba(148,163,184,.2);background:rgba(15,23,42,.46);color:var(--nc-text,#f8fafc);border-radius:8px;min-height:30px;padding:0 12px;font:inherit;font-size:13px;line-height:1;cursor:pointer;white-space:nowrap}
+.ncd2-tab-button:hover,.ncd2-control-button:hover{background:rgba(148,163,184,.12)}
+.ncd2-tab-button.is-active,.ncd2-control-button.is-active{border-color:rgba(139,92,246,.55);background:rgba(124,58,237,.3);color:#fff}
+.ncd2-search-input{width:min(320px,100%);min-height:36px;border:1px solid rgba(148,163,184,.22);background:rgba(2,6,23,.38);color:var(--nc-text,#f8fafc);border-radius:10px;padding:0 12px;font:inherit;font-size:14px;outline:none}
+.ncd2-search-input:focus{border-color:rgba(139,92,246,.62);box-shadow:0 0 0 3px rgba(139,92,246,.13)}
+.ncd2-table code{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.16);background:rgba(2,6,23,.46);border-radius:6px;padding:2px 6px;font-size:12px;color:#dbeafe}
+/* NOCTRA_DOCS_FOUNDATION_NATIVE_CONTROLS_END */

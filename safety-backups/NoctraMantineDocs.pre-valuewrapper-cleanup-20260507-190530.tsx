@@ -125,11 +125,9 @@ export function NoctraDocsHeader({
               <div key={`${link.label}-${link.value}`} className="ncd2-meta-row">
                 <dt>{link.label}</dt>
                 <dd>
-                  {link.href ? (
-                    <a href={link.href}>{link.value}</a>
-                  ) : (
-                    <span>{link.value}</span>
-                  )}
+                  <ValueWrapper {...(link.href ? { href: link.href } : {})}>
+                    {link.value}
+                  </ValueWrapper>
                 </dd>
               </div>
             );
