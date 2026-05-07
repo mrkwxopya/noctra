@@ -20,7 +20,6 @@ const TextInput = (runtime.TextInput ?? "input") as RuntimeComponent;
 const CodeBlockRuntime = (runtime.CodeBlock ?? "pre") as RuntimeComponent;
 const InlineCodeRuntime = (runtime.InlineCode ?? "code") as RuntimeComponent;
 const TableRuntime = (runtime.Table ?? "table") as RuntimeComponent;
-const hasRuntimeTable = Boolean(runtime.Table);
 
 export type NoctraDocsTabId = "documentation" | "props" | "styles";
 
@@ -348,67 +347,33 @@ export function NoctraDocsPropsPanel({
   );
 }
 
-function NoctraDocsRuntimeTable({
-  columns,
-  rows,
-  system
-}: {
-  columns: readonly string[];
-  rows: readonly ReactNode[][];
-  system: string;
-}) {
-  if (hasRuntimeTable) {
-    return (
-      <TableRuntime
-        className="nd-table"
-        data-noctra-docs-system={system}
-        columns={columns}
-        rows={rows}
-        data={rows}
-      />
-    );
-  }
-
+export function NoctraDocsPropsTable({ rows }: { rows: readonly NoctraDocsPropRow[] }) {
   return (
-    <table className="nd-table" data-noctra-docs-system={system}>
+    <TableRuntime className="nd-table" data-noctra-docs-system="props-table">
       <thead>
         <tr>
-          {columns.map((column) => (
-            <th key={column}>{column}</th>
-          ))}
+          <th>Name</th>
+          <th>Type</th>
+          <th>Required</th>
+          <th>Default</th>
+          <th>Description</th>
         </tr>
       </thead>
 
       <tbody>
-        {rows.map((row, rowIndex) => (
-          <tr key={rowIndex}>
-            {row.map((cell, cellIndex) => (
-              <td key={cellIndex}>{cell}</td>
-            ))}
+        {rows.map((row) => (
+          <tr key={row.name}>
+            <td>
+              <InlineCodeRuntime>{row.name}</InlineCodeRuntime>
+            </td>
+            <td>{row.type}</td>
+            <td>{row.required ? "Required" : "Optional"}</td>
+            <td>{row.defaultValue ?? "—"}</td>
+            <td>{row.description}</td>
           </tr>
         ))}
       </tbody>
-    </table>
-  );
-}
-
-export function NoctraDocsPropsTable({ rows }: { rows: readonly NoctraDocsPropRow[] }) {
-  const columns = ["Name", "Type", "Required", "Default", "Description"] as const;
-
-  const tableRows = rows.map((row) => [
-    <InlineCodeRuntime key={`${row.name}-name`}>{row.name}</InlineCodeRuntime>,
-    row.type,
-    row.required ? "Required" : "Optional",
-    row.defaultValue ?? "—",
-    row.description
-  ]);
-
-  return (
-    <NoctraDocsRuntimeTable
-      columns={columns}
-      rows={tableRows}
-      system="props-table"
-    />
+    </TableRuntime>
   );
 }
 
@@ -474,21 +439,32 @@ export function NoctraDocsSimpleTable({
   return (
     <Card className="nd-card">
       <h2>{title}</h2>
-      <NoctraDocsRuntimeTable
-        columns={columns}
-        rows={rows}
-        system="simple-table"
-      />
+
+      <TableRuntime className="nd-table">
+        <thead>
+          <tr>
+            {columns.map((column) => (
+              <th key={column}>{column}</th>
+            ))}
+          </tr>
+        </thead>
+
+        <tbody>
+          {rows.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex}>{cell}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </TableRuntime>
     </Card>
   );
 }
 
 export function NoctraCodeBlock({ code }: { code: string }) {
-  return (
-    <CodeBlockRuntime code={code} value={code}>
-      {code}
-    </CodeBlockRuntime>
-  );
+  return <CodeBlockRuntime>{code}</CodeBlockRuntime>;
 }
 
 export function NoctraDocsToc({ items }: { items: readonly NoctraDocsTocItem[] }) {
