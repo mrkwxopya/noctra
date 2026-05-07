@@ -68,6 +68,9 @@ jobs:
           console.log("Noctra docs artifact asset:", match[0]);
           NODE
 
+      - name: Generate static route fallbacks
+        run: node scripts/generate-static-route-fallbacks.mjs
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
