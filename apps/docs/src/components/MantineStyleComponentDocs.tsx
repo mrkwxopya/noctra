@@ -1,4 +1,4 @@
-﻿import { UniversalComponentDocPage } from "../pages/UniversalComponentDocPage";
+import { UniversalComponentDocPage } from "../pages/UniversalComponentDocPage";
 
 export type MantineStyleComponentDocsProps = {
   slug?: string;

@@ -1,6 +1,7 @@
-﻿import ComponentDetailPage, { UniversalComponentDocPage } from "./UniversalComponentDocPage";
+import ComponentDetailPageDefault, { UniversalComponentDocPage } from "./UniversalComponentDocPage";
 
 export { UniversalComponentDocPage };
-export { ComponentDetailPage };
 
-export default ComponentDetailPage;
+export const ComponentDetailPage = ComponentDetailPageDefault;
+
+export default ComponentDetailPageDefault;
