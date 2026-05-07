@@ -74,7 +74,7 @@ function DocsBox({
 
 function DocsCard({
   children,
-  className = "ncd-card",
+  className = "nd-card",
   ...props
 }: {
   children: ReactNode;
@@ -89,15 +89,15 @@ function DocsCard({
 }
 
 function DocsStack({ children }: { children: ReactNode }) {
-  return <DocsBox className="ncd-stack">{children}</DocsBox>;
+  return <DocsBox className="nd-stack">{children}</DocsBox>;
 }
 
 function DocsGrid({ children }: { children: ReactNode }) {
-  return <DocsBox className="ncd-grid">{children}</DocsBox>;
+  return <DocsBox className="nd-related-grid">{children}</DocsBox>;
 }
 
 function DocsTwoGrid({ children }: { children: ReactNode }) {
-  return <DocsBox className="ncd-two-grid">{children}</DocsBox>;
+  return <DocsBox className="nd-two-grid">{children}</DocsBox>;
 }
 
 export function NoctraDocsShell({
@@ -108,11 +108,11 @@ export function NoctraDocsShell({
   toc?: readonly NoctraDocsTocItem[];
 }) {
   return (
-    <DocsBox className="ncd-layout" data-noctra-docs-system="shell">
-      <DocsBox className="ncd-main">{children}</DocsBox>
+    <DocsBox className="nd-detail-layout" data-noctra-docs-system="shell">
+      <DocsBox className="nd-detail-main">{children}</DocsBox>
 
       {toc && toc.length > 0 ? (
-        <aside className="ncd-aside">
+        <aside className="nd-detail-aside">
           <NoctraDocsToc items={toc} />
         </aside>
       ) : null}
@@ -130,8 +130,8 @@ export function NoctraDocsHeader({
   links?: readonly NoctraDocsHeaderLink[];
 }) {
   return (
-    <DocsBox className="ncd-section" data-noctra-docs-system="header">
-      <DocsBox className="ncd-kicker">Component</DocsBox>
+    <DocsBox className="nd-doc-section" data-noctra-docs-system="header">
+      <DocsBox className="nd-kicker">Component</DocsBox>
       <h1>{title}</h1>
       <p>{description}</p>
 
@@ -144,7 +144,7 @@ export function NoctraDocsHeader({
               <DocsBox
                 key={`${link.label}-${link.value}`}
                 as={Wrapper}
-                className="ncd-card ncd-related-card"
+                className="nd-related-card"
                 {...(link.href ? { href: link.href } : {})}
               >
                 <strong>{link.label}</strong>
@@ -172,7 +172,7 @@ export function NoctraDocsTabs({
   ];
 
   return (
-    <DocsBox className="ncd-section" data-noctra-docs-system="tabs">
+    <DocsBox className="nd-doc-section" data-noctra-docs-system="tabs">
       <DocsGrid>
         {tabs.map((tab) => (
           <ButtonRuntime
@@ -242,8 +242,8 @@ export function NoctraDocsSection({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="ncd-section">
-      {eyebrow ? <DocsBox className="ncd-kicker">{eyebrow}</DocsBox> : null}
+    <section id={id} className="nd-doc-section">
+      {eyebrow ? <DocsBox className="nd-kicker">{eyebrow}</DocsBox> : null}
       <h2>{title}</h2>
       {description ? <p>{description}</p> : null}
       {children}
@@ -271,12 +271,12 @@ export function NoctraDocsDemo({
         {description ? <p>{description}</p> : null}
 
         <DocsTwoGrid>
-          <DocsBox className="ncd-card ncd-related-card">
+          <DocsBox className="nd-related-card">
             <strong>Preview</strong>
-            <DocsBox className="ncd-grid">{preview}</DocsBox>
+            <DocsBox className="nd-related-grid">{preview}</DocsBox>
           </DocsBox>
 
-          <DocsBox className="ncd-card ncd-related-card">
+          <DocsBox className="nd-related-card">
             <strong>Code</strong>
             <NoctraCodeBlock code={code} />
           </DocsBox>
@@ -300,7 +300,7 @@ export function NoctraDocsControlGroup<TValue extends string>({
   onChange: (value: TValue) => void;
 }) {
   return (
-    <DocsBox className="ncd-card ncd-related-card" data-noctra-docs-system="control-group">
+    <DocsBox className="nd-related-card" data-noctra-docs-system="control-group">
       <strong>{label}</strong>
       <DocsGrid>
         {options.map((option) => (
@@ -332,7 +332,7 @@ export function NoctraDocsBooleanControl({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <DocsBox className="ncd-card ncd-related-card" data-noctra-docs-system="boolean-control">
+    <DocsBox className="nd-related-card" data-noctra-docs-system="boolean-control">
       <strong>{label}</strong>
       <DocsGrid>
         <ButtonRuntime
@@ -493,7 +493,7 @@ function NoctraDocsSimpleNativeTable({
   system: string;
 }) {
   return (
-    <table className="ncd-table" data-noctra-docs-system={system}>
+    <table className="nd-table" data-noctra-docs-system={system}>
       <thead>
         <tr>
           {columns.map((column) => (
@@ -517,7 +517,7 @@ function NoctraDocsSimpleNativeTable({
 
 export function NoctraCodeBlock({ code }: { code: string }) {
   return (
-    <pre className="ncd-code" data-noctra-docs-system="code-block">
+    <pre className="nd-code-block" data-noctra-docs-system="code-block">
       <code>{code}</code>
     </pre>
   );
@@ -550,7 +550,7 @@ export function NoctraDocsExampleCard({
   children: ReactNode;
 }) {
   return (
-    <DocsBox className="ncd-card ncd-related-card">
+    <DocsBox className="nd-related-card">
       <strong>{label}</strong>
       <span>{children}</span>
     </DocsBox>
@@ -567,7 +567,7 @@ export function NoctraDocsPreviousNext({
   return (
     <DocsTwoGrid>
       {previous ? (
-        <a className="ncd-card ncd-related-card" href={previous.href}>
+        <a className="nd-related-card" href={previous.href}>
           <span>Previous</span>
           <strong>{previous.label}</strong>
         </a>
@@ -576,7 +576,7 @@ export function NoctraDocsPreviousNext({
       )}
 
       {next ? (
-        <a className="ncd-card ncd-related-card" href={next.href}>
+        <a className="nd-related-card" href={next.href}>
           <span>Next</span>
           <strong>{next.label}</strong>
         </a>
