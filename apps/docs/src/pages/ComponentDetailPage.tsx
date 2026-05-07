@@ -1,4 +1,5 @@
 import { AnchorList, CodeBlock, CoverageMeter, DataTable, DocCard, ExampleBlock, PageHero, ProPreview, SectionTitle, StatCard, TagList } from "../components/DocsChrome";
+import { InteractiveComponentDemo } from "../components/InteractiveComponentDemo";
 import { getComponentExamples } from "../data/componentExamples";
 import { getCategoryLabel, getPropDescription } from "../data/propDescriptions";
 import { noctraDocsComponents, type NoctraDocsComponent } from "../generated/noctra-professional-docs.generated";
@@ -94,6 +95,7 @@ export function ComponentDetailPage({ component }: { component: NoctraDocsCompon
         <section id="showcase" className="nd-doc-section">
           <SectionTitle id="showcase-title" eyebrow="Showcase" title="Examples" description="Curated examples are shown when available. All components receive a polished generated usage preview." />
           <div className="nd-example-stack">
+            <InteractiveComponentDemo component={component} />
             {examples.length > 0 ? examples.map((example) => <ExampleBlock key={example.id} title={example.title} description={example.description} code={example.code} preview={example.preview} />) : <GeneratedExample component={component} />}
           </div>
         </section>
