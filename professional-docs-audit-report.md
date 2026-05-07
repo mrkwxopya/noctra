@@ -1,14 +1,14 @@
 # Noctra Professional Docs Audit
 
-Generated: 2026-05-07T02:01:14.700Z
+Generated: 2026-05-07T02:54:53.882Z
 
-Required files checked: 14
+Required files checked: 17
 Generated components: 119
 Generated props: 2786
 Generated tokens: 1661
-Curated example components: 32
-Curated examples: 34
 Prop descriptions: 108
+Named real demo adapters: 30
+Runtime demo coverage: 119
 Problems found: 0
 Warnings found: 0
 
@@ -17,6 +17,8 @@ Warnings found: 0
 - OK apps/docs/src/main.tsx
 - OK apps/docs/src/docs.css
 - OK apps/docs/src/components/DocsChrome.tsx
+- OK apps/docs/src/components/PreviewFrame.tsx
+- OK apps/docs/src/components/InteractiveComponentDemo.tsx
 - OK apps/docs/src/pages/OverviewPage.tsx
 - OK apps/docs/src/pages/ComponentsPage.tsx
 - OK apps/docs/src/pages/ComponentDetailPage.tsx
@@ -24,9 +26,10 @@ Warnings found: 0
 - OK apps/docs/src/pages/ThemingPage.tsx
 - OK apps/docs/src/pages/QualityPage.tsx
 - OK apps/docs/src/pages/ReleasePage.tsx
-- OK apps/docs/src/data/componentExamples.tsx
 - OK apps/docs/src/data/propDescriptions.ts
+- OK apps/docs/src/data/realDemoAdapters.ts
 - OK apps/docs/src/generated/noctra-professional-docs.generated.ts
+- OK apps/docs/src/lib/docsRouting.ts
 - OK scripts/generate-professional-docs-data.mjs
 
 ## Route Checks
@@ -42,55 +45,53 @@ Warnings found: 0
 ## Feature Checks
 
 - OK copy button
-- OK example block
 - OK anchor list
 - OK coverage meter
-- OK component showcase
 - OK props metadata
 - OK related components
 - OK generated docs data
-- OK docs CSS preview styles
-- OK docs CSS responsive detail layout
-- OK professional docs data generator
+- OK clean path routing
+- OK internal link interception
+- OK real isolated playground
+- OK preview iframe
+- OK real runtime render
+- OK real demo adapters
+- OK component API presets
+- OK preview frame styles
+- OK real demo styles
 
-## Curated Example Components
+## Real Demo Adapters
 
 - Accordion
-- Alert
-- Badge
-- Box
-- Button
-- Card
+- Avatar
+- Breadcrumbs
 - Checkbox
 - CodeBlock
-- Divider
+- Command
+- DataTable
 - Drawer
 - EmptyState
-- Flex
-- Grid
-- Group
-- Loader
+- Image
+- InlineCode
+- Kbd
+- ListBox
 - Menu
 - Modal
-- Pagination
-- Paper
+- NumberInput
+- Popover
 - Progress
 - Radio
-- Section
+- Result
+- RingProgress
 - Select
-- Skeleton
-- Spacer
-- Stack
+- Slider
 - Switch
 - Table
 - Tabs
 - Textarea
 - TextInput
 - Tooltip
-
-## Missing Core Examples
-
-- None
+- TreeView
 
 ## Problems
 
@@ -102,6 +103,6 @@ Warnings found: 0
 
 ## Publish Interpretation
 
-- Problems should be zero before GitHub publish.
-- Warnings are acceptable for alpha docs, but should be reduced before a stable v1 docs release.
-- This audit checks professional docs structure, not visual perfection.
+- Problems must be zero before GitHub Pages or npm release.
+- Warnings are acceptable during alpha docs hardening.
+- Current docs standard: real isolated component playground, clean path routing, generated props/tokens/anatomy, and premium static docs pages.

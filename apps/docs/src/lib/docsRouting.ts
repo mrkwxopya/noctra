@@ -23,9 +23,7 @@ export function getDocsBasePath() {
 
 export function normalizeDocsPath(value: string) {
   const withoutHash = value.replace(/^#\/?/, "/");
-  const cleaned = withoutHash
-    .replace(/^\/+/, "/")
-    .replace(/\/+$/, "");
+  const cleaned = withoutHash.replace(/^\/+/, "/").replace(/\/+$/, "");
 
   return cleaned === "" ? "/" : cleaned;
 }
@@ -93,9 +91,14 @@ export function routeToPath(route: ParsedDocsRoute) {
   return `/${route.route}`;
 }
 
+export function canonicalCleanHrefForLocation(location: Location) {
+  const parsed = parseDocsRouteFromLocation(location);
+
+  return docsHref(routeToPath(parsed));
+}
+
 export function canonicalizeDocsCleanRoute() {
-  const parsed = parseDocsRouteFromLocation(window.location);
-  const target = docsHref(routeToPath(parsed));
+  const target = canonicalCleanHrefForLocation(window.location);
   const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
 
   if (current !== target) {

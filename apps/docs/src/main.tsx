@@ -9,37 +9,82 @@ import { ThemingPage } from "./pages/ThemingPage";
 import { QualityPage } from "./pages/QualityPage";
 import { ReleasePage } from "./pages/ReleasePage";
 import { noctraDocsComponents } from "./generated/noctra-professional-docs.generated";
+import {
+  canonicalizeDocsCleanRoute,
+  docsHref,
+  isInternalDocsUrl,
+  parseDocsRouteFromLocation
+} from "./lib/docsRouting";
 import "./noctra-style-bridge.css";
 import "./docs.css";
 
+function locationKey() {
+  return `${window.location.pathname}${window.location.search}${window.location.hash}`;
+}
+
 function parseRoute(): { route: DocsRoute; componentSlug?: string } {
-  const hash = window.location.hash.replace(/^#\/?/, "");
-  const parts = hash.split("/").filter(Boolean);
-
-  if (parts.length === 0) return { route: "overview" };
-
-  if (parts[0] === "components" && parts[1]) {
-    return { route: "component", componentSlug: parts[1] };
-  }
-
-  if (parts[0] === "components") return { route: "components" };
-  if (parts[0] === "architecture") return { route: "architecture" };
-  if (parts[0] === "theming") return { route: "theming" };
-  if (parts[0] === "quality") return { route: "quality" };
-  if (parts[0] === "release") return { route: "release" };
-
-  return { route: "overview" };
+  return parseDocsRouteFromLocation(window.location);
 }
 
 function App() {
-  const [parsedRoute, setParsedRoute] = useState(() => parseRoute());
+  const [key, setKey] = useState(() => locationKey());
+  const parsedRoute = useMemo(() => parseRoute(), [key]);
 
   useEffect(() => {
-    const handleHashChange = () => setParsedRoute(parseRoute());
+    canonicalizeDocsCleanRoute();
+    setKey(locationKey());
 
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
+    const syncRoute = () => {
+      canonicalizeDocsCleanRoute();
+      setKey(locationKey());
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      const link = event.target instanceof Element ? event.target.closest("a[href]") : null;
+
+      if (!(link instanceof HTMLAnchorElement)) return;
+      if (link.target && link.target !== "_self") return;
+
+      const url = new URL(link.href);
+
+      if (!isInternalDocsUrl(url)) return;
+
+      event.preventDefault();
+
+      const next = `${url.pathname}${url.search}${url.hash}`;
+
+      if (next !== locationKey()) {
+        window.history.pushState(null, "", next);
+      }
+
+      syncRoute();
+    };
+
+    window.addEventListener("popstate", syncRoute);
+    window.addEventListener("hashchange", syncRoute);
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      window.removeEventListener("popstate", syncRoute);
+      window.removeEventListener("hashchange", syncRoute);
+      document.removeEventListener("click", handleClick);
+    };
   }, []);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [parsedRoute.route, parsedRoute.componentSlug]);
 
   const component = useMemo(() => {
     if (!parsedRoute.componentSlug) return undefined;
@@ -77,17 +122,17 @@ function App() {
     return <OverviewPage />;
   }, [component, parsedRoute.route]);
 
-  return (
-    <DocsChrome route={parsedRoute.route}>
-      {page}
-    </DocsChrome>
-  );
+  return <DocsChrome route={parsedRoute.route}>{page}</DocsChrome>;
 }
 
 const root = document.getElementById("root");
 
 if (!root) {
   throw new Error("Missing #root element");
+}
+
+if (window.location.pathname.endsWith("/index.html")) {
+  window.history.replaceState(null, "", docsHref("/"));
 }
 
 createRoot(root).render(
