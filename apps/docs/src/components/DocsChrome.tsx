@@ -185,7 +185,19 @@ export function CopyButton({ value }: { value: string }) {
   return <button className="nd-copy-button" type="button" onClick={() => void handleCopy()}>{copied ? "Copied" : "Copy"}</button>;
 }
 
+
+function ExampleRuntimeNotice() {
+  return (
+    <div className="nd-example-runtime-notice">
+      <span>Live preview</span>
+      <small>Rendered inside the docs runtime with Noctra styles loaded.</small>
+    </div>
+  );
+}
+
 export function ExampleBlock({ title, description, code, preview }: { title: ReactNode; description?: ReactNode; code: string; preview: ReactNode }) {
+  const [activeTab, setActiveTab] = useState("preview");
+
   return (
     <section className="nd-example">
       <div className="nd-example-header">
@@ -193,10 +205,38 @@ export function ExampleBlock({ title, description, code, preview }: { title: Rea
           <h3>{title}</h3>
           {description ? <p>{description}</p> : null}
         </div>
-        <CopyButton value={code} />
+
+        <div className="nd-example-actions">
+          <button
+            className="nd-example-tab"
+            type="button"
+            data-active={activeTab === "preview" || undefined}
+            onClick={() => setActiveTab("preview")}
+          >
+            Preview
+          </button>
+          <button
+            className="nd-example-tab"
+            type="button"
+            data-active={activeTab === "code" || undefined}
+            onClick={() => setActiveTab("code")}
+          >
+            Code
+          </button>
+          <CopyButton value={code} />
+        </div>
       </div>
-      <div className="nd-example-preview">{preview}</div>
-      <CodeBlock>{code}</CodeBlock>
+
+      {activeTab === "preview" ? (
+        <div className="nd-example-preview nd-noctra-runtime">
+          <ExampleRuntimeNotice />
+          <div className="nd-example-canvas">{preview}</div>
+        </div>
+      ) : (
+        <div className="nd-example-code-panel">
+          <CodeBlock>{code}</CodeBlock>
+        </div>
+      )}
     </section>
   );
 }

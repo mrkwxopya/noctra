@@ -9,6 +9,7 @@ import { ThemingPage } from "./pages/ThemingPage";
 import { QualityPage } from "./pages/QualityPage";
 import { ReleasePage } from "./pages/ReleasePage";
 import { noctraDocsComponents } from "./generated/noctra-professional-docs.generated";
+import "./noctra-style-bridge.css";
 import "./docs.css";
 
 function parseRoute(): { route: DocsRoute; componentSlug?: string } {
