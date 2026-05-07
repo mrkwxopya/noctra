@@ -60,13 +60,6 @@ const sizes = ["xs", "sm", "md", "lg", "xl"] as const satisfies readonly ButtonS
 const radii = ["none", "sm", "md", "lg", "xl", "full"] as const satisfies readonly ButtonRadius[];
 const labels = ["Button", "Save changes", "Continue", "Delete"] as const;
 
-const buttonStateExamples: Array<{ label: string; state: ButtonPlaygroundState }> = [
-  { label: "Default", state: { ...defaultButtonState, children: "Default" } },
-  { label: "Disabled", state: { ...defaultButtonState, disabled: true, children: "Disabled" } },
-  { label: "Loading", state: { ...defaultButtonState, loading: true, children: "Loading" } },
-  { label: "Danger", state: { ...defaultButtonState, tone: "danger", children: "Delete" } }
-];
-
 const toc = [
   { href: "#usage", label: "Usage" },
   { href: "#configurator", label: "Configurator" },
@@ -261,7 +254,12 @@ export function Demo() {
         description="Button states must remain visible and understandable in dark and light themes."
       >
         <NoctraDocsExampleGrid>
-          {buttonStateExamples.map((example) => (
+          {[
+            { label: "Default", state: { ...defaultButtonState, children: "Default" } },
+            { label: "Disabled", state: { ...defaultButtonState, disabled: true, children: "Disabled" } },
+            { label: "Loading", state: { ...defaultButtonState, loading: true, children: "Loading" } },
+            { label: "Danger", state: { ...defaultButtonState, tone: "danger", children: "Delete" } }
+          ].map((example) => (
             <NoctraDocsExampleCard key={example.label} label={example.label}>
               <ButtonPreview state={example.state}>{example.state.children}</ButtonPreview>
             </NoctraDocsExampleCard>

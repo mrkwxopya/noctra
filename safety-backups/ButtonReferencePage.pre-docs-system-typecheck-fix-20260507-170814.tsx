@@ -3,9 +3,7 @@ import {
   useMemo,
   useState,
   type ComponentType,
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction
+  type ReactNode
 } from "react";
 import * as NoctraReact from "@noctra/react";
 import {
@@ -54,18 +52,11 @@ const defaultButtonState: ButtonPlaygroundState = {
   loading: false
 };
 
-const variants = ["filled", "light", "outline", "subtle", "ghost"] as const satisfies readonly ButtonVariant[];
-const tones = ["primary", "neutral", "success", "warning", "danger"] as const satisfies readonly ButtonTone[];
-const sizes = ["xs", "sm", "md", "lg", "xl"] as const satisfies readonly ButtonSize[];
-const radii = ["none", "sm", "md", "lg", "xl", "full"] as const satisfies readonly ButtonRadius[];
+const variants: ButtonVariant[] = ["filled", "light", "outline", "subtle", "ghost"];
+const tones: ButtonTone[] = ["primary", "neutral", "success", "warning", "danger"];
+const sizes: ButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
+const radii: ButtonRadius[] = ["none", "sm", "md", "lg", "xl", "full"];
 const labels = ["Button", "Save changes", "Continue", "Delete"] as const;
-
-const buttonStateExamples: Array<{ label: string; state: ButtonPlaygroundState }> = [
-  { label: "Default", state: { ...defaultButtonState, children: "Default" } },
-  { label: "Disabled", state: { ...defaultButtonState, disabled: true, children: "Disabled" } },
-  { label: "Loading", state: { ...defaultButtonState, loading: true, children: "Loading" } },
-  { label: "Danger", state: { ...defaultButtonState, tone: "danger", children: "Delete" } }
-];
 
 const toc = [
   { href: "#usage", label: "Usage" },
@@ -157,7 +148,7 @@ function DocumentationTab({
   code
 }: {
   state: ButtonPlaygroundState;
-  setState: Dispatch<SetStateAction<ButtonPlaygroundState>>;
+  setState: (updater: (current: ButtonPlaygroundState) => ButtonPlaygroundState) => void;
   code: string;
 }) {
   return (
@@ -261,7 +252,12 @@ export function Demo() {
         description="Button states must remain visible and understandable in dark and light themes."
       >
         <NoctraDocsExampleGrid>
-          {buttonStateExamples.map((example) => (
+          {[
+            { label: "Default", state: { ...defaultButtonState, children: "Default" } },
+            { label: "Disabled", state: { ...defaultButtonState, disabled: true, children: "Disabled" } },
+            { label: "Loading", state: { ...defaultButtonState, loading: true, children: "Loading" } },
+            { label: "Danger", state: { ...defaultButtonState, tone: "danger", children: "Delete" } }
+          ].map((example) => (
             <NoctraDocsExampleCard key={example.label} label={example.label}>
               <ButtonPreview state={example.state}>{example.state.children}</ButtonPreview>
             </NoctraDocsExampleCard>
@@ -302,9 +298,9 @@ function PropsTab({ component }: { component: NoctraDocsComponent }) {
 
     return {
       name: prop.name,
-      type: <code>{prop.type}</code>,
+      type: <NoctraCodeBlock code={prop.type} />,
       required: prop.required,
-      defaultValue: "—",
+      defaultValue: prop.defaultValue || "—",
       description: metadata.description
     };
   });
