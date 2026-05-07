@@ -86,12 +86,36 @@ export const docsSidebarSections = [
         "href": "/components/breadcrumb"
       },
       {
+        "label": "Breadcrumbs",
+        "href": "/components/breadcrumbs"
+      },
+      {
         "label": "Button",
         "href": "/components/button"
       },
       {
         "label": "Card",
         "href": "/components/card"
+      },
+      {
+        "label": "Card Body",
+        "href": "/components/card-body"
+      },
+      {
+        "label": "Card Description",
+        "href": "/components/card-description"
+      },
+      {
+        "label": "Card Footer",
+        "href": "/components/card-footer"
+      },
+      {
+        "label": "Card Header",
+        "href": "/components/card-header"
+      },
+      {
+        "label": "Card Title",
+        "href": "/components/card-title"
       },
       {
         "label": "Center",
@@ -102,12 +126,20 @@ export const docsSidebarSections = [
         "href": "/components/checkbox"
       },
       {
+        "label": "Click Outside",
+        "href": "/components/click-outside"
+      },
+      {
         "label": "Clipboard",
         "href": "/components/clipboard"
       },
       {
         "label": "Code",
         "href": "/components/code"
+      },
+      {
+        "label": "Code Block",
+        "href": "/components/code-block"
       },
       {
         "label": "Color Input",
@@ -124,6 +156,10 @@ export const docsSidebarSections = [
       {
         "label": "Command",
         "href": "/components/command"
+      },
+      {
+        "label": "Command Bar",
+        "href": "/components/command-bar"
       },
       {
         "label": "Container",
@@ -174,12 +210,32 @@ export const docsSidebarSections = [
         "href": "/components/float-label"
       },
       {
+        "label": "Focus Trap",
+        "href": "/components/focus-trap"
+      },
+      {
+        "label": "Footer",
+        "href": "/components/footer"
+      },
+      {
+        "label": "Form Field",
+        "href": "/components/form-field"
+      },
+      {
         "label": "Grid",
         "href": "/components/grid"
       },
       {
         "label": "Group",
         "href": "/components/group"
+      },
+      {
+        "label": "Header",
+        "href": "/components/header"
+      },
+      {
+        "label": "Highlight",
+        "href": "/components/highlight"
       },
       {
         "label": "Hover Card",
@@ -190,12 +246,20 @@ export const docsSidebarSections = [
         "href": "/components/icon-button"
       },
       {
+        "label": "Inline Code",
+        "href": "/components/inline-code"
+      },
+      {
         "label": "Input",
         "href": "/components/input"
       },
       {
         "label": "Kbd",
         "href": "/components/kbd"
+      },
+      {
+        "label": "Layout",
+        "href": "/components/layout"
       },
       {
         "label": "Layout Shell",
@@ -238,6 +302,10 @@ export const docsSidebarSections = [
         "href": "/components/number-input"
       },
       {
+        "label": "Page",
+        "href": "/components/page"
+      },
+      {
         "label": "Pagination",
         "href": "/components/pagination"
       },
@@ -254,12 +322,24 @@ export const docsSidebarSections = [
         "href": "/components/pin-code"
       },
       {
+        "label": "Pin Input",
+        "href": "/components/pin-input"
+      },
+      {
         "label": "Popover",
         "href": "/components/popover"
       },
       {
+        "label": "Portal",
+        "href": "/components/portal"
+      },
+      {
         "label": "Progress",
         "href": "/components/progress"
+      },
+      {
+        "label": "Prose",
+        "href": "/components/prose"
       },
       {
         "label": "Radio",
@@ -274,12 +354,24 @@ export const docsSidebarSections = [
         "href": "/components/rating"
       },
       {
+        "label": "Resizable Panel",
+        "href": "/components/resizable-panel"
+      },
+      {
         "label": "Scroll Area",
         "href": "/components/scroll-area"
       },
       {
+        "label": "Scroll Lock",
+        "href": "/components/scroll-lock"
+      },
+      {
         "label": "Search Input",
         "href": "/components/search-input"
+      },
+      {
+        "label": "Section",
+        "href": "/components/section"
       },
       {
         "label": "Segmented Control",
@@ -288,6 +380,10 @@ export const docsSidebarSections = [
       {
         "label": "Select",
         "href": "/components/select"
+      },
+      {
+        "label": "Sidebar",
+        "href": "/components/sidebar"
       },
       {
         "label": "Simple Grid",
@@ -302,12 +398,24 @@ export const docsSidebarSections = [
         "href": "/components/slider"
       },
       {
+        "label": "Spacer",
+        "href": "/components/spacer"
+      },
+      {
         "label": "Spinner",
         "href": "/components/spinner"
       },
       {
+        "label": "Split Pane",
+        "href": "/components/split-pane"
+      },
+      {
         "label": "Stack",
         "href": "/components/stack"
+      },
+      {
+        "label": "Status Bar",
+        "href": "/components/status-bar"
       },
       {
         "label": "Stepper",
@@ -320,6 +428,10 @@ export const docsSidebarSections = [
       {
         "label": "Table",
         "href": "/components/table"
+      },
+      {
+        "label": "Table Of Contents",
+        "href": "/components/table-of-contents"
       },
       {
         "label": "Tabs",
@@ -364,6 +476,10 @@ export const docsSidebarSections = [
       {
         "label": "Tree Select",
         "href": "/components/tree-select"
+      },
+      {
+        "label": "Tree View",
+        "href": "/components/tree-view"
       },
       {
         "label": "Visually Hidden",

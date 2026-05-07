@@ -295,7 +295,7 @@ function createPropsRows(label: string): readonly NoctraDocsPropRow[] {
 
 function createStylesRows(slug: string): readonly NoctraDocsStyleRow[] {
   return [
-    { selector: `.ncr-mock-${slug}`, description: "Root preview selector.", value: "Selector" },
+    { selector: `.ncr-mock-${slug}`, description: "Root selector.", value: "Selector" },
     { selector: "[data-variant]", description: "Current variant state.", value: "Data attribute" },
     { selector: "[data-tone]", description: "Current tone state.", value: "Data attribute" },
     { selector: "[data-size]", description: "Current size state.", value: "Data attribute" },
@@ -352,7 +352,7 @@ export function UniversalComponentDocPage(props: UniversalComponentDocPageProps)
       </NoctraDocsSection>
 
       <NoctraDocsSection
-        description="Change options and preview the result immediately."
+        description="Change options and see the result immediately."
         eyebrow="Live controls"
         id="configurator"
         title="Configurator"

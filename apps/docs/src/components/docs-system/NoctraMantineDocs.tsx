@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import { docsHref } from "../../lib/docsRouting";
 import { docsSidebarSections, type DocsSidebarSection } from "../../data/docsSidebarLinks";
 
@@ -61,6 +61,25 @@ export type NoctraMantineDocsProps = {
 };
 
 
+
+const DOCS_SCROLL_EVENT = "noctra:docs-scroll-target";
+
+function docsTabForTarget(id: string): "documentation" | "props-panel" | "styles-panel" {
+  if (id === "props" || id === "props-panel") return "props-panel";
+  if (id === "styles-api" || id === "styles-panel" || id === "styles") return "styles-panel";
+  return "documentation";
+}
+
+function emitDocsScrollTarget(href: string): void {
+  if (typeof window === "undefined") return;
+
+  window.dispatchEvent(
+    new CustomEvent(DOCS_SCROLL_EVENT, {
+      detail: { href }
+    })
+  );
+}
+
 function scrollToDocsTarget(href: string): void {
   if (typeof window === "undefined") return;
   if (!href.startsWith("#")) return;
@@ -69,15 +88,17 @@ function scrollToDocsTarget(href: string): void {
   if (!id) return;
 
   window.requestAnimationFrame(() => {
-    const element = document.getElementById(id);
-    if (!element) return;
+    window.requestAnimationFrame(() => {
+      const element = document.getElementById(id);
+      if (!element) return;
 
-    element.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      window.history.replaceState(null, "", href);
     });
-
-    window.history.replaceState(null, "", href);
   });
 }
 
@@ -117,6 +138,7 @@ function SectionList({ sections }: { sections: readonly DocsSidebarSection[] }) 
 }
 
 
+
 export function NoctraDocsToc({ items = [] }: { items?: readonly NoctraDocsTocItem[] }) {
   return (
     <aside className="nmx-right-toc" aria-label="Table of contents">
@@ -129,8 +151,9 @@ export function NoctraDocsToc({ items = [] }: { items?: readonly NoctraDocsTocIt
               key={item.href}
               onClick={(event) => {
                 if (!item.href.startsWith("#")) return;
+
                 event.preventDefault();
-                scrollToDocsTarget(item.href);
+                emitDocsScrollTarget(item.href);
               }}
             >
               <span>{item.label}</span>
@@ -181,6 +204,7 @@ export function NoctraDocsHeader({
 }
 
 
+
 export function NoctraDocsTabs({
   documentation,
   props,
@@ -201,21 +225,63 @@ export function NoctraDocsTabs({
 
   const [active, setActive] = useState(() => tabs[0]?.id ?? "documentation");
 
+  useEffect(() => {
+    const handleDocsScroll = (event: Event) => {
+      const customEvent = event as CustomEvent<{ href?: string }>;
+      const href = customEvent.detail?.href;
+
+      if (!href || !href.startsWith("#")) return;
+
+      const targetId = href.slice(1);
+      const nextTab = docsTabForTarget(targetId);
+
+      if (tabs.some((tab) => tab.id === nextTab)) {
+        setActive(nextTab);
+      }
+
+      scrollToDocsTarget(href);
+    };
+
+    const handleHashChange = () => {
+      if (!window.location.hash) return;
+
+      const targetId = window.location.hash.slice(1);
+      const nextTab = docsTabForTarget(targetId);
+
+      if (tabs.some((tab) => tab.id === nextTab)) {
+        setActive(nextTab);
+      }
+
+      scrollToDocsTarget(window.location.hash);
+    };
+
+    window.addEventListener(DOCS_SCROLL_EVENT, handleDocsScroll as EventListener);
+    window.addEventListener("hashchange", handleHashChange);
+
+    if (window.location.hash) {
+      handleHashChange();
+    }
+
+    return () => {
+      window.removeEventListener(DOCS_SCROLL_EVENT, handleDocsScroll as EventListener);
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, [tabs]);
+
   if (tabs.length === 0) {
     return null;
   }
+
+  const current = (tabs.find((tab) => tab.id === active) ?? tabs[0])!;
 
   return (
     <div className="nmx-tabs-shell">
       <div className="nmx-tabs" role="tablist" aria-label="Docs sections">
         {tabs.map((tab) => (
           <button
-            aria-selected={tab.id === active}
+            aria-selected={tab.id === current.id}
             key={tab.id}
-            onClick={() => {
-              setActive(tab.id);
-              scrollToDocsTarget(`#${tab.id}`);
-            }}
+            onClick={() => setActive(tab.id)}
             role="tab"
             type="button"
           >
@@ -227,14 +293,15 @@ export function NoctraDocsTabs({
       <div className="nmx-tab-panels">
         {tabs.map((tab) => (
           <section
+            aria-hidden={tab.id === current.id ? "false" : "true"}
             aria-label={tab.label}
             className="nmx-tab-panel"
-            data-active={tab.id === active ? "true" : "false"}
+            data-active={tab.id === current.id ? "true" : "false"}
             id={tab.id}
             key={tab.id}
             role="tabpanel"
           >
-            {tab.node}
+            {tab.id === current.id ? tab.node : null}
           </section>
         ))}
       </div>
