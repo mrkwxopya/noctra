@@ -197,7 +197,7 @@ export function Demo() {
           preview={<ButtonPreview state={state} />}
           code={code}
           controls={
-            <div className="ncd2-controls-grid">
+            <div className="nd-two-grid">
               <NoctraDocsControlGroup label="Variant" value={state.variant} options={variants} onChange={(variant) => setState((current) => ({ ...current, variant }))} />
               <NoctraDocsControlGroup label="Tone" value={state.tone} options={tones} onChange={(tone) => setState((current) => ({ ...current, tone }))} />
               <NoctraDocsControlGroup label="Size" value={state.size} options={sizes} onChange={(size) => setState((current) => ({ ...current, size }))} />

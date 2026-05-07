@@ -1,4 +1,4 @@
-﻿import {
+import {
   useMemo,
   useState,
   type ElementType,
@@ -11,6 +11,7 @@ type AnyProps = Record<string, any>;
 
 const runtime = NoctraReact as AnyProps;
 
+const BoxRuntime = (runtime.Box ?? "div") as RuntimeComponent;
 const ButtonRuntime = (runtime.Button ?? "button") as RuntimeComponent;
 const TextInputRuntime = (runtime.TextInput ?? "input") as RuntimeComponent;
 const InlineCodeRuntime = (runtime.InlineCode ?? "code") as RuntimeComponent;
@@ -51,6 +52,54 @@ export type NoctraDocsStylesApiDataAttribute = {
   description: ReactNode;
 };
 
+function DocsBox({
+  as,
+  className,
+  children,
+  ...props
+}: {
+  as?: RuntimeComponent;
+  className?: string;
+  children?: ReactNode;
+  [key: string]: unknown;
+}) {
+  const Component = as ?? BoxRuntime;
+
+  return (
+    <Component className={className} {...props}>
+      {children}
+    </Component>
+  );
+}
+
+function DocsCard({
+  children,
+  className = "ncd-card",
+  ...props
+}: {
+  children: ReactNode;
+  className?: string;
+  [key: string]: unknown;
+}) {
+  return (
+    <DocsBox className={className} {...props}>
+      {children}
+    </DocsBox>
+  );
+}
+
+function DocsStack({ children }: { children: ReactNode }) {
+  return <DocsBox className="ncd-stack">{children}</DocsBox>;
+}
+
+function DocsGrid({ children }: { children: ReactNode }) {
+  return <DocsBox className="ncd-grid">{children}</DocsBox>;
+}
+
+function DocsTwoGrid({ children }: { children: ReactNode }) {
+  return <DocsBox className="ncd-two-grid">{children}</DocsBox>;
+}
+
 export function NoctraDocsShell({
   children,
   toc
@@ -59,15 +108,15 @@ export function NoctraDocsShell({
   toc?: readonly NoctraDocsTocItem[];
 }) {
   return (
-    <div className="ncd2-shell" data-noctra-docs-system="shell">
-      <main className="ncd2-main">{children}</main>
+    <DocsBox className="ncd-layout" data-noctra-docs-system="shell">
+      <DocsBox className="ncd-main">{children}</DocsBox>
 
       {toc && toc.length > 0 ? (
-        <aside className="ncd2-rail">
+        <aside className="ncd-aside">
           <NoctraDocsToc items={toc} />
         </aside>
       ) : null}
-    </div>
+    </DocsBox>
   );
 }
 
@@ -81,30 +130,31 @@ export function NoctraDocsHeader({
   links?: readonly NoctraDocsHeaderLink[];
 }) {
   return (
-    <header className="ncd2-header" data-noctra-docs-system="header">
-      <div className="ncd2-eyebrow">Component</div>
+    <DocsBox className="ncd-section" data-noctra-docs-system="header">
+      <DocsBox className="ncd-kicker">Component</DocsBox>
       <h1>{title}</h1>
       <p>{description}</p>
 
       {links && links.length > 0 ? (
-        <dl className="ncd2-meta">
+        <DocsGrid>
           {links.map((link) => {
-            const ValueWrapper = (link.href ? "a" : "span") as RuntimeComponent;
+            const Wrapper = (link.href ? "a" : "div") as RuntimeComponent;
 
             return (
-              <div key={`${link.label}-${link.value}`} className="ncd2-meta-row">
-                <dt>{link.label}</dt>
-                <dd>
-                  <ValueWrapper {...(link.href ? { href: link.href } : {})}>
-                    {link.value}
-                  </ValueWrapper>
-                </dd>
-              </div>
+              <DocsBox
+                key={`${link.label}-${link.value}`}
+                as={Wrapper}
+                className="ncd-compact-card"
+                {...(link.href ? { href: link.href } : {})}
+              >
+                <strong>{link.label}</strong>
+                <span>{link.value}</span>
+              </DocsBox>
             );
           })}
-        </dl>
+        </DocsGrid>
       ) : null}
-    </header>
+    </DocsBox>
   );
 }
 
@@ -122,23 +172,25 @@ export function NoctraDocsTabs({
   ];
 
   return (
-    <nav className="ncd2-tabs" data-noctra-docs-system="tabs" role="tablist">
-      {tabs.map((tab) => (
-        <ButtonRuntime
-          key={tab.value}
-          type="button"
-          role="tab"
-          aria-selected={active === tab.value}
-          variant={active === tab.value ? "filled" : "outline"}
-          tone={active === tab.value ? "primary" : "neutral"}
-          size="sm"
-          radius="md"
-          onClick={() => onChange(tab.value)}
-        >
-          {tab.label}
-        </ButtonRuntime>
-      ))}
-    </nav>
+    <DocsBox className="ncd-section" data-noctra-docs-system="tabs">
+      <DocsGrid>
+        {tabs.map((tab) => (
+          <ButtonRuntime
+            key={tab.value}
+            type="button"
+            role="tab"
+            aria-selected={active === tab.value}
+            variant={active === tab.value ? "filled" : "outline"}
+            tone={active === tab.value ? "primary" : "neutral"}
+            size="sm"
+            radius="md"
+            onClick={() => onChange(tab.value)}
+          >
+            {tab.label}
+          </ButtonRuntime>
+        ))}
+      </DocsGrid>
+    </DocsBox>
   );
 }
 
@@ -190,8 +242,8 @@ export function NoctraDocsSection({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="ncd2-section">
-      {eyebrow ? <div className="ncd2-eyebrow">{eyebrow}</div> : null}
+    <section id={id} className="ncd-section">
+      {eyebrow ? <DocsBox className="ncd-kicker">{eyebrow}</DocsBox> : null}
       <h2>{title}</h2>
       {description ? <p>{description}</p> : null}
       {children}
@@ -213,26 +265,26 @@ export function NoctraDocsDemo({
   controls?: ReactNode;
 }) {
   return (
-    <div className="ncd2-demo" data-noctra-docs-system="demo">
-      <div className="ncd2-demo-head">
+    <DocsCard data-noctra-docs-system="demo">
+      <DocsStack>
         <h3>{title}</h3>
         {description ? <p>{description}</p> : null}
-      </div>
 
-      <div className="ncd2-demo-grid">
-        <div className="ncd2-preview-panel">
-          <strong>Preview</strong>
-          <div className="ncd2-preview-content">{preview}</div>
-        </div>
+        <DocsTwoGrid>
+          <DocsBox className="ncd-compact-card">
+            <strong>Preview</strong>
+            <DocsBox className="ncd-grid">{preview}</DocsBox>
+          </DocsBox>
 
-        <div className="ncd2-code-panel">
-          <strong>Code</strong>
-          <NoctraCodeBlock code={code} />
-        </div>
-      </div>
+          <DocsBox className="ncd-compact-card">
+            <strong>Code</strong>
+            <NoctraCodeBlock code={code} />
+          </DocsBox>
+        </DocsTwoGrid>
 
-      {controls ? <div className="ncd2-controls-wrap">{controls}</div> : null}
-    </div>
+        {controls ? <DocsBox>{controls}</DocsBox> : null}
+      </DocsStack>
+    </DocsCard>
   );
 }
 
@@ -248,9 +300,9 @@ export function NoctraDocsControlGroup<TValue extends string>({
   onChange: (value: TValue) => void;
 }) {
   return (
-    <div className="ncd2-control-card" data-noctra-docs-system="control-group">
+    <DocsBox className="ncd-control-card" data-noctra-docs-system="control-group">
       <strong>{label}</strong>
-      <div className="ncd2-control-options">
+      <DocsGrid>
         {options.map((option) => (
           <ButtonRuntime
             key={option}
@@ -265,8 +317,8 @@ export function NoctraDocsControlGroup<TValue extends string>({
             {option}
           </ButtonRuntime>
         ))}
-      </div>
-    </div>
+      </DocsGrid>
+    </DocsBox>
   );
 }
 
@@ -280,9 +332,9 @@ export function NoctraDocsBooleanControl({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <div className="ncd2-control-card" data-noctra-docs-system="boolean-control">
+    <DocsBox className="ncd-control-card" data-noctra-docs-system="boolean-control">
       <strong>{label}</strong>
-      <div className="ncd2-control-options">
+      <DocsGrid>
         <ButtonRuntime
           type="button"
           variant={!checked ? "filled" : "subtle"}
@@ -306,8 +358,8 @@ export function NoctraDocsBooleanControl({
         >
           On
         </ButtonRuntime>
-      </div>
-    </div>
+      </DocsGrid>
+    </DocsBox>
   );
 }
 
@@ -329,18 +381,18 @@ export function NoctraDocsPropsPanel({
   }, [query, rows]);
 
   return (
-    <div className="ncd2-tab-panel" data-noctra-docs-system="props-panel">
+    <DocsStack>
       <TextInputRuntime
         value={query}
         placeholder="Search props"
         onChange={(event: { currentTarget: { value: string } }) => setQuery(event.currentTarget.value)}
       />
 
-      <div className="ncd2-table-card">
+      <DocsCard>
         <h2>{title}</h2>
         <NoctraDocsPropsTable rows={filteredRows} />
-      </div>
-    </div>
+      </DocsCard>
+    </DocsStack>
   );
 }
 
@@ -374,11 +426,11 @@ export function NoctraDocsStylesApiPanel({
   dataAttributes?: readonly NoctraDocsStylesApiDataAttribute[];
 }) {
   return (
-    <div className="ncd2-tab-panel" data-noctra-docs-system="styles-api-panel">
-      <div className="ncd2-table-card">
+    <DocsStack>
+      <DocsCard>
         <h2>Styles API</h2>
         <p>Use selectors, CSS variables, and data attributes to customize Noctra components without reaching into unstable DOM structure.</p>
-      </div>
+      </DocsCard>
 
       <NoctraDocsSimpleTable
         title="Selectors"
@@ -410,7 +462,7 @@ export function NoctraDocsStylesApiPanel({
           ])}
         />
       ) : null}
-    </div>
+    </DocsStack>
   );
 }
 
@@ -424,10 +476,10 @@ export function NoctraDocsSimpleTable({
   rows: readonly ReactNode[][];
 }) {
   return (
-    <div className="ncd2-table-card">
+    <DocsCard>
       <h2>{title}</h2>
       <NoctraDocsSimpleNativeTable columns={columns} rows={rows} system="simple-table" />
-    </div>
+    </DocsCard>
   );
 }
 
@@ -441,7 +493,7 @@ function NoctraDocsSimpleNativeTable({
   system: string;
 }) {
   return (
-    <table className="ncd2-table" data-noctra-docs-system={system}>
+    <table className="ncd-table" data-noctra-docs-system={system}>
       <thead>
         <tr>
           {columns.map((column) => (
@@ -465,7 +517,7 @@ function NoctraDocsSimpleNativeTable({
 
 export function NoctraCodeBlock({ code }: { code: string }) {
   return (
-    <pre className="ncd2-code" data-noctra-docs-system="code-block">
+    <pre className="ncd-code" data-noctra-docs-system="code-block">
       <code>{code}</code>
     </pre>
   );
@@ -473,19 +525,21 @@ export function NoctraCodeBlock({ code }: { code: string }) {
 
 export function NoctraDocsToc({ items }: { items: readonly NoctraDocsTocItem[] }) {
   return (
-    <nav className="ncd2-toc" data-noctra-docs-system="toc">
-      <h3>On this page</h3>
-      {items.map((item) => (
-        <a key={item.href} href={item.href}>
-          {item.label}
-        </a>
-      ))}
-    </nav>
+    <DocsCard data-noctra-docs-system="toc">
+      <h3>Table of contents</h3>
+      <DocsStack>
+        {items.map((item) => (
+          <a key={item.href} href={item.href}>
+            {item.label}
+          </a>
+        ))}
+      </DocsStack>
+    </DocsCard>
   );
 }
 
 export function NoctraDocsExampleGrid({ children }: { children: ReactNode }) {
-  return <div className="ncd2-example-list">{children}</div>;
+  return <DocsGrid>{children}</DocsGrid>;
 }
 
 export function NoctraDocsExampleCard({
@@ -496,10 +550,10 @@ export function NoctraDocsExampleCard({
   children: ReactNode;
 }) {
   return (
-    <div className="ncd2-example-row">
+    <DocsBox className="ncd-compact-card">
       <strong>{label}</strong>
       <span>{children}</span>
-    </div>
+    </DocsBox>
   );
 }
 
@@ -511,22 +565,22 @@ export function NoctraDocsPreviousNext({
   next?: { label: string; href: string };
 }) {
   return (
-    <nav className="ncd2-prev-next">
+    <DocsTwoGrid>
       {previous ? (
-        <a href={previous.href}>
+        <a className="ncd-compact-card" href={previous.href}>
           <span>Previous</span>
           <strong>{previous.label}</strong>
         </a>
       ) : (
-        <span />
+        <DocsBox />
       )}
 
       {next ? (
-        <a href={next.href}>
+        <a className="ncd-compact-card" href={next.href}>
           <span>Next</span>
           <strong>{next.label}</strong>
         </a>
       ) : null}
-    </nav>
+    </DocsTwoGrid>
   );
 }
