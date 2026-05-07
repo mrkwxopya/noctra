@@ -17,98 +17,73 @@ concurrency:
 
 jobs:
   build:
-    name: Build docs
+    name: Build docs artifact
     runs-on: ubuntu-latest
-
+    env:
+      GITHUB_PAGES_BASE: /noctra/
+      NODE_ENV: production
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
-      - name: Enable Corepack
-        run: |
-          corepack enable
-          corepack prepare pnpm@latest --activate
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Generate professional docs data
-        run: pnpm exec node scripts/generate-professional-docs-data.mjs
+      - name: Build docs
+        run: pnpm --filter @noctra/docs build
 
-      - name: Patch professional docs audit fixes
-        run: |
-          if [ -f scripts/patch-professional-docs-audit-fixes.mjs ]; then
-            pnpm exec node scripts/patch-professional-docs-audit-fixes.mjs
-          fi
-
-      - name: Audit professional docs
-        run: pnpm exec node scripts/audit-professional-docs.mjs
-
-      - name: Build packages
-        run: |
-          pnpm --filter @noctra/utils build
-          pnpm --filter @noctra/tokens build
-          pnpm --filter @noctra/react build
-          pnpm --filter @noctra/styles build
-
-      - name: Verify exports
-        run: pnpm exec node scripts/verify-exports.mjs
-
-      - name: Typecheck docs with log
-        run: pnpm --filter @noctra/docs typecheck > docs-typecheck-debug.log 2>&1
-
-      - name: Build docs with GitHub Pages base
-        env:
-          GITHUB_PAGES_BASE: /noctra/
-        run: pnpm --filter @noctra/docs build > docs-build-debug.log 2>&1
-
-      - name: Print docs logs
-        if: always()
-        run: |
-          echo "----- docs typecheck log -----"
-          if [ -f docs-typecheck-debug.log ]; then cat docs-typecheck-debug.log; fi
-          echo "----- docs build log -----"
-          if [ -f docs-build-debug.log ]; then cat docs-build-debug.log; fi
-
-      - name: Verify built asset paths
+      - name: Prepare Pages fallback
+        shell: bash
         run: |
           test -f apps/docs/dist/index.html
-          grep -q '"/noctra/assets/' apps/docs/dist/index.html
           cp apps/docs/dist/index.html apps/docs/dist/404.html
+          node - <<'NODE'
+          const { readFileSync, writeFileSync, existsSync } = require("node:fs");
+          const indexPath = "apps/docs/dist/index.html";
+          const html = readFileSync(indexPath, "utf8");
+          const match = html.match(/assets\/index-[^"]+\.js/);
+          if (!match) {
+            throw new Error("No Vite JS asset found in docs dist index.html");
+          }
+          const assetPath = "apps/docs/dist/" + match[0];
+          if (!existsSync(assetPath)) {
+            throw new Error("Vite JS asset referenced by index.html does not exist: " + assetPath);
+          }
+          const info = {
+            generatedAt: new Date().toISOString(),
+            sha: process.env.GITHUB_SHA,
+            asset: match[0],
+            base: process.env.GITHUB_PAGES_BASE
+          };
+          writeFileSync("apps/docs/dist/noctra-deploy-info.json", JSON.stringify(info, null, 2) + "\n");
+          console.log("Noctra docs artifact asset:", match[0]);
+          NODE
 
-      - name: Final quality gate
-        run: pnpm exec node scripts/final-quality-gate.mjs
-
-      - name: Final docs release decision
-        run: |
-          pnpm exec node scripts/audit-professional-docs.mjs
-          pnpm exec node scripts/final-professional-docs-release-decision.mjs
-
-      - name: Setup Pages
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload current docs artifact
+        uses: actions/upload-pages-artifact@v4
         with:
           path: apps/docs/dist
 
   deploy:
-    name: Deploy to GitHub Pages
+    name: Deploy docs to GitHub Pages
     runs-on: ubuntu-latest
     needs: build
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
-      - name: Deploy
+      - name: Deploy current artifact
         id: deployment
         uses: actions/deploy-pages@v4

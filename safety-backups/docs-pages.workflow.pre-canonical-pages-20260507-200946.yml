@@ -1,0 +1,114 @@
+name: Deploy Noctra Docs
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: noctra-docs-pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate professional docs data
+        run: pnpm exec node scripts/generate-professional-docs-data.mjs
+
+      - name: Patch professional docs audit fixes
+        run: |
+          if [ -f scripts/patch-professional-docs-audit-fixes.mjs ]; then
+            pnpm exec node scripts/patch-professional-docs-audit-fixes.mjs
+          fi
+
+      - name: Audit professional docs
+        run: pnpm exec node scripts/audit-professional-docs.mjs
+
+      - name: Build packages
+        run: |
+          pnpm --filter @noctra/utils build
+          pnpm --filter @noctra/tokens build
+          pnpm --filter @noctra/react build
+          pnpm --filter @noctra/styles build
+
+      - name: Verify exports
+        run: pnpm exec node scripts/verify-exports.mjs
+
+      - name: Typecheck docs with log
+        run: pnpm --filter @noctra/docs typecheck > docs-typecheck-debug.log 2>&1
+
+      - name: Build docs with GitHub Pages base
+        env:
+          GITHUB_PAGES_BASE: /noctra/
+        run: pnpm --filter @noctra/docs build > docs-build-debug.log 2>&1
+
+      - name: Print docs logs
+        if: always()
+        run: |
+          echo "----- docs typecheck log -----"
+          if [ -f docs-typecheck-debug.log ]; then cat docs-typecheck-debug.log; fi
+          echo "----- docs build log -----"
+          if [ -f docs-build-debug.log ]; then cat docs-build-debug.log; fi
+
+      - name: Verify built asset paths
+        run: |
+          test -f apps/docs/dist/index.html
+          grep -q '"/noctra/assets/' apps/docs/dist/index.html
+          cp apps/docs/dist/index.html apps/docs/dist/404.html
+
+      - name: Final quality gate
+        run: pnpm exec node scripts/final-quality-gate.mjs
+
+      - name: Final docs release decision
+        run: |
+          pnpm exec node scripts/audit-professional-docs.mjs
+          pnpm exec node scripts/final-professional-docs-release-decision.mjs
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/docs/dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
