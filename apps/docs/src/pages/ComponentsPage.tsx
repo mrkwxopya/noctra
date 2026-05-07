@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { DocCard, PageHero, TagList } from "../components/DocsChrome";
 import { noctraDocsComponents, noctraDocsGroups } from "../generated/noctra-professional-docs.generated";
+import { docsHref } from "../lib/docsRouting";
 
 export function ComponentsPage() {
   const [query, setQuery] = useState("");
@@ -34,7 +35,7 @@ export function ComponentsPage() {
 
       <div className="nd-component-grid">
         {filteredComponents.map((component) => (
-          <a className="nd-component-card" key={component.name} href={`#/components/${component.kebab}`}>
+          <a className="nd-component-card" key={component.name} href={docsHref(`/components/${component.kebab}`)}>
             <div>
               <span>{component.group}</span>
               <h3>{component.name}</h3>
